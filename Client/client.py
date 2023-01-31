@@ -5,3 +5,4 @@ ADDR = (HOST,PORT)
 
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect(ADDR)
+
