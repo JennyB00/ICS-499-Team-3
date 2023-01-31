@@ -24,7 +24,7 @@ def chat_bot():
         except Exception as e:
             print(f"Error: {str(e)}")
             continue
-        print("Bot: " + response["choices"][0]["text"])
+        print("Bot: {}".format(response["choices"][0]["text"].replace(".", ".\n")))
 
 
 if __name__ == "__main__":
