@@ -7,8 +7,8 @@ class Contacts:
     def remove(self, User):
         self.users.remove(User)
 
-    def getUsers():
-        return users
+    def getUsers(self):
+        return self.users
 
     def invite(self, user):
         result = False
