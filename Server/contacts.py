@@ -1,4 +1,3 @@
-from .bot import Bot
 class Contacts:
     def __init__(self) -> None:
         self.users = []
