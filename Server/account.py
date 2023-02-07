@@ -1,13 +1,18 @@
 import hashlib
 import random
+from .privileges import Privileges
+from .contacts import Contacts
 
-class account:
-    username = str()
-    password = str()
-    status = str()
-    pastChats = list()
-    privileges = list ()
-    contacts =  list ()
+"""The user account class"""
+class Account:
+    def __init__(self, user: str, passwrd: str, priv=Privileges(False,False,False)) -> None:
+        self.username = user
+        self.password = passwrd
+        self.status = "offline"
+        self.privileges = priv
+        self.pastChats = []
+        self.contacts = Contacts()
+
 
     # account creation and password hashing
     def createAccount():
@@ -41,13 +46,13 @@ class account:
 
     
 
-    def createChat():
+    def createChat(self):
         #generating a random number between 0 and 100
         chatId = random.randint(0,100)
         # some code to check if a chat with that ID already exists
         return chatId
     
-    def joinChat(self,chatId):
+    def joinChat(self,chatId: str):
         # check if ID is equal to any chat ID in database of txt
         # if chatID == something:
         #    print ("Successfullly joined Chat!")
