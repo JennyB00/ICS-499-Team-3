@@ -6,6 +6,15 @@ class Bot:
     openai.api_key = openai_key.openai_key
     username = str()
 
+    def receive(self, messageType, message):
+        return messageType
+
+    def process(self, message):
+        return message
+
+    def getResponse(self):
+        return message
+
     def generate_image(self):
         prompt = input("Please describe your image: ")
         response = openai.Image.create(
