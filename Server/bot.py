@@ -4,10 +4,18 @@ import openai_key
 
 class Bot:
     openai.api_key = openai_key.openai_key
-    
-    def __init__(self) -> None:
-        self.username = "AI bot"
 
+    def __init__(self, username):
+        self.username = username
+
+    def receive(self, messageType, message):
+        return messageType
+
+    def process(self, message):
+        return message
+
+    def getResponse(self):
+        return message
 
     def generate_image(self):
         prompt = input("Please describe your image: ")
@@ -43,8 +51,3 @@ class Bot:
                 print(f"Error: {str(e)}")
                 continue
             print("Bot: {}".format(response["choices"][0]["text"].replace(".", ".\n")))
-
-
-# if __name__ == "__main__":
-#     bot = Bot()
-#     bot.generate_image()
