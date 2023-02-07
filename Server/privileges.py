@@ -1,6 +1,6 @@
 class Privileges:
 
-    def __init__(self, addU, deleteM, deleteC, send=True, recieve=True):
+    def __init__(self, addU: bool, deleteM: bool, deleteC: bool, send=True, recieve=True) -> None:
         self.send = send
         self.recieve = recieve
         self.addUser = addU
@@ -15,29 +15,29 @@ class Privileges:
     def getSend(self) -> bool:
         return self.send
 
-    def setSend(self, s):
+    def setSend(self, s:bool):
         self.send = s
 
     def getRecieve(self) -> bool:
         return self.recieve
 
-    def setRecieve(self, r):
+    def setRecieve(self, r:bool):
         self.recieve = r
 
     def getAddUser(self) -> bool:
         return self.addUser
 
-    def setAddUser(self, a):
+    def setAddUser(self, a: bool):
         self.addUser = a
 
     def getDeleteMessage(self) -> bool:
         return self.deleteMessage
 
-    def setDeleteMessage(self, dm):
+    def setDeleteMessage(self, dm: bool):
         self.deleteMessage = dm
 
     def getDeleteChat(self) -> bool:
         return self.deleteChat
 
-    def setDeleteChat(self, dc):
+    def setDeleteChat(self, dc: bool):
         self.deleteChat = dc

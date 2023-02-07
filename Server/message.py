@@ -1,18 +1,21 @@
 import time
 class Message:
-    uid = int()
-    username = str()
-    message = bytearray()
-    messageType = str()
-    date = time.time()
 
-    def createMessage(self, messageType, message):
+    def __init__(self, user: str, messageType: str, message:bytearray, date=time.time()):
+        self.uid = 10
+        self.username = user
         self.messageType = messageType
         self.message = message
-        return message
+        self.date = date
 
-    def getMessage():
-        return message
+    def getMessage(self) -> bytearray:
+        return self.message
 
-    def getUser():
-        return username
+    def getMessageType(self) -> str:
+        return self.messageType
+
+    def getUser(self) -> str:
+        return self.username
+
+    def getDate(self):
+        return self.date

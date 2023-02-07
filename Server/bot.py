@@ -4,7 +4,10 @@ import openai_key
 
 class Bot:
     openai.api_key = openai_key.openai_key
-    username = str()
+    
+    def __init__(self) -> None:
+        self.username = "AI bot"
+
 
     def generate_image(self):
         prompt = input("Please describe your image: ")
