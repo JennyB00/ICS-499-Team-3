@@ -1,9 +1,9 @@
 import hashlib
 import random
-from ..privileges import Privileges
-from ..chat import Chat
-from ..contacts import Contacts
-from ..bot import Bot
+from privileges import Privileges
+from chat import Chat
+from contacts import Contacts
+from bot import Bot
 
 """The user account class"""
 class Account:
@@ -12,7 +12,7 @@ class Account:
         self.password = passwrd
         self.status = "offline"
         self.privileges = priv
-        self.pastChats = [Chat(-1, )]
+        self.pastChats = [Chat(-1, "AI Bot")]
         self.contacts = Contacts()
         self.contacts.add(Bot("AI Bot"))
 
@@ -34,6 +34,8 @@ class Account:
     #         print("Passwords did not match! \n")
     # login
     # courrently only works for one user and you'll have to keep deleting info in txt
+
+    #Sets the account status to online
     def login(self):
         self.status = "online"
         # username = input("Enter Username: ")

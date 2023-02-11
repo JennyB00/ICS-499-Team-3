@@ -1,0 +1,1 @@
+# uid | username | messageType | messageBytes | date

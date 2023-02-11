@@ -1,0 +1,1 @@
+# uid | accountUID | send | receive | addUser | deleteMessage | deleteChat

@@ -1,6 +1,6 @@
-from .Domain.account import Account
-from .message import Message
-from .History import History
+from account import Account
+from message import Message
+from History import History
 
 class Chat:
     def __init__(self, uid: int, userID: str):

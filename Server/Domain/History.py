@@ -1,4 +1,4 @@
-from .message import Message
+from message import Message
 class History:
     def __init__(self, usernames: list):
         self.usernames = usernames
