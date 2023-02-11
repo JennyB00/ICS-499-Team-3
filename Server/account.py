@@ -51,7 +51,8 @@ class Account:
     def logout(self):
         self.status = "offline"
 
-    
+    def getStatus(self) -> str:
+        return self.status
 
     def createChat(self):
         #generating a random number between 0 and 100
@@ -74,30 +75,35 @@ class Account:
 
         chat.join(self.username)
 
+    def getPastChats(self):
+        return self.pastChats
 
     # don't know what to do with these yet    
-    def loadContacts(self):
+    def getContacts(self):
          return self.contacts
 
     def addContact(self, username):
         self.contacts.add(username)
     
     # don't know what to do with these yet
-    def loadPrivileges(self):
+    def getPrivileges(self):
         return self.privileges
 
-    while 1:
-        # simple login system screen
-        print("********** Login System **********")
-        print("1.Create Account")
-        print("2.Login")
-        print("3.Exit")
-        ch = int(input("Enter your choice: "))
-        if ch == 1:
-            createAccount()
-        elif ch == 2:
-            login()
-        elif ch == 3:
-            break
-        else:
-            print("Wrong Choice!")
+    def setPrivileges(self, privileges):
+        self.privileges = privileges
+
+    # while 1:
+    #     # simple login system screen
+    #     print("********** Login System **********")
+    #     print("1.Create Account")
+    #     print("2.Login")
+    #     print("3.Exit")
+    #     ch = int(input("Enter your choice: "))
+    #     if ch == 1:
+    #         createAccount()
+    #     elif ch == 2:
+    #         login()
+    #     elif ch == 3:
+    #         break
+    #     else:
+    #         print("Wrong Choice!")
