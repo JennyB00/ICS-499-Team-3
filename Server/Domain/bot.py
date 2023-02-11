@@ -12,10 +12,10 @@ class Bot:
         return messageType
 
     def process(self, message):
-        return message
+        self.message = message
 
     def getResponse(self):
-        return message
+        return self.message
 
     def generate_image(self):
         prompt = input("Please describe your image: ")
