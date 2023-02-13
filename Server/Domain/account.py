@@ -14,7 +14,7 @@ class Account:
         self.privileges = priv
         self.pastChats = [Chat(-1, "AI Bot")]
         self.contacts = Contacts()
-        self.contacts.add(Bot("AI Bot"))
+        self.contacts.add(Bot())
 
 
     # account creation and password hashing
