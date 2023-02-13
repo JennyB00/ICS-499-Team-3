@@ -1,0 +1,96 @@
+	
+@startuml
+
+class Account
+Account : - username: String {id}
+Account : - password: String
+Account : + status: String
+Account : - pastChatIDs: String[]
+Account : - contacts: Contacts
+Account : - bot: Bot
+Account : + Account(username: String, passwrd: String, status: String = "offline"): void
+Account : + getUsername(): String {query}
+Account : + getPassword(): String {query}
+Account : + getContacts(): Contacts {query}
+Account : + getPastChatIDs(): String[] {query}
+Account : + getBot(): Bot {query}
+Account : + login(password: String): boolean
+Account : + logout(): void
+Account : + addChat(chatId: int): void
+
+class Contacts
+Contacts : - users: String[]
+Contacts : + add(username: String): void
+Contacts : + remove(username: String): void
+Contacts : + getUsernames(): String[] {query}
+Contacts : + invite(email: String): boolean
+
+class Chat
+Chat : - uid: int {id}
+Chat : - history: History
+Chat : - privileges: Privileges[]
+Chat : - activeUsers: String[]
+Chat : + Chat(creator: Account): void
+Chat : + getId(): int {query}
+Chat : + getHistory(): History {query}
+Chat : + getActiveUsers(): String[] {query}
+Chat : + getPrivilege(username: String): Privileges {query}
+Chat : + getPrivileges(): Privileges[] {query}
+Chat : + join(user: String): void
+Chat : + leave(user: String): void
+Chat : + sendMessage(message: Message): boolean
+Chat : + deleteMessage(message: Message): boolean
+Chat : + inviteContact(user: Account): void
+
+class History
+History : - history: Message[]
+History : + getHistory(): Message[] {query}
+History : + add(message: Message): boolean
+History : + delete(message: Message): boolean
+History : + searchByDate(date: UTC date): Message[]
+History : + searchByUsername(username: String): Message[]
+History : + searchByString(substring: String): Message[]
+
+class Message
+Message : - uid: int {id}
+Message : - username: String
+Message : - message: byte[]
+Message : - type: String
+Message : - date: UTC Date
+Message : + getId(): int {query}
+Message : + getMessage(): byte[] {query}
+Message : + getType(): String {query}
+Message : + getUser(): String {query}
+Message : + getDate(): UTC Date {query}
+
+class Privileges
+Privileges : - username: String
+Privileges : - send: boolean
+Privileges : - receive: boolean
+Privileges : - add: boolean
+Privileges : - deleteChat: boolean
+Privileges : - deleteMessage: boolean
+Privileges : + getUser(): String {query}
+Privileges : + getFull(): boolean[] {query}
+Privileges : + getSend(): boolean {query}
+Privileges : + getReceive(): boolean {query}
+Privileges : + getAdd(): boolean {query}
+Privileges : + getDeleteChat(): boolean {query}
+Privileges : + getDeleteMessage(): boolean {query}
+
+class Bot
+Bot : + username: String
+Bot : + Bot(username: String = "AI Bot"): void
+Bot : + process(prompt: String): String
+Bot : + generate_image(prompt: String): String
+
+
+Account "1" --> "1" Contacts: has a
+
+Chat "1" --> "1" History: has a
+Chat <|-- Message: dependency
+Chat -* Privileges
+History -* Message
+Account "1" --> "1" Bot: has a
+
+@enduml
