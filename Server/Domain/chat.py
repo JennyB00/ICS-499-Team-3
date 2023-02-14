@@ -1,18 +1,21 @@
-from account import Account
 from message import Message
 from History import History
+from privileges import Privileges
 
 class Chat:
-    def __init__(self, uid: int, userID: str):
+    uid = 0
+    def __init__(self, userID: str):
         self.uid = uid
-        self.userID = userID
+        uid = uid + 1
         self.history = History([userID])
-        self.activeMembers = [userID]
+        self.activeMembers = []
+        self.privileges = [Privileges]
+        self.privileges.append(Privileges(userID, True, True, True))
 
-    def join(self, user: Account):
+    def join(self, user: str):
         self.activeMembers.append(user)
 
-    def leave(self, user):
+    def leave(self, user: str):
         self.activeMembers.remove(user)
 
     def sendMessage(self, message: Message) -> bool:
@@ -25,15 +28,15 @@ class Chat:
     def getID(self) -> int:
         return self.uid
 
-    def addUser(self, username):
-        self.activeMembers.append(username)
-
-    #not sure if this should stay since join method does the same thing basically
-
-    #Deletes itself, perhaps wrong scope, gets deleted not deletes self
-    def delete(self) -> bool:
-        pass
-
     def deleteMessage(self, message) -> bool:
         self.history.remove_from_history(message)
         return True
+
+    def getPrivilege(self, user:str) -> Privileges:
+        for p in self.privileges:
+            if p.username is user:
+                return p
+        return None
+
+    def getPrivileges(self):
+        return self.privileges

@@ -1,5 +1,5 @@
 import openai
-import openai_key
+from openai import openai_key
 
 
 class Bot:

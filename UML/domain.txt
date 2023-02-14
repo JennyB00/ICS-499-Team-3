@@ -65,18 +65,12 @@ Message : + getDate(): UTC Date {query}
 
 class Privileges
 Privileges : - username: String
-Privileges : - send: boolean
-Privileges : - receive: boolean
-Privileges : - add: boolean
-Privileges : - deleteChat: boolean
-Privileges : - deleteMessage: boolean
-Privileges : + getUser(): String {query}
-Privileges : + getFull(): boolean[] {query}
-Privileges : + getSend(): boolean {query}
-Privileges : + getReceive(): boolean {query}
-Privileges : + getAdd(): boolean {query}
-Privileges : + getDeleteChat(): boolean {query}
-Privileges : + getDeleteMessage(): boolean {query}
+Privileges : + send: boolean
+Privileges : + receive: boolean
+Privileges : + add: boolean
+Privileges : + deleteChat: boolean
+Privileges : + deleteMessage: boolean
+Privileges : + getUser(): str {query}
 
 class Bot
 Bot : + username: String

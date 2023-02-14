@@ -1,20 +1,18 @@
 import hashlib
 import random
-from privileges import Privileges
 from chat import Chat
 from contacts import Contacts
 from bot import Bot
 
 """The user account class"""
 class Account:
-    def __init__(self, user: str, passwrd: str, priv=Privileges(False,False,False)) -> None:
+    def __init__(self, user: str, passwrd: str, status: str = "online") -> None:
         self.username = user
         self.password = passwrd
-        self.status = "offline"
-        self.privileges = priv
-        self.pastChats = [Chat(-1, "AI Bot")]
+        self.status = status
+        self.pastChatIDs = []
         self.contacts = Contacts()
-        self.contacts.add(Bot())
+        self.bot = Bot()
 
 
     # account creation and password hashing
@@ -56,17 +54,17 @@ class Account:
     def getStatus(self) -> str:
         return self.status
 
-    def createChat(self):
-        #generating a random number between 0 and 100
-        chatId = random.randint(0,100)
-        # some code to check if a chat with that ID already exists
-        chat = Chat(chatId,self.username)
-        self.pastChats.append(chat)
-        return chatId
+    def addChat(self, chatID: str):
+        self.pastChatIDs.append(chatID)
+    # def createChat(self):
+    #     chat = Chat(self.username)
+    #     id = chat.getID()
+    #     self.pastChatIDs.append(id)
+    #     return id
 
-    def deleteChat(self, chat):
-        self.pastChats.remove(chat)
-        #System call to delete obj
+    # def deleteChat(self, chat):
+    #     self.pastChats.remove(chat)
+    #     #System call to delete obj
     
     def joinChat(self,chat: Chat):
         # check if ID is equal to any chat ID in database of txt
@@ -77,22 +75,13 @@ class Account:
 
         chat.join(self.username)
 
-    def getPastChats(self):
-        return self.pastChats
+    # def getPastChats(self) -> list:
+    #     return self.pastChatIDs
 
-    # don't know what to do with these yet    
-    def getContacts(self):
-         return self.contacts
-
-    def addContact(self, username):
-        self.contacts.add(username)
+    # # don't know what to do with these yet    
+    # def getContacts(self) -> Contacts:
+    #      return self.contacts
     
-    # don't know what to do with these yet
-    def getPrivileges(self):
-        return self.privileges
-
-    def setPrivileges(self, privileges):
-        self.privileges = privileges
 
     # while 1:
     #     # simple login system screen
