@@ -7,6 +7,6 @@ class ChatRepo:
         cursor.execute(query)
         results = []
         for (chatID, creator) in cursor:
-            results.append({"chatID": chatID})
-            results.append({"creator": creator})
+            results.append({"ChatID": chatID})
+            results.append({"Creator": creator})
         return results
