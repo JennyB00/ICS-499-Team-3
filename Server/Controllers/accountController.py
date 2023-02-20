@@ -1,24 +1,33 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, FastAPI, HTTPException
+from sqlalchemy.orm import Session
+from Domain.account import *
+from Database.Database import *
+from Database.accountRepo import *
+from Database.contactsRepo import *
 
-app = APIRouter(
+router = APIRouter(
     prefix="/accounts",
     tags=["accounts"],
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
 
+@router.get("/", response_model=list[AccountPy])
+def read_accounts(limit: int = 100, db: Session = Depends(get_db)):
+    return get_all_accounts(db, limit)
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+@router.get("/{username}", response_model=AccountPy)
+def read_account(username: str, db: Session = Depends(get_db)):
+    return get_account(db, username)
 
+@router.get("/{username}/contacts", response_model=list[AccountPy])
+def read_account_contacts(username: str, db: Session = Depends(get_db)):
+    return get_contacts_by_account(db, username)
 
-@app.get("/{username}")
-def read_item(username: str):
-    return 
+@router.post("/", response_model=AccountPy)
+def create_account(account: AccountCreate, db: Session = Depends(get_db)):
+    return create_account(db, account)
 
-#get all
-
-#get by id
-
-#etc...
+@router.post("/{username}/contacts", response_model=ContactPy)
+def create_contact_for_account(username: str, contact: ContactCreate,db: Session = Depends(get_db)):
+    return create_contact(db, contact, username)

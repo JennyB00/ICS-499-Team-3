@@ -1,9 +1,8 @@
 import openai
-from openai import openai_key
-
+# from openai import openai_key
 
 class Bot:
-    openai.api_key = openai_key.openai_key
+    openai.api_key = ""
 
     def __init__(self, username="AI Bot"):
         self.username = username

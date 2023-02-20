@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from models import PrivilegesModel
-from Domain.privileges import Privileges
+from .models import PrivilegesModel
+from Domain.privileges import *
 # class PrivilegesRepo:
 #     def get_all_privileges(cursor: mysql.connector.connection.MySQLCursor):
 #         query = ("SELECT * FROM privileges")
@@ -15,8 +15,10 @@ from Domain.privileges import Privileges
 def get_all_privileges(db: Session, limit: int = 100):
     return db.query(PrivilegesModel).limit(limit).all()
 
-def add_privileges(db: Session, privilege: Privileges, chat_id: int):
+def get_privileges(db: Session, id: int):
+    return db.query(PrivilegesModel).filter(PrivilegesModel.id == id).first()
 
+def create_privileges(db: Session, privilege: PrivilegesCreate, chat_id: int):
     db_privileges = PrivilegesModel(**privilege.dict(), chat_id=chat_id)
     db.add(db_privileges)
     db.commit()

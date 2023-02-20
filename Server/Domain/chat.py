@@ -1,6 +1,16 @@
-from message import Message
-from History import History
-from privileges import Privileges
+from .message import Message
+from .History import *
+from .privileges import *
+from pydantic import BaseModel
+
+class ChatPy(BaseModel):
+    uid: int
+    history: HistoryPy = HistoryPy()
+    active: list[str] = []
+    privileges: list[PrivilegesPy] = []
+    class Config:
+        orm_mode = True
+
 
 class Chat:
     uid = 0
@@ -40,3 +50,4 @@ class Chat:
 
     def getPrivileges(self):
         return self.privileges
+        

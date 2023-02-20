@@ -1,3 +1,20 @@
+from pydantic import BaseModel
+
+class PrivilegesBase(BaseModel):
+    username: str
+    send: bool
+    recieve: bool
+    add_user: bool
+    delete_message: bool
+    delete_chat: bool
+
+class PrivilegesCreate(PrivilegesBase):
+    pass
+
+class PrivilegesPy(PrivilegesBase):
+    class Config:
+        orm_mode = True
+
 class Privileges:
     
     def __init__(self, user: str, addU: bool, deleteM: bool, deleteC: bool, send=True, recieve=True) -> None:

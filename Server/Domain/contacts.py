@@ -16,3 +16,14 @@ class Contacts:
         # send invite, if successful set result to True
 
         return result
+
+from pydantic import BaseModel
+class ContactBase(BaseModel):
+    contact: str
+
+class ContactCreate(ContactBase):
+    pass
+
+class ContactPy(ContactBase):
+    class Condig:
+        orm_mode = True

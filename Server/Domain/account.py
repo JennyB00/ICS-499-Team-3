@@ -1,8 +1,8 @@
 import hashlib
 import random
-from chat import Chat
-from contacts import Contacts
-from bot import Bot
+from .chat import Chat
+from .contacts import *
+from .bot import Bot
 
 """The user account class"""
 class Account:
@@ -57,7 +57,7 @@ class Account:
         return self.status
 
     
-    def join_chat(self,chat: Chat):
+    def join_chat(self, chat: Chat):
         # check if ID is equal to any chat ID in database of txt
         # if chatID == something:
         #    print ("Successfullly joined Chat!")
@@ -108,3 +108,20 @@ class Account:
     #         break
     #     else:
     #         print("Wrong Choice!")
+
+from pydantic import BaseModel
+
+class AccountBase(BaseModel):
+    username: str
+
+class AccountCreate(AccountBase):
+    password: str
+
+class AccountPy(AccountBase):
+    status: str
+    past_chat_ids: list[str]
+    contacts: list[ContactPy]
+    #bot: Bot
+    class Config:
+        orm_mode = True
+        

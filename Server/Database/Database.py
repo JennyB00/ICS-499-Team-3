@@ -7,7 +7,7 @@ from sqlalchemy import URL
 url = URL.create(
     "mysql",
     username="root",
-    password="password",  # plain (unescaped) text
+    password="ics499Team3",  # plain (unescaped) text
     host="127.0.0.1",
     database="webserver",
 )
