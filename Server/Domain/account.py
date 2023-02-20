@@ -73,6 +73,7 @@ class Account:
         # else:
         #   print("Chat joining was unsucessfful")
 
+        #this should probably be moved into the if statement
         chat.join(self.username)
 
     # def getPastChats(self) -> list:
