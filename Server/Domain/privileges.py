@@ -11,6 +11,14 @@ class Privileges:
     def getUser(self) -> str:
         return self.username
 
+    def dict(self) -> dict:
+        return {'username':self.username,
+                'send':self.send,
+                'recieve':self.recieve,
+                'addUser':self.addUser,
+                'deleteMessage':self.deleteMessage,
+                'deleteChat':self.deleteChat}
+
     # def getFull(self) -> dict:
     #     return {"send":self.send,"recieve":self.recieve,"addUser":self.addUser,
     #     "deleteMessage":self.deleteMessage,"deleteChat":self.deleteChat}

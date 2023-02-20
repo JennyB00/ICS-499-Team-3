@@ -1,6 +1,9 @@
-from fastapi import APIRouter
-from Database.privilegesRepo import PrivilegesRepo
-import Database.Database
+from fastapi import APIRouter, Depends, FastAPI, HTTPException
+from sqlalchemy.orm import Session
+from Domain.privileges import Privileges
+from Database.Database import *
+from Database.privilegesRepo import *
+
 
 app = APIRouter(
     prefix="/privileges",
@@ -9,6 +12,6 @@ app = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@app.get("/")
-def read_privileges():
-    return PrivilegesRepo.get_all_privileges(cursor)
+@app.get("/", response_model=list[Privileges])
+def read_privileges(limit: int = 100, db: Session = Depends(get_db)):
+    return get_all_privileges(db, limit=limit)

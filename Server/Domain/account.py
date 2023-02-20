@@ -14,24 +14,26 @@ class Account:
         self.contacts = Contacts()
         self.bot = Bot()
 
+    def get_username(self) -> str:
+        return self.username
 
-    # account creation and password hashing
-    # def createAccount():
-    #     username = input("Enter a username: ")
-    #     password = input("Enter password: ")
-    #     confirm_password = input("Confirm password: ")
-    #     if confirm_password == password:
-    #         enc = confirm_password.encode()
-    #         hash1 = hashlib.md5(enc).hexdigest()
-    #         with open("loginDetails.txt", 'a') as f:
-    #             f.write(username + "\n")
-    #             f.write(hash1)
-    #         f.close()
-    #         print("Account creation successful!")
-    #     else:
-    #         print("Passwords did not match! \n")
-    # login
-    # courrently only works for one user and you'll have to keep deleting info in txt
+    def get_password(self) -> str:
+        return self.password
+
+    def get_chats(self) -> list[str]:
+        return self.pastChatIDs.copy()
+
+    def add_chat(self, chatID: str):
+        self.pastChatIDs.append(chatID)
+
+    def delete_chat(self, chatID: str):
+        self.pastChatIDs.remove(chatID)
+
+    def get_contacts(self) -> Contacts:
+        return self.contacts
+
+    def get_bot(self) -> Bot:
+        return self.bot
 
     #Sets the account status to online
     def login(self):
@@ -54,19 +56,8 @@ class Account:
     def getStatus(self) -> str:
         return self.status
 
-    def addChat(self, chatID: str):
-        self.pastChatIDs.append(chatID)
-    # def createChat(self):
-    #     chat = Chat(self.username)
-    #     id = chat.getID()
-    #     self.pastChatIDs.append(id)
-    #     return id
-
-    # def deleteChat(self, chat):
-    #     self.pastChats.remove(chat)
-    #     #System call to delete obj
     
-    def joinChat(self,chat: Chat):
+    def join_chat(self,chat: Chat):
         # check if ID is equal to any chat ID in database of txt
         # if chatID == something:
         #    print ("Successfullly joined Chat!")
@@ -74,6 +65,25 @@ class Account:
         #   print("Chat joining was unsucessfful")
 
         chat.join(self.username)
+        
+    # account creation and password hashing
+    # def createAccount():
+    #     username = input("Enter a username: ")
+    #     password = input("Enter password: ")
+    #     confirm_password = input("Confirm password: ")
+    #     if confirm_password == password:
+    #         enc = confirm_password.encode()
+    #         hash1 = hashlib.md5(enc).hexdigest()
+    #         with open("loginDetails.txt", 'a') as f:
+    #             f.write(username + "\n")
+    #             f.write(hash1)
+    #         f.close()
+    #         print("Account creation successful!")
+    #     else:
+    #         print("Passwords did not match! \n")
+    # login
+    # courrently only works for one user and you'll have to keep deleting info in txt
+
 
     # def getPastChats(self) -> list:
     #     return self.pastChatIDs

@@ -1,15 +1,15 @@
 class Contacts:
     def __init__(self) -> None:
-        self.users = []
+        self.__users = []
 
-    def add(self, User: str):
-        self.users.append(User)
+    def add(self, user: str):
+        self.__users.append(user)
 
-    def remove(self, User: str):
-        self.users.remove(User)
+    def remove(self, user: str):
+        self.__users.remove(user)
 
-    def getUsers(self) -> list:
-        return self.users
+    def get_users(self) -> list[str]:
+        return self.__users.copy()
 
     def invite(self, userEmail: str):
         result = False
