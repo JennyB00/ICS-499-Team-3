@@ -2,7 +2,7 @@
 import mysql.connector
 class AccountsRepo:
     def get_all_accounts(cursor: mysql.connector.connection.MySQLCursor):
-        query = ("SELECT * FROM accounts")
+        query = ("SELECT * FROM account")
         cursor.execute(query)
         results = []
         for (username, password) in cursor:
