@@ -23,7 +23,7 @@ class ChatModel(Base):
     id = Column(Integer, primary_key=True)
     # creator = Column(String, ForeignKey("accounts.username"))
 
-    privileges = relationship("PrivilegesModel", back_populates="chat")
+    privileges = relationship("PrivilegesModel", back_populates="owner_chat")
     messages = relationship("MessageModel", back_populates="owner_chat")
 
 class PrivilegesModel(Base):
@@ -33,9 +33,9 @@ class PrivilegesModel(Base):
     username = Column(String(255), ForeignKey("accounts.username"))
     send = Column(Boolean, index=True)
     receive = Column(Boolean, index=True)
-    addUser = Column(Boolean)
-    deleteMessege = Column(Boolean)
-    deleteChat = Column(Boolean)
+    add_user = Column(Boolean)
+    delete_messege = Column(Boolean)
+    delete_chat = Column(Boolean)
 
     owner_chat = relationship("ChatModel", back_populates="privileges")
 

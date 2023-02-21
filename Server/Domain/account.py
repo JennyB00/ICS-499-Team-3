@@ -113,6 +113,7 @@ from pydantic import BaseModel
 
 class AccountBase(BaseModel):
     username: str
+    contacts: list[ContactPy] = []
 
 class AccountCreate(AccountBase):
     password: str
@@ -120,7 +121,6 @@ class AccountCreate(AccountBase):
 class AccountPy(AccountBase):
     status: str
     past_chat_ids: list[str] = []
-    contacts: list[ContactPy]
     bot: BotPy = BotPy()
     class Config:
         orm_mode = True

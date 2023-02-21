@@ -38,7 +38,8 @@ def create_chat(db: Session = Depends(get_db)):
 
 @router.post("/{chat_id}/privileges", response_model=PrivilegesPy)
 def create_privileges_for_chat(chat_id: int, privileges: PrivilegesCreate, db: Session = Depends(get_db)):
-    return create_privileges(db, privileges, chat_id)
+    db_privilege = create_privileges(db, privileges, chat_id)
+    return PrivilegesPy.from_orm(db_privilege)
 
 @router.post("/{chat_id}/messages", response_model=MessagePy)
 def create_message_for_chat(chat_id: int, message: MessageCreate, db: Session = Depends(get_db)):

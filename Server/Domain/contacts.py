@@ -22,7 +22,7 @@ class ContactBase(BaseModel):
     contact: str
 
 class ContactCreate(ContactBase):
-    pass
+    owner: str
 
 class ContactPy(ContactBase):
     class Condig:

@@ -9,7 +9,7 @@ class PrivilegesBase(BaseModel):
     delete_chat: bool
 
 class PrivilegesCreate(PrivilegesBase):
-    pass
+    chat_id: int
 
 class PrivilegesPy(PrivilegesBase):
     class Config:
