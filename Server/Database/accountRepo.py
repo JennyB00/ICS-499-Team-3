@@ -7,5 +7,5 @@ class AccountsRepo:
         results = []
         for (username, password) in cursor:
             results.append({"Username":username})
-	          results.append({"Password":password})
+	    results.append({"Password":password})
         return results
