@@ -2,7 +2,7 @@ import hashlib
 import random
 from .chat import Chat
 from .contacts import *
-from .bot import Bot
+from .bot import *
 
 """The user account class"""
 class Account:
@@ -119,9 +119,9 @@ class AccountCreate(AccountBase):
 
 class AccountPy(AccountBase):
     status: str
-    past_chat_ids: list[str]
+    past_chat_ids: list[str] = []
     contacts: list[ContactPy]
-    #bot: Bot
+    bot: BotPy = BotPy()
     class Config:
         orm_mode = True
         

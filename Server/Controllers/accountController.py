@@ -18,7 +18,10 @@ def read_accounts(limit: int = 100, db: Session = Depends(get_db)):
 
 @router.get("/{username}", response_model=AccountPy)
 def read_account(username: str, db: Session = Depends(get_db)):
-    return get_account(db, username)
+    db_account = get_account(db, username)
+    if db_account is None:
+        raise HTTPException(status_code=404, detail="Account not found")
+    return AccountPy.from_orm(db_account)
 
 @router.get("/{username}/contacts", response_model=list[AccountPy])
 def read_account_contacts(username: str, db: Session = Depends(get_db)):

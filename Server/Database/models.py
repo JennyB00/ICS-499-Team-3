@@ -14,7 +14,7 @@ class ContactModel(Base):
     __tablename__ = "contacts"
     id = Column(Integer, primary_key=True)
     owner_id = Column(String(255), ForeignKey("accounts.username"))
-    contact = Column(String(255), ForeignKey("accounts.username"), index=True)
+    contact = Column(String(255), index=True)
 
     owner = relationship("AccountModel", back_populates="contacts")
 

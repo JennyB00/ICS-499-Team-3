@@ -12,10 +12,10 @@ app = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@app.get("/", response_model=list[Privileges])
+@app.get("/", response_model=list[PrivilegesPy])
 def read_all_privileges(limit: int = 100, db: Session = Depends(get_db)):
     return get_all_privileges(db, limit=limit)
 
-@app.get("/{id}", response_model=Privileges)
+@app.get("/{id}", response_model=PrivilegesPy)
 def read_privileges(id: int, db: Session = Depends(get_db)):
     return get_privileges(db, id)
