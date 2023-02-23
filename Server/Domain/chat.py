@@ -3,51 +3,23 @@ from .History import *
 from .privileges import *
 from pydantic import BaseModel
 
-class ChatPy(BaseModel):
-    uid: int
-    history: HistoryPy = HistoryPy()
+class ChatBase(BaseModel):
+    pass
+
+class ChatCreate(ChatBase):
+    pass
+
+class Chat(ChatBase):
+    id: int
+    history: History = History()
     active: list[str] = []
-    privileges: list[PrivilegesPy] = []
-    class Config:
-        orm_mode = True
+    privileges: list[Privileges] = []
 
-
-class Chat:
-    uid = 0
-    def __init__(self, userID: str):
-        self.uid = uid
-        uid = uid + 1
-        self.history = History([userID])
-        self.activeMembers = []
-        self.privileges = [Privileges]
-        self.privileges.append(Privileges(userID, True, True, True))
-
-    def join(self, user: str):
-        self.activeMembers.append(user)
-
-    def leave(self, user: str):
-        self.activeMembers.remove(user)
-
-    def sendMessage(self, message: Message) -> bool:
-        self.history.add_to_history(message)
-        return True
-
-    def loadHistory(self) -> History:
-        return self.history
-
-    def getID(self) -> int:
-        return self.uid
-
-    def deleteMessage(self, message) -> bool:
-        self.history.remove_from_history(message)
-        return True
-
-    def getPrivilege(self, user:str) -> Privileges:
+    def get_privilege(self, user:str) -> Privileges:
         for p in self.privileges:
             if p.username is user:
                 return p
         return None
 
-    def getPrivileges(self):
-        return self.privileges
-        
+    class Config:
+        orm_mode = True

@@ -13,8 +13,8 @@ from sqlalchemy.orm import Session
 from .models import ContactModel
 from Domain.contacts import *
 
-def create_contact(db: Session, contact: ContactCreate, owner: str) -> ContactModel:
-    db_contact = ContactModel(**ContactCreate.dict(), owner_id=owner)
+def create_contact(db: Session, contact: ContactCreate) -> ContactModel:
+    db_contact = ContactModel(**contact.dict())
     db.add(db_contact)
     db.commit()
     db.refresh(db_contact)

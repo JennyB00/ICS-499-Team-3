@@ -1,43 +1,36 @@
+from enum import Enum
 import hashlib
 import random
-from .chat import Chat
-from .contacts import *
-from .bot import *
+from .contacts import Contact
+from .bot import Bot
+from pydantic import BaseModel
+
+class Status(str, Enum):
+    online = 'online'
+    offline = 'offline'
 
 """The user account class"""
-class Account:
-    def __init__(self, user: str, passwrd: str, status: str = "online") -> None:
-        self.username = user
-        self.password = passwrd
-        self.status = status
-        self.pastChatIDs = []
-        self.contacts = Contacts()
-        self.bot = Bot()
+class AccountBase(BaseModel):
+    username: str
+    contacts: list[Contact] = []
+    past_chats: list[int] = []
 
-    def get_username(self) -> str:
-        return self.username
+class AccountCreate(AccountBase):
+    password: str
 
-    def get_password(self) -> str:
-        return self.password
+class Account(AccountBase):
+    status: Status = Status.online
+    bot: Bot = Bot()
+    def login(self) -> None:
+        self.status = Status.online
+    def logout(self) -> None:
+        self.status = Status.offline
+    def online(self) -> bool:
+        return self.status is Status.online
+    class Config:
+        orm_mode = True
 
-    def get_chats(self) -> list[str]:
-        return self.pastChatIDs.copy()
 
-    def add_chat(self, chatID: str):
-        self.pastChatIDs.append(chatID)
-
-    def delete_chat(self, chatID: str):
-        self.pastChatIDs.remove(chatID)
-
-    def get_contacts(self) -> Contacts:
-        return self.contacts
-
-    def get_bot(self) -> Bot:
-        return self.bot
-
-    #Sets the account status to online
-    def login(self):
-        self.status = "online"
         # username = input("Enter Username: ")
         # password = input("Enter password: ")
         # auth = password.encode()
@@ -49,22 +42,14 @@ class Account:
         #     print("Logged in Successfully!")
         # else:
         #     print("Login failed! \n")
-
-    def logout(self):
-        self.status = "offline"
-
-    def getStatus(self) -> str:
-        return self.status
-
-    
-    def join_chat(self, chat: Chat):
+        
+    # def join_chat(self, chat: Chat):
         # check if ID is equal to any chat ID in database of txt
         # if chatID == something:
         #    print ("Successfullly joined Chat!")
         # else:
         #   print("Chat joining was unsucessfful")
 
-        chat.join(self.username)
         
     # account creation and password hashing
     # def createAccount():
@@ -107,21 +92,4 @@ class Account:
     #     elif ch == 3:
     #         break
     #     else:
-    #         print("Wrong Choice!")
-
-from pydantic import BaseModel
-
-class AccountBase(BaseModel):
-    username: str
-    contacts: list[ContactPy] = []
-
-class AccountCreate(AccountBase):
-    password: str
-
-class AccountPy(AccountBase):
-    status: str
-    past_chat_ids: list[str] = []
-    bot: BotPy = BotPy()
-    class Config:
-        orm_mode = True
-        
+    #         print("Wrong Choice!")    

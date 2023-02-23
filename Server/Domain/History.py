@@ -1,45 +1,35 @@
 from .message import *
-class History:
-    def __init__(self, usernames: list):
-        self.usernames = usernames
-        self.messages = []
-
-    def add_to_history(self, message: Message):
-        self.messages.append(message)
-
-    def remove_from_history(self, message: Message):
-        self.messages.remove(message)
-
-    def search_by_date(self, date) -> list:
-        searchedMessages = []
-        for message in self.messages:
-            if message.getDate() == date:
-                searchedMessages.append(message)
-
-        return searchedMessages
-
-    def search_by_username(self, username: str) -> list:
-        searchedMessages = []
-        for message in self.messages:
-            if message.getUser() == username:
-                searchedMessages.append(message)
-
-        return searchedMessages
-
-    def search_by_word(self, searchWord) -> list:
-        searchedMessages = []
-        for message in self.messages:
-            splitMessage = message.split()
-            for word in splitMessage:
-                if word == searchWord:
-                    searchedMessages.append(message)
-
-        return searchedMessages
-      
 from pydantic import BaseModel
 class HistoryBase(BaseModel):
     pass
 
-class HistoryPy(HistoryBase):
+class History(HistoryBase):
     usernames: list[str] = []
-    messages: list[MessagePy] = []
+    messages: list[Message] = []
+
+    def search_by_date(self, date: datetime) -> list[Message]:
+        searched_messages = []
+        for message in self.messages:
+            if message.date == date:
+                searched_messages.append(message)
+
+        return searched_messages
+
+    def search_by_username(self, username: str) -> list[Message]:
+        searched_messages = []
+        for message in self.messages:
+            if message.username == username:
+                searched_messages.append(message)
+
+        return searched_messages
+
+    def search_by_word(self, search_word: str) -> list[Message]:
+        searched_messages = []
+        for message in self.messages:
+            if message.type is Type.string:
+                split_message = str(message.message).split()
+                for word in split_message:
+                    if word == search_word:
+                        searched_messages.append(message)
+
+        return searched_messages
