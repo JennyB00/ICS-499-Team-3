@@ -1,12 +1,10 @@
 from .message import *
 from pydantic import BaseModel
 class HistoryBase(BaseModel):
-    pass
-
-class History(HistoryBase):
     usernames: list[str] = []
     messages: list[Message] = []
 
+class History(HistoryBase):
     def search_by_date(self, date: datetime) -> list[Message]:
         searched_messages = []
         for message in self.messages:
@@ -33,3 +31,6 @@ class History(HistoryBase):
                         searched_messages.append(message)
 
         return searched_messages
+        
+    class Config:
+        orm_mode = True

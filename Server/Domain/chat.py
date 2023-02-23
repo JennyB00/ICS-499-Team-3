@@ -12,7 +12,7 @@ class ChatCreate(ChatBase):
 class Chat(ChatBase):
     id: int
     history: History = History()
-    active: list[str] = []
+    # active: list[str] = []
     privileges: list[Privileges] = []
 
     def get_privilege(self, user:str) -> Privileges:

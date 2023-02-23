@@ -1,14 +1,8 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, LargeBinary, Table
-from sqlalchemy.orm import relationship, DeclarativeBase
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, LargeBinary
+from sqlalchemy.orm import relationship
 
 from .Database import Base
 
-past_chats_table = Table(
-    "past_chats",
-    DeclarativeBase.metadata,
-    Column("user", ForeignKey("accounts.username")),
-    Column("past_chat_id", ForeignKey("chats.id")),
-)
 
 class AccountModel(Base):
     __tablename__ = "accounts"
@@ -16,7 +10,15 @@ class AccountModel(Base):
     password = Column(String(255))
 
     contacts = relationship("ContactModel", back_populates="owner")
-    past_chats = relationship(secondary=past_chats_table)
+    past_chats = relationship("PastChatModel", back_populates="owner")
+
+class PastChatModel(Base):
+    __tablename__ = "past_chats_table"
+    id = Column(Integer, primary_key=True)
+    username = Column(String(255), ForeignKey("accounts.username"))
+    past_chat_id = Column(Integer)
+
+    owner = relationship("AccountModel", back_populates="past_chats")
 
 class ContactModel(Base):
     __tablename__ = "contacts"
@@ -46,22 +48,23 @@ class PrivilegesModel(Base):
     chat_id = Column(Integer, ForeignKey("chats.id"))
     owner_chat = relationship("ChatModel", back_populates="privileges")
 
-history_users_table = Table(
-    "history_users",
-    DeclarativeBase.metadata,
-    Column("history_id", ForeignKey("histories.id")),
-    Column("user", ForeignKey("accounts.username")),
-)
-
 class HistoryModel(Base):
     __tablename__ = "histories"
     id = Column(Integer, primary_key=True)
     chat_id = Column(Integer, ForeignKey("chats.id"))
-    owner_chat = relationship("ChatModel", back_populates="")
+    owner_chat = relationship("ChatModel", back_populates="history")
 
-    users = relationship(secondary=history_users_table)
+    users = relationship("HistoryUserModel", back_populates="owner")
 
     messages = relationship("MessageModel", back_populates="history")
+
+class HistoryUserModel(Base):
+    __tablename__ = "history_users_table"
+    id = Column(Integer, primary_key=True)
+    user = Column(String(255))
+
+    history_id = Column(Integer, ForeignKey("histories.id"))
+    owner = relationship("HistoryModel", back_populates="users")
 
 
 class MessageModel(Base):
@@ -70,7 +73,7 @@ class MessageModel(Base):
     username = Column(String(255), ForeignKey("accounts.username"))
     date = Column(DateTime)
     type = Column(String(255), index=True)
-    message = Column(LargeBinary(500), index=True)
+    message = Column(LargeBinary(500))
 
-    history_id = Column(Integer, ForeignKey("history.id"))
-    history = relationship("ChatModel", back_populates="messages")
+    history_id = Column(Integer, ForeignKey("histories.id"))
+    history = relationship("HistoryModel", back_populates="messages")
