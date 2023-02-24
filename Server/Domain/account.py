@@ -5,28 +5,25 @@ from .contacts import Contact
 from .bot import Bot
 from pydantic import BaseModel
 
-class Status(str, Enum):
-    online = 'online'
-    offline = 'offline'
 
 """The user account class"""
 class AccountBase(BaseModel):
     username: str
-    contacts: list[Contact] = []
+    status: str
+    contacts: list[str] = []# list[Contact] = []
     past_chats: list[int] = []
 
 class AccountCreate(AccountBase):
     password: str
 
 class Account(AccountBase):
-    status: Status = Status.online
     bot: Bot = Bot()
     def login(self) -> None:
-        self.status = Status.online
+        self.status = "online"
     def logout(self) -> None:
-        self.status = Status.offline
+        self.status = "online"
     def online(self) -> bool:
-        return self.status is Status.online
+        return self.status is "online"
     class Config:
         orm_mode = True
 

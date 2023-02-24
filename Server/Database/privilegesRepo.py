@@ -24,3 +24,7 @@ def create_privileges(db: Session, privilege: PrivilegesCreate) -> PrivilegesMod
     db.commit()
     db.refresh(db_privileges)
     return db_privileges
+
+def update_privileges(db: Session):
+    
+    return

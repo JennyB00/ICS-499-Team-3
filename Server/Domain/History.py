@@ -5,6 +5,12 @@ class HistoryBase(BaseModel):
     messages: list[Message] = []
 
 class History(HistoryBase):
+    def add_message(self, m: Message):
+        self.messages.append(m)
+        user = m.username
+        if not (user in self.usernames):
+            self.usernames.append(user)
+
     def search_by_date(self, date: datetime) -> list[Message]:
         searched_messages = []
         for message in self.messages:
@@ -31,6 +37,6 @@ class History(HistoryBase):
                         searched_messages.append(message)
 
         return searched_messages
-        
+
     class Config:
         orm_mode = True
