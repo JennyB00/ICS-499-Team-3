@@ -1,20 +1,53 @@
+from enum import Enum
 import hashlib
 import random
-from chat import Chat
-from contacts import Contacts
-from bot import Bot
+from .contacts import Contact
+from .bot import Bot
+from pydantic import BaseModel
+
 
 """The user account class"""
-class Account:
-    def __init__(self, user: str, passwrd: str, status: str = "online") -> None:
-        self.username = user
-        self.password = passwrd
-        self.status = status
-        self.pastChatIDs = []
-        self.contacts = Contacts()
-        self.bot = Bot()
+class AccountBase(BaseModel):
+    username: str
+    status: str
+    contacts: list[str] = []# list[Contact] = []
+    past_chats: list[int] = []
+
+class AccountCreate(AccountBase):
+    password: str
+
+class Account(AccountBase):
+    bot: Bot = Bot()
+    def login(self) -> None:
+        self.status = "online"
+    def logout(self) -> None:
+        self.status = "online"
+    def online(self) -> bool:
+        return self.status is "online"
+    class Config:
+        orm_mode = True
 
 
+        # username = input("Enter Username: ")
+        # password = input("Enter password: ")
+        # auth = password.encode()
+        # auth_hash = hashlib.md5(auth).hexdigest()
+        # with open("loginDetails.txt", "r") as f:
+        #     stored_username, stored_password = f.read().split("\n")
+        # f.close()
+        # if username == stored_username and auth_hash == stored_password:
+        #     print("Logged in Successfully!")
+        # else:
+        #     print("Login failed! \n")
+        
+    # def join_chat(self, chat: Chat):
+        # check if ID is equal to any chat ID in database of txt
+        # if chatID == something:
+        #    print ("Successfullly joined Chat!")
+        # else:
+        #   print("Chat joining was unsucessfful")
+
+        
     # account creation and password hashing
     # def createAccount():
     #     username = input("Enter a username: ")
@@ -33,6 +66,8 @@ class Account:
     # login
     # courrently only works for one user and you'll have to keep deleting info in txt
 
+<<<<<<< HEAD
+=======
     #Sets the account status to online
     def login(self):
         self.status = "online"
@@ -75,6 +110,7 @@ class Account:
 
         #this should probably be moved into the if statement
         chat.join(self.username)
+>>>>>>> main
 
     # def getPastChats(self) -> list:
     #     return self.pastChatIDs
@@ -98,4 +134,4 @@ class Account:
     #     elif ch == 3:
     #         break
     #     else:
-    #         print("Wrong Choice!")
+    #         print("Wrong Choice!")    

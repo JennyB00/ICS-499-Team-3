@@ -1,38 +1,42 @@
-from message import Message
-class History:
-    def __init__(self, usernames: list):
-        self.usernames = usernames
-        self.messages = []
+from .message import *
+from pydantic import BaseModel
+class HistoryBase(BaseModel):
+    usernames: list[str] = []
+    messages: list[Message] = []
 
-    def add_to_history(self, message: Message):
-        self.messages.append(message)
+class History(HistoryBase):
+    def add_message(self, m: Message):
+        self.messages.append(m)
+        user = m.username
+        if not (user in self.usernames):
+            self.usernames.append(user)
 
-    def remove_from_history(self, message: Message):
-        self.messages.remove(message)
-
-    def search_by_date(self, date) -> list:
-        searchedMessages = []
+    def search_by_date(self, date: datetime) -> list[Message]:
+        searched_messages = []
         for message in self.messages:
-            if message.getDate() == date:
-                searchedMessages.append(message)
+            if message.date == date:
+                searched_messages.append(message)
 
-        return searchedMessages
+        return searched_messages
 
-    def search_by_username(self, username: str) -> list:
-        searchedMessages = []
+    def search_by_username(self, username: str) -> list[Message]:
+        searched_messages = []
         for message in self.messages:
-            if message.getUser() == username:
-                searchedMessages.append(message)
+            if message.username == username:
+                searched_messages.append(message)
 
-        return searchedMessages
+        return searched_messages
 
-    def search_by_word(self, searchWord) -> list:
-        searchedMessages = []
+    def search_by_word(self, search_word: str) -> list[Message]:
+        searched_messages = []
         for message in self.messages:
-            splitMessage = message.split()
-            for word in splitMessage:
-                if word == searchWord:
-                    searchedMessages.append(message)
+            if message.type is Type.string:
+                split_message = str(message.message).split()
+                for word in split_message:
+                    if word == search_word:
+                        searched_messages.append(message)
 
-        return searchedMessages
-      
+        return searched_messages
+
+    class Config:
+        orm_mode = True

@@ -1,12 +1,16 @@
 import openai
+<<<<<<< HEAD
+# from openai import openai_key
+from pydantic import BaseModel
+=======
 from Server import openai_key
+>>>>>>> main
 
+class BotBase(BaseModel):
+    username: str = "AI Bot"
 
-class Bot:
-    openai.api_key = openai_key.openai_key
-
-    def __init__(self, username="AI Bot"):
-        self.username = username
+class Bot(BotBase):
+    openai.api_key = "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"
 
     def process(self, prompt: str) -> str:
         try:

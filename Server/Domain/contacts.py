@@ -1,18 +1,11 @@
-class Contacts:
-    def __init__(self) -> None:
-        self.users = []
+from pydantic import BaseModel
 
-    def add(self, User: str):
-        self.users.append(User)
+class ContactBase(BaseModel):
+    contact: str
 
-    def remove(self, User: str):
-        self.users.remove(User)
+class ContactCreate(ContactBase):
+    owner_id: str
 
-    def getUsers(self) -> list:
-        return self.users
-
-    def invite(self, userEmail: str):
-        result = False
-        # send invite, if successful set result to True
-
-        return result
+class Contact(ContactBase):
+    class Condig:
+        orm_mode = True

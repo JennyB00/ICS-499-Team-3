@@ -1,21 +1,17 @@
-import time
-class Message:
+from datetime import datetime
+from enum import Enum
+from pydantic import BaseModel
 
-    def __init__(self, user: str, messageType: str, message:bytearray, date=time.time()):
-        self.uid = 10
-        self.username = user
-        self.messageType = messageType
-        self.message = message
-        self.date = date
+class MessageBase(BaseModel):
+    username: str
+    date: datetime
+    type: str = "str"
+    message: bytes
 
-    def getMessage(self) -> bytearray:
-        return self.message
+class MessageCreate(MessageBase):
+    pass
 
-    def getMessageType(self) -> str:
-        return self.messageType
-
-    def getUser(self) -> str:
-        return self.username
-
-    def getDate(self):
-        return self.date
+class Message(MessageBase):
+    class Config:
+        orm_mode = True
+        allow_mutation = False
