@@ -22,7 +22,7 @@ class Account(AccountBase):
     def logout(self) -> None:
         self.status = "online"
     def online(self) -> bool:
-        return self.status is "online"
+        return self.status == "online"
     class Config:
         orm_mode = True
 
