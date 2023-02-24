@@ -30,7 +30,7 @@ class History(HistoryBase):
     def search_by_word(self, search_word: str) -> list[Message]:
         searched_messages = []
         for message in self.messages:
-            if message.type is Type.string:
+            if message.type is "str":
                 split_message = str(message.message).split()
                 for word in split_message:
                     if word == search_word:

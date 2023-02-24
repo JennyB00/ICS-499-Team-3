@@ -1,10 +1,6 @@
 import openai
-<<<<<<< HEAD
 # from openai import openai_key
 from pydantic import BaseModel
-=======
-from Server import openai_key
->>>>>>> main
 
 class BotBase(BaseModel):
     username: str = "AI Bot"

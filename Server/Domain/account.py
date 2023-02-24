@@ -1,4 +1,3 @@
-from enum import Enum
 import hashlib
 import random
 from .contacts import Contact
@@ -66,51 +65,6 @@ class Account(AccountBase):
     # login
     # courrently only works for one user and you'll have to keep deleting info in txt
 
-<<<<<<< HEAD
-=======
-    #Sets the account status to online
-    def login(self):
-        self.status = "online"
-        # username = input("Enter Username: ")
-        # password = input("Enter password: ")
-        # auth = password.encode()
-        # auth_hash = hashlib.md5(auth).hexdigest()
-        # with open("loginDetails.txt", "r") as f:
-        #     stored_username, stored_password = f.read().split("\n")
-        # f.close()
-        # if username == stored_username and auth_hash == stored_password:
-        #     print("Logged in Successfully!")
-        # else:
-        #     print("Login failed! \n")
-
-    def logout(self):
-        self.status = "offline"
-
-    def getStatus(self) -> str:
-        return self.status
-
-    def addChat(self, chatID: str):
-        self.pastChatIDs.append(chatID)
-    # def createChat(self):
-    #     chat = Chat(self.username)
-    #     id = chat.getID()
-    #     self.pastChatIDs.append(id)
-    #     return id
-
-    # def deleteChat(self, chat):
-    #     self.pastChats.remove(chat)
-    #     #System call to delete obj
-    
-    def joinChat(self,chat: Chat):
-        # check if ID is equal to any chat ID in database of txt
-        # if chatID == something:
-        #    print ("Successfullly joined Chat!")
-        # else:
-        #   print("Chat joining was unsucessfful")
-
-        #this should probably be moved into the if statement
-        chat.join(self.username)
->>>>>>> main
 
     # def getPastChats(self) -> list:
     #     return self.pastChatIDs
