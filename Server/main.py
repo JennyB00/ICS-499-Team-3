@@ -1,11 +1,11 @@
 from fastapi import Depends, FastAPI
-from Controllers import accountController, chatController
-from Database.Database import Base, engine
+from Controllers import account_controller, chat_controller
+from Database.database import Base, engine
 
 
 app = FastAPI()
-app.include_router(accountController.router)
-app.include_router(chatController.router)
+app.include_router(account_controller.router)
+app.include_router(chat_controller.router)
 # app.include_router(
 #     prefix="/admin",
 #     tags=["admin"],

@@ -6,6 +6,9 @@ from pydantic import BaseModel
 class ChatCreate(BaseModel):
     pass
 
+class ChatUpdate(BaseModel):
+    pass
+
 class Chat(BaseModel):
     id: int
     history: History = History()

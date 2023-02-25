@@ -44,7 +44,7 @@ def delete_chat(db: Session, chat_id: int):
     return True
 
 
-def update_chat(db: Session, db_chat: ChatModel, chat_update: ChatUpdateSchema) -> ChatModel:
+def update_chat(db: Session, db_chat: ChatModel, chat_update: ChatUpdate) -> ChatModel:
     for field, value in chat_update.dict(exclude_unset=True).items():
         setattr(db_chat, field, value)
     db.add(db_chat)
