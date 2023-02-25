@@ -18,13 +18,17 @@ def get_all_privileges(db: Session, limit: int = 100):
 def get_privileges(db: Session, id: int):
     return db.query(PrivilegesModel).filter(PrivilegesModel.id == id).first()
 
-def create_privileges(db: Session, privilege: PrivilegesCreate) -> PrivilegesModel:
-    db_privileges = PrivilegesModel(**privilege.dict())
+def create_privileges(db: Session, privilege: PrivilegesCreate, chat_id: int) -> PrivilegesModel:
+    db_privileges = PrivilegesModel(**privilege.dict(), chat_id=chat_id)
     db.add(db_privileges)
     db.commit()
     db.refresh(db_privileges)
     return db_privileges
 
-def update_privileges(db: Session):
-    
-    return
+def update_privileges(db: Session, id: int, privilege: Privileges):
+    db_privileges = db.query(PrivilegesModel).filter(PrivilegesModel.id == id)
+    if db_privileges is None:
+        return
+    else:
+        db_privileges.update(privilege.dict())
+        return db_privileges
