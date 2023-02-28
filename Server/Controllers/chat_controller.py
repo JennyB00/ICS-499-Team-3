@@ -72,3 +72,17 @@ async def update_privileges(chat_id: int, p_id: int, privilege: Privileges, db: 
     if get_privileges(db, p_id) is None:
         raise HTTPException(status_code=404, detail="Privileges not found")
     return update_privileges(privilege.dict(exclude_unset=True))
+
+@router.delete("/{chat_id}")
+def delete_chat(chat_id: int, db: Session = Depends(get_db)):
+    return chat_repo.delete_chat(db, chat_id)
+
+@router.delete("/{chat_id}/privileges/{p_id}")
+def delete_privilege_for_chat(chat_id: int, p_id: int, db: Session = Depends(get_db)):
+    if chat_repo.get_chat(db, chat_id) is None:
+        raise HTTPException(status_code=404, detail="Chat not found")
+    return delete_privileges(db, p_id)
+
+@router.delete("/{chat_id}/messages/{m_id}")
+def delete_message_for_chat(chat_id: int, m_id: int, db: Session = Depends(get_db)):
+    pass

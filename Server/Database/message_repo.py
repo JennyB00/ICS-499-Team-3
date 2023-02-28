@@ -14,3 +14,12 @@ def create_message(db: Session, message: MessageCreate, chat_id: int):
     db.commit()
     db.refresh(db_message)
     return db_message
+
+def delete_message(db: Session, id: int):
+    db_message = db.query(MessageModel).filter(MessageModel.id == id)
+    if not db_message:
+        return False
+    else:
+        db_message.delete()
+        db.commit()
+        return True

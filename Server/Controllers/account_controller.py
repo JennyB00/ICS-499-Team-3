@@ -40,6 +40,9 @@ def create_account(account: AccountCreate, db: Session = Depends(get_db)):
 def create_contact_for_account(username: str, contact: ContactCreate, db: Session = Depends(get_db)):
     return create_contact(db, contact, username)
 
+@router.post()
+def create_past_chat():
+    return
 
 @router.delete("/{username}")
 def delete_account(username: str, db: Session = Depends(get_db)):
@@ -48,3 +51,11 @@ def delete_account(username: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Account not found")
     delete_account_by_username(db, username)
     return {"message": "Account deleted"}
+
+@router.delete()
+def delete_contact_for_account():
+    pass
+
+@router.delete()
+def delete_past_chat_for_account():
+    pass

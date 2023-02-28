@@ -32,3 +32,12 @@ def update_privileges(db: Session, id: int, privilege: Privileges):
     else:
         db_privileges.update(privilege.dict())
         return db_privileges
+    
+def delete_privileges(db: Session, id: int) -> bool:
+    db_privileges = db.query(PrivilegesModel).filter(PrivilegesModel.id == id)
+    if db_privileges is None:
+        return False
+    else:
+        db_privileges.delete()
+        db.commit()
+        return True
