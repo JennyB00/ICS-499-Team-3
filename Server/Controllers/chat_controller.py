@@ -83,6 +83,6 @@ def delete_privilege_for_chat(chat_id: int, p_id: int, db: Session = Depends(get
         raise HTTPException(status_code=404, detail="Chat not found")
     return delete_privileges(db, p_id)
 
-@router.delete("/{chat_id}/messages/{m_id}")
-def delete_message_for_chat(chat_id: int, m_id: int, db: Session = Depends(get_db)):
-    pass
+# @router.delete("/{chat_id}/messages/{m_id}")
+# def delete_message_for_chat(chat_id: int, m_id: int, db: Session = Depends(get_db)):
+#     pass
