@@ -4,8 +4,9 @@ class ContactBase(BaseModel):
     contact: str
 
 class ContactCreate(ContactBase):
-    owner_id: str
+    pass
 
 class Contact(ContactBase):
+    id: int
     class Condig:
         orm_mode = True

@@ -13,9 +13,20 @@ from sqlalchemy.orm import Session
 from .models import ContactModel
 from Domain.contacts import *
 
-def create_contact(db: Session, contact: ContactCreate) -> ContactModel:
-    db_contact = ContactModel(**contact.dict())
+def create_contact(db: Session, contact: str, owner: str) -> ContactModel:
+    db_contact = ContactModel(contact=contact, owner_id=owner)
     db.add(db_contact)
     db.commit()
     db.refresh(db_contact)
     return db_contact
+
+def get_contact(db: Session, id: int) -> (ContactModel | None):
+    return db.query(ContactModel).filter(ContactModel.id == id).first()
+
+def delete_contact(db: Session, id: int) -> bool:
+    db_contact = get_contact(db, id)
+    if db_contact is None:
+        return False
+    db.delete(db_contact)
+    db.commit()
+    return True
