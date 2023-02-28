@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from Domain.account import *
 from Domain.contacts import *
+from Domain.past_chat import *
 from Database.database import *
 from Database import account_repo, contacts_repo, chat_repo, past_chats_repo
 
@@ -23,7 +24,7 @@ def read_account(username: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Account not found")
     return db_account
 
-@router.get("/{username}/contacts", response_model=list[Account])
+@router.get("/{username}/contacts", response_model=list[Contact])
 def read_account_contacts(username: str, db: Session = Depends(get_db)):
     db_account = account_repo.get_account(db, username)
     if db_account is None:
@@ -31,7 +32,7 @@ def read_account_contacts(username: str, db: Session = Depends(get_db)):
     return db_account.contacts
     # return get_contacts_by_account(db, username)
 
-@router.get("/{username}/past_chats", response_model=list[str])
+@router.get("/{username}/past_chats", response_model=list[PastChat])
 def read_account_past_chats(username: str, db: Session = Depends(get_db)):
     db_account = account_repo.get_account(db, username)
     if db_account is None:

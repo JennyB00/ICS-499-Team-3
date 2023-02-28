@@ -12,5 +12,6 @@ class PrivilegesCreate(PrivilegesBase):
     pass
 
 class Privileges(PrivilegesBase):
+    id: int
     class Config:
         orm_mode = True
