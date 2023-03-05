@@ -1,0 +1,20 @@
+@startuml
+actor       User       as user
+user -> System: Authentication Request
+System -> AccountService: check pass
+AccountService -> AccountRepo: get account
+AccountRepo --> AccountService: Account
+
+alt successful
+	AccountService -> AccountRepo: set online
+	AccountService --> System: pass
+    System -> user: Account Page
+
+else failure
+	AccountService --> System: fail
+    System -> user: Authentication Failure
+	end
+	
+
+
+@enduml
