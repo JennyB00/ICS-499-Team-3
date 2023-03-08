@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends
 from Database.database import *
 from Database import account_repo as ar
+from Domain.account import Account
 
 # accounts = ar.get_all_accounts(Depends(get_db),None)
 
@@ -20,3 +21,9 @@ def logout_user(username: str, db: Session = Depends(get_db)) -> None:
     db_account.status = "offline"
     db.commit()
     db.refresh(db_account)
+
+def get_account_by_username(username: str, db: Session) -> (Account | None):
+    return ar.get_account(db,username)
+
+def get_accounts_by_usernames(usernames: list[str], db: Session = Depends(get_db)) -> list[Account]:
+    pass

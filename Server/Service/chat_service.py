@@ -24,6 +24,7 @@ def get_chats_by_ids(chat_ids: list[int], db: Session = Depends(get_db)) -> list
             chats.append(Chat.from_orm(db_chat))
     return chats
 
+# Get chat -> get privilegs -> list of past users -> filter those online status
 def get_active_users_for_chat(chat_id: int, db: Session = Depends(get_db)) -> list[str]:
     pass
 
