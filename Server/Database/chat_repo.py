@@ -3,7 +3,7 @@ from .models import ChatModel, PrivilegesModel, MessageModel
 from Domain.chat import *
 
 
-def get_all_chats(db: Session, limit: int = 100) -> list[ChatModel]:
+def get_all_chats(db: Session, limit: (int | None) = 100) -> list[ChatModel]:
     return db.query(ChatModel).limit(limit).all()
 
 

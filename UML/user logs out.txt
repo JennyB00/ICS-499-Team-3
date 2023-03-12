@@ -1,0 +1,8 @@
+@startuml
+actor       User       as user
+user -> System: Logout Request
+System -> AccountService: logout
+AccountService -> AccountRepo: set offline
+System --> user: Logout Response
+
+@enduml

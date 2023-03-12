@@ -13,7 +13,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.get("/", response_model=list[AccountBase])
+@router.get("/", response_model=list[Account])
 def read_accounts(limit: int = 100, db: Session = Depends(get_db)):
     return account_repo.get_all_accounts(db, limit)
 

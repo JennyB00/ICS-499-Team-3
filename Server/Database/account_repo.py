@@ -3,7 +3,7 @@ from .models import AccountModel
 from Domain.account import *
 
 
-def get_all_accounts(db: Session, limit: int = 100) -> list[AccountModel]:
+def get_all_accounts(db: Session, limit: (int | None) = 100) -> list[AccountModel]:
     return db.query(AccountModel).limit(limit).all()
 
 def get_account(db: Session, username: str) -> (AccountModel | None):
