@@ -1,14 +1,16 @@
+from typing import Optional
 import openai
-# from openai import openai_key
 from pydantic import BaseModel
 
 class BotBase(BaseModel):
     username: str = "AI Bot"
+    text: str
+    image_url: Optional[str] = None
 
 class Bot(BotBase):
     openai.api_key = "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"
 
-    def process(self, prompt: str) -> str:
+    def process(self, prompt: str) -> BotBase:
         try:
             response = openai.Completion.create(
                 model="text-davinci-003",
@@ -19,9 +21,9 @@ class Bot(BotBase):
             return response["choices"][0]["text"].replace(".", ".\n")
         except Exception as e:
             print(f"Error: {str(e)}")
-            return
+            return BotBase(text= "Error generating text")
 
-    def generate_image(self, prompt) -> str:
+    def generate_image(self, prompt) -> BotBase:
         response = openai.Image.create(
             prompt=prompt,
             n=1,
@@ -29,29 +31,7 @@ class Bot(BotBase):
         )
         if response["data"]:
             image_url = response['data'][0]['url']
-            return image_url
+            return BotBase(text="Link to the image: ", image_url=image_url)
         else:
             print("Error: API request failed. Please try again.")
-            return
-
-    # def chat_bot(self, username):
-    #     print("Welcome to the chat bot. Type 'exit or 'quit' to end the chat.")
-    #     while True:
-    #         message = input(username + ": ")
-    #         if message.lower() in ["exit", "quit"]:
-    #             break
-    #         if len(message.strip()) == 0:
-    #             print("Error: Input cannot be empty.")
-    #             continue
-    #         response = None
-    #         try:
-    #             response = openai.Completion.create(
-    #                 model="text-davinci-003",
-    #                 prompt=message,
-    #                 max_tokens=100,
-    #                 temperature=1,
-    #             )
-    #         except Exception as e:
-    #             print(f"Error: {str(e)}")
-    #             continue
-    #         print("Bot: {}".format(response["choices"][0]["text"].replace(".", ".\n")))
+            return BotBase(text="Error generating image")
