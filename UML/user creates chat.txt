@@ -1,0 +1,16 @@
+@startuml
+actor       User       as user
+user -> System: Request
+System -> ChatService: create_chat()
+ChatService -> ChatRepo: create_chat()
+ChatRepo --> ChatService: Chat
+ChatService -> PrivilegesRepo: create full permissions for user
+PrivilegesRepo --> ChatService:
+ChatService --> System: Chat
+System -> AccountService: add past chat
+AccountService -> AccountRepo: add past chat
+AccountRepo --> AccountService:
+AccountService --> System:
+System --> user: Chat Page
+
+@enduml
