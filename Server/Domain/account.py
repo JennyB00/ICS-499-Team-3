@@ -1,3 +1,4 @@
+import hashlib
 import random
 from .contacts import Contact
 from .past_chat import PastChat
