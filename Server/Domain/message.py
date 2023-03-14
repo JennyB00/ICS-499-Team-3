@@ -1,11 +1,10 @@
 from datetime import datetime
-from enum import Enum
 from pydantic import BaseModel
 
 class MessageBase(BaseModel):
     username: str
     date: datetime
-    type: str = "str"
+    type: str# = "str"
     message: bytes
 
 class MessageCreate(MessageBase):

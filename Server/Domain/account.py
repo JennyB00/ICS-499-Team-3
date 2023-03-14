@@ -1,6 +1,7 @@
 import hashlib
 import random
 from .contacts import Contact
+from .past_chat import PastChat
 from .bot import Bot
 from pydantic import BaseModel
 
@@ -9,20 +10,20 @@ from pydantic import BaseModel
 class AccountBase(BaseModel):
     username: str
     status: str
-    contacts: list[str] = []# list[Contact] = []
-    past_chats: list[int] = []
 
 class AccountCreate(AccountBase):
     password: str
 
 class Account(AccountBase):
+    contacts: list[Contact]
+    past_chats: list[PastChat]
     bot: Bot = Bot()
-    def login(self) -> None:
-        self.status = "online"
-    def logout(self) -> None:
-        self.status = "online"
-    def online(self) -> bool:
-        return self.status == "online"
+    # def login(self) -> None:
+    #     self.status = "online"
+    # def logout(self) -> None:
+    #     self.status = "online"
+    # def online(self) -> bool:
+    #     return self.status == "online"
     class Config:
         orm_mode = True
 

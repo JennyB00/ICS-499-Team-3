@@ -4,13 +4,12 @@ from pydantic import BaseModel
 
 class BotBase(BaseModel):
     username: str = "AI Bot"
-    text: str
-    image_url: Optional[str] = None
+    session_id: int
 
 class Bot(BotBase):
     openai.api_key = "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"
 
-    def process(self, prompt: str) -> BotBase:
+    def process(self, prompt: str) -> str:
         try:
             response = openai.Completion.create(
                 model="text-davinci-003",
@@ -21,9 +20,9 @@ class Bot(BotBase):
             return response["choices"][0]["text"].replace(".", ".\n")
         except Exception as e:
             print(f"Error: {str(e)}")
-            return BotBase(text= "Error generating text")
+            return "Error generating text"
 
-    def generate_image(self, prompt) -> BotBase:
+    def generate_image(self, prompt) -> str:
         response = openai.Image.create(
             prompt=prompt,
             n=1,
@@ -31,7 +30,7 @@ class Bot(BotBase):
         )
         if response["data"]:
             image_url = response['data'][0]['url']
-            return BotBase(text="Link to the image: ", image_url=image_url)
+            return image_url
         else:
             print("Error: API request failed. Please try again.")
-            return BotBase(text="Error generating image")
+            return "Error generating image"
