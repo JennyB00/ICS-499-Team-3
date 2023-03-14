@@ -14,7 +14,7 @@ def get_account(db: Session, username: str) -> (AccountModel | None):
 #     if db_account is None:
 #         return []
 #     else:
-#         return db_account.contacts
+#         return db_accou nt.contacts
 
 def create_account(db: Session, account: AccountCreate) -> AccountModel:
     db_account = AccountModel(**account.dict())
