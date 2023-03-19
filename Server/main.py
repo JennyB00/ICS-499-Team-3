@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from Domain.account import *
 from Database.database import *
-from Controllers import account_controller, chat_controller, contacts_controller, past_chats_controller, messages_controller, privileges_controller
+from Controllers import account_controller, chat_controller, contacts_controller, past_chats_controller, messages_controller, privileges_controller, bot_controller
 from Service.account_service import *
 
 app = FastAPI()
@@ -14,6 +14,7 @@ app.include_router(contacts_controller.router)
 app.include_router(past_chats_controller.router)
 app.include_router(messages_controller.router)
 app.include_router(privileges_controller.router)
+app.include_router(bot_controller.router)
 # app.include_router(
 #     prefix="/admin",
 #     tags=["admin"],

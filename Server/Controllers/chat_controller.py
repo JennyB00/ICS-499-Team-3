@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from Domain.chat import *
-from Domain.privileges import Privileges
+from Domain.privileges import *
 from Domain.history import History
 from Domain.message import *
 from Database.database import *

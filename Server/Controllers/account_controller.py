@@ -1,3 +1,4 @@
+from enum import Enum
 from fastapi import APIRouter, Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 from Domain.account import *
@@ -5,6 +6,10 @@ from Domain.contacts import *
 from Domain.past_chat import *
 from Database.database import *
 from Database import account_repo, contacts_repo, chat_repo, past_chats_repo
+
+# class Status(str, Enum):
+#     online = "online"
+#     offline = "offline"
 
 router = APIRouter(
     prefix="/accounts",
@@ -23,6 +28,22 @@ def read_account(username: str, db: Session = Depends(get_db)):
     if db_account is None:
         raise HTTPException(status_code=404, detail="Account not found")
     return db_account
+
+@router.get("/{username}/password", response_model=str)
+def read_account_password(username: str, db: Session = Depends(get_db)):
+    db_account = account_repo.get_account(db, username)
+    if db_account is None:
+        raise HTTPException(status_code=404, detail="Account not found")
+    return db_account.password
+
+@router.post("/{username}/status")
+def update_account_status(username: str, status: Status, db: Session = Depends(get_db)):
+    db_account = account_repo.get_account(db, username)
+    if db_account is None: 
+        raise HTTPException(status_code=404, detail="Account not found")
+    # if status not in ["online","offline"]:
+    #     pass
+    account_repo.update_account_status(db, username, status)
 
 @router.get("/{username}/contacts", response_model=list[Contact])
 def read_account_contacts(username: str, db: Session = Depends(get_db)):

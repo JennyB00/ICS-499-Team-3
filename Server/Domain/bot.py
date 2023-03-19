@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 class BotBase(BaseModel):
     username: str = "AI Bot"
-    session_id: int
+    # session_id: int
 
 class Bot(BotBase):
     openai.api_key = "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"

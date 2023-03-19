@@ -15,7 +15,7 @@ router = APIRouter(
 def read_privileges(id: int, db: Session = Depends(get_db)):
     db_privileges = pr.get_privileges(db, id)
     if db_privileges is None:
-        raise HTTPException(status_code=404, detail="Contact Not Found")
+        raise HTTPException(status_code=404, detail="Privileges Not Found")
     return db_privileges
 
 @router.patch("/{id}", response_model=Privileges)
@@ -27,6 +27,6 @@ async def update_privileges(id: int, privilege: Privileges, db: Session = Depend
 @router.delete("/{id}")
 def delete_privileges(id: int, db: Session = Depends(get_db)):
     if pr.delete_privileges(db, id):
-        return {"message":"Contact Deleted"}
+        return {"message":"Privileges Deleted"}
     else:
-        raise HTTPException(status_code=404,detail="Contact Not Found")
+        raise HTTPException(status_code=404,detail="Privileges Not Found")
