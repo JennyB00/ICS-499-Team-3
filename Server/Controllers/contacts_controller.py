@@ -24,3 +24,7 @@ def delete_contact(id: int, db: Session = Depends(get_db)):
         return {"message":"Contact successfully deleted"}
     else:
         raise HTTPException(status_code=404,detail="Contact Not Found")
+    
+@router.post("/{id}", response_model=Contact)
+def create_contact(contact: str, owner: str, db: Session = Depends(get_db)):
+    return cr.create_contact(db, contact, owner)
