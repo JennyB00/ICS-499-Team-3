@@ -21,6 +21,6 @@ def read_contact(id: int, db: Session = Depends(get_db)):
 @router.delete("/{id}")
 def delete_contact(id: int, db: Session = Depends(get_db)):
     if cr.delete_contact(db, id):
-        return {"message":"Contact Deleted"}
+        return {"message":"Contact successfully deleted"}
     else:
         raise HTTPException(status_code=404,detail="Contact Not Found")

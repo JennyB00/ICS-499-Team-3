@@ -15,12 +15,12 @@ router = APIRouter(
 def read_message(id: int, db: Session = Depends(get_db)):
     db_message = mr.get_message(db, id)
     if db_message is None:
-        raise HTTPException(status_code=404, detail="Contact Not Found")
+        raise HTTPException(status_code=404, detail="Message Not Found")
     return db_message
 
 @router.delete("/{id}")
 def delete_contact(id: int, db: Session = Depends(get_db)):
     if mr.delete_message(db, id):
-        return {"message":"Contact Deleted"}
+        return {"message":"Message successfully deleted"}
     else:
-        raise HTTPException(status_code=404,detail="Contact Not Found")
+        raise HTTPException(status_code=404,detail="Message Not Found")

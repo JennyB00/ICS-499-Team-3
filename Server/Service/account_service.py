@@ -6,21 +6,21 @@ from Domain.account import Account
 
 # accounts = ar.get_all_accounts(Depends(get_db),None)
 
-def login_user(username: str, password: str, db: Session) -> bool:
-    db_account = ar.get_account(db, username)
-    if password is db_account.password:
-        db_account.status = "online"
-        db.commit()
-        db.refresh(db_account)
-        return True
-    else:
-        return False
+# def login_user(username: str, password: str, db: Session) -> bool:
+#     db_account = ar.get_account(db, username)
+#     if password is db_account.password:
+#         db_account.status = "online"
+#         db.commit()
+#         db.refresh(db_account)
+#         return True
+#     else:
+#         return False
 
-def logout_user(username: str, db: Session) -> None:
-    db_account = ar.get_account(db, username)
-    db_account.status = "offline"
-    db.commit()
-    db.refresh(db_account)
+# def logout_user(username: str, db: Session) -> None:
+#     db_account = ar.get_account(db, username)
+#     db_account.status = "offline"
+#     db.commit()
+#     db.refresh(db_account)
 
 # def get_account_by_username(username: str, db: Session) -> (Account | None):
 #     return ar.get_account(db,username)

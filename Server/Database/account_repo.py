@@ -16,14 +16,6 @@ def get_all_usernames(db: Session, limit: (int | None) = None) -> list[str]:
 def get_account(db: Session, username: str) -> (AccountModel | None):
     return db.query(AccountModel).filter(AccountModel.username == username).first()
 
-def update_account_status(db: Session, username: str, status: Status):
-    db_account = get_account(db, username)
-    if db_account is None:
-        return
-    db_account.status = status
-    db.commit()
-    db.refresh(db_account)
-
 # def get_contacts_by_account(db: Session, username: str) -> list[str]:
 #     db_account = get_account(db, username)
 #     if db_account is None:
@@ -38,6 +30,23 @@ def create_account(db: Session, account: AccountCreate) -> AccountModel:
     db.refresh(db_account)
     return db_account
 
+def update_account_password(db: Session, username: str, password: str) -> bool:
+    db_account = get_account(db, username)
+    if db_account is None:
+        return False
+    db_account.password = password
+    db.commit()
+    db.refresh(db_account)
+    return True
+
+def update_account_status(db: Session, username: str, status: Status) -> bool:
+    db_account = get_account(db, username)
+    if db_account is None:
+        return False
+    db_account.status = status
+    db.commit()
+    db.refresh(db_account)
+    return True
 
 def delete_account(db: Session, username: str) -> bool:
     db_account = get_account(db, username)

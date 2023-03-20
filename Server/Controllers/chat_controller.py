@@ -21,48 +21,50 @@ router = APIRouter(
 def read_chats(limit: int = 100, db: Session = Depends(get_db)):
     return chat_repo.get_all_chats(db, limit=limit)
 
-@router.get("/{chat_id}", response_model=Chat)
-def read_chat(chat_id: int, db: Session = Depends(get_db)):
-    db_chat = chat_repo.get_chat(db, chat_id)
-    if db_chat is None:
-        raise HTTPException(status_code=404, detail="Chat not found")
-    return db_chat
-
-@router.get("/{chat_id}/privileges", response_model=list[Privileges])
-def read_chat_privileges(chat_id: int, db: Session = Depends(get_db)):
-    db_chat = chat_repo.get_chat(db, chat_id)
-    if db_chat is None:
-        raise HTTPException(status_code=404, detail="Chat not found")
-    return db_chat.privileges
-
-@router.get("/{chat_id}/messages", response_model=list[Message])
-def read_chat_messages(chat_id: int, db: Session = Depends(get_db)):
-    db_chat = chat_repo.get_chat(db, chat_id)
-    if db_chat is None:
-        raise HTTPException(status_code=404, detail="Chat not found")
-    return db_chat.history
-
 @router.post("/", response_model=Chat)
 def create_chat(db: Session = Depends(get_db)):
     return chat_repo.create_chat(db)
 
-@router.post("/{chat_id}/privileges", response_model=Privileges)
-def create_privileges_for_chat(chat_id: int, privileges: PrivilegesCreate, db: Session = Depends(get_db)):
-    if chat_repo.get_chat(db, chat_id) is None:
+@router.get("/{id}", response_model=Chat)
+def read_chat(id: int, db: Session = Depends(get_db)):
+    db_chat = chat_repo.get_chat(db, id)
+    if db_chat is None:
         raise HTTPException(status_code=404, detail="Chat not found")
-    db_privilege = privileges_repo.create_privileges(db, privileges, chat_id)
+    return db_chat
+
+@router.delete("/{id}")
+def delete_chat(id: int, db: Session = Depends(get_db)):
+    if chat_repo.delete_chat(db, id):
+        return {"message": "Chat successfully deleted"}
+    else:
+        raise HTTPException(status_code=404, detail="Chat not found")
+
+@router.get("/{id}/privileges", response_model=list[Privileges])
+def read_chat_privileges(id: int, db: Session = Depends(get_db)):
+    db_chat = chat_repo.get_chat(db, id)
+    if db_chat is None:
+        raise HTTPException(status_code=404, detail="Chat not found")
+    return db_chat.privileges
+
+@router.post("/{id}/privileges", response_model=Privileges)
+def create_privileges_for_chat(id: int, privileges: PrivilegesCreate, db: Session = Depends(get_db)):
+    if chat_repo.get_chat(db, id) is None:
+        raise HTTPException(status_code=404, detail="Chat not found")
+    db_privilege = privileges_repo.create_privileges(db, privileges, id)
     return db_privilege
 
-@router.post("/{chat_id}/messages", response_model=Message)
-def create_message_for_chat(chat_id: int, message: MessageCreate, db: Session = Depends(get_db)):
-    if chat_repo.get_chat(db, chat_id) is None:
+@router.get("/{id}/messages", response_model=list[Message])
+def read_chat_messages(id: int, db: Session = Depends(get_db)):
+    db_chat = chat_repo.get_chat(db, id)
+    if db_chat is None:
         raise HTTPException(status_code=404, detail="Chat not found")
-    return message_repo.create_message(db, message, chat_id)
+    return db_chat.history
 
-
-@router.delete("/{chat_id}")
-def delete_chat(chat_id: int, db: Session = Depends(get_db)):
-    return chat_repo.delete_chat(db, chat_id)
+@router.post("/{id}/messages", response_model=Message)
+def create_message_for_chat(id: int, message: MessageCreate, db: Session = Depends(get_db)):
+    if chat_repo.get_chat(db, id) is None:
+        raise HTTPException(status_code=404, detail="Chat not found")
+    return message_repo.create_message(db, message, id)
 
 # @router.delete("/{chat_id}/privileges/{p_id}")
 # def delete_privilege_for_chat(chat_id: int, p_id: int, db: Session = Depends(get_db)):

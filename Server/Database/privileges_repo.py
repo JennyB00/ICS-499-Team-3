@@ -12,10 +12,10 @@ from Domain.privileges import *
 
 # uid | accountUID | send | receive | addUser | deleteMessage | deleteChat
 
-def get_all_privileges(db: Session, limit: int = 100):
+def get_all_privileges(db: Session, limit: int = 100) -> list[PrivilegesModel]:
     return db.query(PrivilegesModel).limit(limit).all()
 
-def get_privileges(db: Session, id: int):
+def get_privileges(db: Session, id: int) -> (PrivilegesModel | None):
     return db.query(PrivilegesModel).filter(PrivilegesModel.id == id).first()
 
 def create_privileges(db: Session, privilege: PrivilegesCreate, chat_id: int) -> PrivilegesModel:
@@ -25,19 +25,19 @@ def create_privileges(db: Session, privilege: PrivilegesCreate, chat_id: int) ->
     db.refresh(db_privileges)
     return db_privileges
 
-def update_privileges(db: Session, id: int, privilege: Privileges):
+def update_privileges(db: Session, id: int, privilege: Privileges) -> (PrivilegesModel | None):
     db_privileges = db.query(PrivilegesModel).filter(PrivilegesModel.id == id)
-    if db_privileges is None:
-        return
+    if db_privileges.first() is None:
+        return None
     else:
         db_privileges.update(privilege.dict())
-        return db_privileges
+        return db_privileges.first()
     
 def delete_privileges(db: Session, id: int) -> bool:
-    db_privileges = db.query(PrivilegesModel).filter(PrivilegesModel.id == id)
+    db_privileges = get_privileges(db, id)
     if db_privileges is None:
         return False
     else:
-        db_privileges.delete()
+        db.delete(db_privileges)
         db.commit()
         return True

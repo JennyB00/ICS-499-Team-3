@@ -20,13 +20,15 @@ def read_privileges(id: int, db: Session = Depends(get_db)):
 
 @router.patch("/{id}", response_model=Privileges)
 async def update_privileges(id: int, privilege: Privileges, db: Session = Depends(get_db)):
-    if pr.get_privileges(db, id) is None:
+    db_privileges = pr.update_privileges(db, id, privilege.dict(exclude_unset=True))
+    if db_privileges is None:
         raise HTTPException(status_code=404, detail="Privileges not found")
-    return pr.update_privileges(db, id, privilege.dict(exclude_unset=True))
+    else:
+        return db_privileges
 
 @router.delete("/{id}")
 def delete_privileges(id: int, db: Session = Depends(get_db)):
     if pr.delete_privileges(db, id):
-        return {"message":"Privileges Deleted"}
+        return {"message":"Privileges successfully deleted"}
     else:
         raise HTTPException(status_code=404,detail="Privileges Not Found")
