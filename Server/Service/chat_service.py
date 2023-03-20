@@ -1,12 +1,10 @@
 from datetime import datetime
 from Domain.chat import *
-from Database.database import *
+from Domain.privileges import *
+from Domain.account import *
 from sqlalchemy.orm import Session
 from Database.models import *
-from Database import chat_repo as cr
-from Database import account_repo as ar
-from Domain.account import *
-from Domain.privileges import *
+from Database import chat_repo as cr, privileges_repo as pr, account_repo as ar
 
 def get_privileges_for_user_in_chat(chat_id: int, username: str, db: Session) -> Privileges:
     db_chat = cr.get_chat(db, chat_id)
@@ -38,12 +36,23 @@ def get_active_users_for_chat(chat_id: int, db: Session) -> list[str]:
             users.remove(u)
     return users
 
+def create_chat(username: str, db: Session) -> ChatModel:
+    db_chat = cr.create_chat(db)
+    privileges = PrivilegesCreate(username=username,
+                                  send=True,
+                                  recieve=True,
+                                  add_user=True,
+                                  delete_message=True,
+                                  delete_chat=True)
+    pr.create_privileges(db,privileges,db_chat.id)
+    return db_chat
+
 def search_by_date_for_chat(chat_id: int, date: datetime, db: Session) -> list[Message]:
     db_messages = cr.get_messages_by_chat(db, chat_id)
     messages = []
     for m in db_messages:
         if m.date == date:
-            messages.append(m)
+            messages.append(Message.from_orm(m))
     return messages
 
 def search_by_username_for_chat(chat_id: int, username: str, db: Session) -> list[Message]:
@@ -51,7 +60,7 @@ def search_by_username_for_chat(chat_id: int, username: str, db: Session) -> lis
     messages = []
     for m in db_messages:
         if m.username == username:
-            messages.append(m)
+            messages.append(Message.from_orm(m))
     return messages
 
 def search_by_word_for_chat(chat_id: int, search: str, db: Session) -> list[Message]:
@@ -63,7 +72,7 @@ def search_by_word_for_chat(chat_id: int, search: str, db: Session) -> list[Mess
     filtered_messages = []
     for m in messages:
         #Needs to change. Not sure how to convert LargeBinary to String
-        message = m.__str__()
+        message = m.message
         words = message.split()
         for w in words:
             if w == search:

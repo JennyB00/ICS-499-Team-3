@@ -2,11 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from Domain.chat import *
 from Domain.privileges import *
-from Domain.history import History
 from Domain.message import *
 from Database.database import *
 from Database import chat_repo, privileges_repo, message_repo
-from Domain.message import *
+from Service import chat_service
 
 
 router = APIRouter(
@@ -22,8 +21,8 @@ def read_chats(limit: int = 100, db: Session = Depends(get_db)):
     return chat_repo.get_all_chats(db, limit=limit)
 
 @router.post("/", response_model=Chat)
-def create_chat(db: Session = Depends(get_db)):
-    return chat_repo.create_chat(db)
+def create_chat(username: str, db: Session = Depends(get_db)):
+    return chat_service.create_chat(username, db)
 
 @router.get("/{id}", response_model=Chat)
 def read_chat(id: int, db: Session = Depends(get_db)):
@@ -54,11 +53,23 @@ def create_privileges_for_chat(id: int, privileges: PrivilegesCreate, db: Sessio
     return db_privilege
 
 @router.get("/{id}/messages", response_model=list[Message])
-def read_chat_messages(id: int, db: Session = Depends(get_db)):
+def read_chat_messages(id: int,
+                       username: str | None = None,
+                       date: datetime | None = None,
+                       word: str | None = None,
+                       db: Session = Depends(get_db)):
     db_chat = chat_repo.get_chat(db, id)
     if db_chat is None:
         raise HTTPException(status_code=404, detail="Chat not found")
-    return db_chat.history
+    elif username:
+        # validate username?
+        return chat_service.search_by_username_for_chat(id, username, db)
+    elif date:
+        return chat_service.search_by_date_for_chat(id, date, db)
+    elif word:
+        return chat_service.search_by_word_for_chat(id, word, db)
+    else:
+        return db_chat.history
 
 @router.post("/{id}/messages", response_model=Message)
 def create_message_for_chat(id: int, message: MessageCreate, db: Session = Depends(get_db)):
