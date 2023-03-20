@@ -21,7 +21,7 @@ class AccountCreate(AccountBase):
 class Account(AccountBase):
     contacts: list[Contact]
     past_chats: list[PastChat]
-    bot: Bot = Bot()
+    bot_session_id: str
 
     def create_account(self, password: str):
         self.password = hashlib.sha256(password.encode()).hexdigest()

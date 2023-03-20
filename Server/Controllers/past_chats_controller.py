@@ -25,6 +25,6 @@ def delete_past_chat(id: int, db: Session = Depends(get_db)):
     else:
         raise HTTPException(status_code=404,detail="Past Chat not found")
     
-@router.post("/{id}")
-def create_past_chat(chat_id: int, user: str, db: Session = Depends(get_db)):
-    return pr.create_past_chat(db, chat_id, user)
+# @router.post("/{id}")
+# def create_past_chat(chat_id: int, user: str, db: Session = Depends(get_db)):
+#     return pr.create_past_chat(db, chat_id, user)

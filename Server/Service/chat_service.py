@@ -76,7 +76,7 @@ def search_by_word_for_chat(chat_id: int, search: str, db: Session) -> list[Mess
     filtered_messages = []
     for m in messages:
         #Needs to change. Not sure how to convert LargeBinary to String
-        message = m.message
+        message = m.message.decode()
         words = message.split()
         for w in words:
             if w == search:

@@ -7,6 +7,7 @@ class AccountModel(Base):
     username = Column(String(255), primary_key=True, index=True)
     password = Column(String(255))
     status = Column(String(8), index=True)
+    bot_session_id = Column(String(36), index=True)
     contacts = relationship("ContactModel", back_populates="owner")
     past_chats = relationship("PastChatModel", back_populates="owner")
 

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from .models import AccountModel
 from Domain.account import *
+import uuid
 
 
 def get_all_accounts(db: Session, limit: (int | None) = 100) -> list[AccountModel]:
@@ -23,8 +24,8 @@ def get_account(db: Session, username: str) -> (AccountModel | None):
 #     else:
 #         return db_accou nt.contacts
 
-def create_account(db: Session, account: AccountCreate) -> AccountModel:
-    db_account = AccountModel(**account.dict())
+def create_account(db: Session, account: AccountCreate, bot_session_id: str) -> AccountModel:
+    db_account = AccountModel(**account.dict(), bot_session_id=bot_session_id)
     db.add(db_account)
     db.commit()
     db.refresh(db_account)

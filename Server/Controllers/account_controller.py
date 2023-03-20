@@ -6,6 +6,7 @@ from Domain.contacts import *
 from Domain.past_chat import *
 from Database.database import *
 from Database import account_repo, contacts_repo, chat_repo, past_chats_repo
+from Service import account_service
 
 # class Status(str, Enum):
 #     online = "online"
@@ -24,7 +25,7 @@ def read_accounts(limit: int = 100, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=Account)
 def create_account(account: AccountCreate, db: Session = Depends(get_db)):
-    return account_repo.create_account(db, account)
+    return account_service.create_account(account, db)
 
 @router.get("/{username}", response_model=Account)
 def read_account(username: str, db: Session = Depends(get_db)):
