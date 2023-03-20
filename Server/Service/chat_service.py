@@ -24,12 +24,16 @@ def get_chats_by_ids(chat_ids: list[int], db: Session) -> list[Chat]:
             chats.append(Chat.from_orm(db_chat))
     return chats
 
-# Get chat -> get privilegs -> list of past users -> filter those online status
-def get_active_users_for_chat(chat_id: int, db: Session) -> list[str]:
+def get_users_for_chat(chat_id: int, db: Session) -> list[str]:
     db_chat = cr.get_chat(db, chat_id)
     users = []
     for p in db_chat.privileges:
         users.append(p.username)
+    return users
+
+# Get chat -> get privilegs -> list of past users -> filter those online status
+def get_active_users_for_chat(chat_id: int, db: Session) -> list[str]:
+    users = get_users_for_chat(chat_id, db)
     for u in users:
         user = ar.get_account(db, u)
         if user.status == Status.offline:

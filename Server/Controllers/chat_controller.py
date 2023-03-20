@@ -37,6 +37,18 @@ def delete_chat(id: int, db: Session = Depends(get_db)):
         return {"message": "Chat successfully deleted"}
     else:
         raise HTTPException(status_code=404, detail="Chat not found")
+    
+@router.get("/{id}/users", response_model=list[str])
+async def read_chat_users(id: int, db: Session = Depends(get_db)):
+    if not chat_repo.get_chat(db, id):
+        raise HTTPException(status_code=404, detail="Chat not found")
+    return chat_service.get_users_for_chat(id, db)
+    
+@router.get("/{id}/active", response_model=list[str])
+async def read_chat_active_users(id: int, db: Session = Depends(get_db)):
+    if not chat_repo.get_chat(db, id):
+        raise HTTPException(status_code=404, detail="Chat not found")
+    return chat_service.get_active_users_for_chat(id, db)
 
 @router.get("/{id}/privileges", response_model=list[Privileges])
 def read_chat_privileges(id: int, db: Session = Depends(get_db)):

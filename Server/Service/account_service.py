@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends
 from Database.database import *
 from Database import account_repo as ar
-from Domain.account import Account
+from Domain.account import *
 
 # accounts = ar.get_all_accounts(Depends(get_db),None)
 
@@ -26,6 +26,10 @@ from Domain.account import Account
 #     return ar.get_account(db,username)
 
 def get_accounts_by_usernames(usernames: list[str], db: Session) -> list[Account]:
+    pass
+
+#business logic for joining site
+def create_account(account: AccountCreate, db: Session) -> Account:
     pass
 
 # def valid_username(username: str, db: Session) -> bool:
