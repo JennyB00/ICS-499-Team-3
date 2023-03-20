@@ -1,5 +1,6 @@
+from typing import Optional
 from fastapi import APIRouter
-from Domain.bot import *
+from Server.Domain.bot import Bot
 
 router = APIRouter(
     prefix="/bot",
@@ -8,12 +9,18 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.get("/process", response_model=str)
-async def process_handler(prompt: str):
-    bot = Bot()
+bot = Bot()
+
+
+@router.post("/process")
+def process_handler(prompt: str, session_id: Optional[str] = None):
+    if session_id:
+        bot.session_id = session_id
     return bot.process(prompt)
 
-@router.get("/generate_image", response_model=str)
-async def generate_image_handler(prompt: str):
-    bot = Bot()
+
+@router.post("/generate_image")
+def generate_image_handler(prompt: str, session_id: Optional[str] = None):
+    if session_id:
+        bot.session_id = session_id
     return bot.generate_image(prompt)
