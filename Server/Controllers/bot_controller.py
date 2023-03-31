@@ -2,9 +2,7 @@ from typing import Optional, List
 from openai.error import *
 from fastapi import APIRouter, HTTPException, Depends
 from Domain.bot import Bot
-from sqlalchemy.orm import Session
-from Database.database import get_db
-from Service import bot_service
+
 
 router = APIRouter(
     prefix="/bot",
@@ -17,9 +15,9 @@ bot = Bot()
 
 
 @router.post("/process", response_model=str)
-async def process_handler(prompt: str, username: str, db: Session = Depends(get_db)):
+async def process_handler(prompt: str, username: str):
     try:
-        response = bot.process(prompt, bot_service.get_session_id_by_username(username, db))
+        response = bot.process(prompt, username)
         return response
     except APIError as e:
         error_message = f"OpenAI API returned an API Error: {e}"
