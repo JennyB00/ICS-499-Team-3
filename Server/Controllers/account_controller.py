@@ -27,6 +27,10 @@ def read_accounts(limit: int = 100, db: Session = Depends(get_db)):
 def create_account(account: AccountCreate, db: Session = Depends(get_db)):
     return account_service.create_account(account, db)
 
+@router.get("/usernames", response_model=list[str])
+async def read_usernames(db: Session = Depends(get_db)):
+    return account_repo.get_all_usernames(db)
+
 @router.get("/{username}", response_model=Account)
 def read_account(username: str, db: Session = Depends(get_db)):
     db_account = account_repo.get_account(db, username)
