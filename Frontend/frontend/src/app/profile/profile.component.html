@@ -1,0 +1,51 @@
+<html>
+    <body>
+        <h1>
+            <section *ngIf="!updateUsername">
+                {{ user.username }} 
+                <button (click)="onUpdateUsername()">Change Username</button>
+            </section>
+            <section *ngIf="updateUsername">
+                <form>
+                    <label for="username">New Username:</label>
+                    <input type="text" id="username" name="username" value="">
+                    <input type="submit" value="Submit">
+                </form>
+            </section>
+        </h1>
+        <h2>
+            <section *ngIf="!updatePassword">
+                <button (click)="onUpdatePassword()">Change Password</button>
+            </section>
+            <section *ngIf="updatePassword">
+                <form>
+                    <label for="new passowrd">New Password:</label>
+                    <input type="text" id="new password" name="new password" value="">
+                    <label for="confirm password">Confirm Password:</label>
+                    <input type="text" id="confirm password" name="confirm password" value="">
+                    <input type="submit" value="Submit">
+                </form>
+            </section>
+        </h2>
+        <h3>{{ user.status }}</h3>
+        <h4>
+            <section *ngIf="!showContacts">
+                <div>
+                    <button (click)="onShowContacts()">Contacts</button>
+                </div>
+                <div>
+                    <a>Bot Chat</a>
+                </div>
+            </section>
+            <section *ngIf="showContacts">
+                <p *ngFor="let contact of user.contacts">contact</p>
+                <button (click)="onHideContacts()">close</button>
+            </section>
+        </h4>
+        
+        <section>
+            <p *ngFor="let chat of user.past_chats">chat</p>
+        </section>
+    
+    </body>
+</html>
