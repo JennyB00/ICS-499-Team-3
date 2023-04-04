@@ -7,6 +7,8 @@ import { MessageComponent } from './message/message.component';
 import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './profile/profile.component';
 
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +19,7 @@ import { ProfileComponent } from './profile/profile.component';
   imports: [
     BrowserModule,
     AppRoutingModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
