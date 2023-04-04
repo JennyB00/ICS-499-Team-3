@@ -1,8 +1,22 @@
 <p>chat works!</p>
 <div class="container">
-    <div class="d-flex flex-column align-items-stratech flex-shrink-0 bg-white">
-        <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-            
-        </div>
+    <div class="buttons">
+        <button class="cta-button" (click)="homePage()">Home Page</button>
+        <button class="cta-button" (click)="chatSettings()">Chat Settings</button>
     </div>
+    <div class="list-group list-group-flush border-bottom other-area">
+        <div class="list-group-item list-group-item-action py-3 lh-tight"
+           *ngFor="let msg of messages"
+      >
+      <div class="col-10 mb-1 small">{{msg.message}}</div>
+
+    </div>
+    <div class="message_area">
+        <form (submit)="submit()">
+            <input class="fs-5 fw-semibold" placeholder="Write a message" [(ngModel)]="message"/>
+        </form>
+        
+    </div>
+    
 </div>
+
