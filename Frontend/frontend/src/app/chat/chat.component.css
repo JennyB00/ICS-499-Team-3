@@ -1,3 +1,5 @@
-.other_area {
-    min-height: 500px;
+.grid-container {
+    display: grid;
+    
+    grid-template-rows: 50px 550px 50px;
 }
