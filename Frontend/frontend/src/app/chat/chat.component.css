@@ -1,5 +1,27 @@
 .grid-container {
     display: grid;
-    
-    grid-template-rows: 50px 550px 50px;
+    border: solid 2px #000;
+    grid-template-rows: 50px 600px 50px;
+    grid-template-areas: 
+        "header"
+        "chat-area"
+        "message-area"; 
+}
+
+.grid-item-1 {
+    grid-area: "header";
+    border: solid 2px #000;
+    background-color: #2d2d2d;
+}
+
+.grid-item-2 {
+    grid-area: "chat-area";
+    border: solid 2px #000;
+    background-color:gray;
+}
+
+.grid-item-3 {
+    grid-area: "message-area";
+    border: solid 2px #000;
+    background-color: #2d2d2d;
 }
