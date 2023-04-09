@@ -1,0 +1,39 @@
+.chat-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  height: 40px;
+  background-color: white;
+  border: 0px solid black;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cta-button {
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+
+.chatbox {
+  overflow-y: scroll;
+  border-radius: 10px;
+  background-color: black;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+}
+.input-box input {
+  flex: 1;
+  margin-right: 10px;
+  border-radius: 100px;
+  background-color: #f0f0f0;
+}
