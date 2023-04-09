@@ -8,6 +8,7 @@ import { MessageComponent } from './message/message.component';
 import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LandingComponent } from './landing/landing.component';
+import { BotComponent } from './bot/bot.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { LandingComponent } from './landing/landing.component';
     MessageComponent,
     ChatComponent,
     ProfileComponent,
-    LandingComponent
+    LandingComponent,
+    BotComponent
   ],
   imports: [
     BrowserModule,
