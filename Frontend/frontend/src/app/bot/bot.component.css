@@ -4,10 +4,11 @@
   left: 0;
   right: 0;
   margin: auto;
+  margin-bottom: 20px;
   width: 50%;
   height: 40px;
   background-color: white;
-  border: 0px solid black;
+  border: 0px;
   padding: 10px;
   display: flex;
   flex-direction: column;
