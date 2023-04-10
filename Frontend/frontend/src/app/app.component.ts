@@ -7,11 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
-
-  testUser = {
-    username: "admin",
-    status: "online",
-    contacts: ["friend"],
-    past_chats: ["chat 1","chat 2","chat 3"]
-  }
+  user: string = "admin";
 }
