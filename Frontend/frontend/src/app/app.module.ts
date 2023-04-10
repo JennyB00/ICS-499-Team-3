@@ -9,6 +9,8 @@ import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LandingComponent } from './landing/landing.component';
 import { BotComponent } from './bot/bot.component';
+import { LoginComponent } from './login/login.compopnent';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { BotComponent } from './bot/bot.component';
     ChatComponent,
     ProfileComponent,
     LandingComponent,
-    BotComponent
+    BotComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
