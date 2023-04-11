@@ -7,6 +7,10 @@
   background-color: #f5f5f5; /* light gray background color */
 }
 
+h2 {
+  text-align: center;
+}
+
 .container {
   background-image: url('pic2.jpg');
   background-size: cover;
