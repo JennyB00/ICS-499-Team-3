@@ -13,9 +13,4 @@ export class LandingComponent {
     // navigate to the registration page
     this.router.navigate(['/register']);
   }
-
-  login() {
-    // navigate to the login page
-    this.router.navigate(['/login']);
-  }
 }

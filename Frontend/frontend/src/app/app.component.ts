@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
-  user: string = "admin";
+
+  constructor(private router: Router, private userService: UserService) {}
+
+  loggedIn() {
+    return this.userService.isLoggedIn();
+  }
+
+  onHome() {
+    this.router.navigate(["/profile"]);
+  }
+  onAbout() {
+    this.router.navigate(["/"]);
+  }
+  onLogin() {
+    // navigate to the login page
+    this.router.navigate(['/login']);
+  }
 }

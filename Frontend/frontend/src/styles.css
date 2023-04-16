@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 30px; /* add some space between header and buttons */
+}
+  
+.cta-button, button{
+    padding: 20px 30px; /* larger button size */
+    font-size: 24px; /* larger font size */
+    background-color: #ff9800; /* bright orange button color */
+    color: #fff; /* white text color */
+    border: none;
+    border-radius: 50px; /* round button edges */
+    cursor: pointer;
+    margin: 20px; /* larger margin */
+    box-shadow: 2px 2px 5px #999; /* subtle box shadow */
+    transition: transform 0.2s ease-in-out; /* add button hover effect */
+}
+  
+.cta-button:hover, button:hover {
+    transform: scale(1.1); /* scale up button on hover */
+}
+
+body {
+    background-color: black;
+    color: white;
+}
