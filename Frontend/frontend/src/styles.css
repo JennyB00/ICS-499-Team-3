@@ -7,7 +7,7 @@
     margin-top: 30px; /* add some space between header and buttons */
 }
   
-.cta-button, button{
+.cta-button, button, input[type=submit], input[type=button]{
     padding: 20px 30px; /* larger button size */
     font-size: 24px; /* larger font size */
     background-color: #ff9800; /* bright orange button color */
@@ -20,11 +20,21 @@
     transition: transform 0.2s ease-in-out; /* add button hover effect */
 }
   
-.cta-button:hover, button:hover {
+.cta-button:hover, button:hover, input[type=submit]:hover, input[type=button]:hover {
     transform: scale(1.1); /* scale up button on hover */
+}
+
+input[type=submit]:disabled, .cta-button:disabled, input[type=button]:disabled {
+    background-color: #ff99003d; /* dark orange button color */
+    color: #ffffff3d; /* gray text color */
+    box-shadow: none; /* like light turned off */
 }
 
 body {
     background-color: black;
     color: white;
+}
+
+nav {
+    background-color: aqua;
 }

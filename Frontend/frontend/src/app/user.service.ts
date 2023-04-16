@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ export class UserService {
     }
   ];
   currentUser: string = '';
-  constructor() { }
+  private urlStub: string = 'http://localhost:8000/accounts'
+  constructor(private http: HttpClient) { }
 
   getAll() {
     return this.users;
@@ -32,6 +35,10 @@ export class UserService {
       }
     }
     return
+  }
+
+  getHTTP(username: string) {
+    return this.http.get<User>(this.urlStub+'/'+username);
   }
   
   add(user: any) {
@@ -69,7 +76,24 @@ export class UserService {
     return this.currentUser;
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     return this.currentUser == '' ? false : true;
   }
+}
+
+interface Contact {
+  contact: string;
+  id: number;
+}
+
+interface PastChat {
+  pastChatID: number;
+  id: number;
+}
+
+interface User {
+  username: string;
+  status: string;
+  contacts: Contact[];
+  pastChats: PastChat[];
 }

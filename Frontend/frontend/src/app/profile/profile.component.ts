@@ -99,7 +99,4 @@ export class ProfileComponent implements OnInit{
   onChatClick(chatID: string) {
     this.router.navigate(['/chat'])
   }
-  onBotClick() {
-    this.router.navigate(['/bot'])
-  }
 }

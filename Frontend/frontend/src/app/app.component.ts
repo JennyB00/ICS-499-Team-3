@@ -26,4 +26,7 @@ export class AppComponent {
     // navigate to the login page
     this.router.navigate(['/login']);
   }
+  onBot() {
+    this.router.navigate(['/bot'])
+  }
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-bot',
@@ -8,15 +9,16 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./bot.component.css']
 })
 
-export class BotComponent {
+export class BotComponent implements OnInit{
   messages: string[] = [];
   newMessage = '';
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private userService: UserService) {}
 
-  homePage() {
-    // navigate to the home page
-    this.router.navigate(['/home']);
+  ngOnInit(): void {
+    if (!this.userService.isLoggedIn()) {
+      this.router.navigate(["/"]);
+    }
   }
 
   submit() {
