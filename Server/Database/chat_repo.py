@@ -24,7 +24,7 @@ def get_messages_by_chat(db: Session, chat_id: int) -> list[MessageModel]:
     if db_chat is None:
         return []
     else:
-        return db_chat.history
+        return db_chat.messages
 
 
 def create_chat(db: Session) -> ChatModel:

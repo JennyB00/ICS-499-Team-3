@@ -8,5 +8,6 @@ class ContactCreate(ContactBase):
 
 class Contact(ContactBase):
     id: int
-    class Condig:
+
+    class Config:
         orm_mode = True

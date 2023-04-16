@@ -81,7 +81,7 @@ def read_chat_messages(id: int,
     elif word:
         return chat_service.search_by_word_for_chat(id, word, db)
     else:
-        return db_chat.history
+        return db_chat.messages
 
 @router.post("/{id}/messages", response_model=Message)
 def create_message_for_chat(id: int, message: MessageCreate, db: Session = Depends(get_db)):

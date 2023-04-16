@@ -8,5 +8,6 @@ class PastChatCreate(PastChatBase):
 
 class PastChat(PastChatBase):
     id: int
-    class Condig:
+    
+    class Config:
         orm_mode = True

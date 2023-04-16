@@ -1,6 +1,4 @@
-import uuid
 from sqlalchemy.orm import Session
-from fastapi import Depends
 from Database.database import *
 from Database import account_repo as ar
 from Domain.account import *
@@ -19,7 +17,7 @@ def get_accounts_by_usernames(usernames: list[str], db: Session) -> list[Account
 #business logic for joining site
 def create_account(account: AccountCreate, db: Session) -> Account:
     # account.password = hashlib.sha256(account.password.encode()).hexdigest()
-    db_account = ar.create_account(db, account, str(uuid.uuid4()))
+    db_account = ar.create_account(db, account)
     account = Account.from_orm(db_account)
     return account
 

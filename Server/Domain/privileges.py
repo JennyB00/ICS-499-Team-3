@@ -3,7 +3,7 @@ from pydantic import BaseModel
 class PrivilegesBase(BaseModel):
     username: str
     send: bool
-    recieve: bool
+    receive: bool
     add_user: bool
     delete_message: bool
     delete_chat: bool

@@ -8,7 +8,7 @@ def get_all_accounts(db: Session, limit: (int | None) = 100) -> list[AccountMode
     return db.query(AccountModel).limit(limit).all()
 
 def get_all_usernames(db: Session, limit: (int | None) = None) -> list[str]:
-    accounts = db.query(AccountBase).all()
+    accounts = db.query(AccountModel).all()
     names = []
     for a in accounts:
         names.append(a.username)
@@ -24,8 +24,8 @@ def get_account(db: Session, username: str) -> (AccountModel | None):
 #     else:
 #         return db_accou nt.contacts
 
-def create_account(db: Session, account: AccountCreate, bot_session_id: str) -> AccountModel:
-    db_account = AccountModel(**account.dict(), bot_session_id=bot_session_id)
+def create_account(db: Session, account: AccountCreate) -> AccountModel:
+    db_account = AccountModel(**account.dict())
     db.add(db_account)
     db.commit()
     db.refresh(db_account)

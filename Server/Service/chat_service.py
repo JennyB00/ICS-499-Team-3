@@ -4,7 +4,7 @@ from Domain.privileges import *
 from Domain.account import *
 from sqlalchemy.orm import Session
 from Database.models import *
-from Database import chat_repo as cr, privileges_repo as pr, account_repo as ar
+from Database import chat_repo as cr, privileges_repo as pr, account_repo as ar, past_chats_repo as pcr
 
 def get_privileges_for_user_in_chat(chat_id: int, username: str, db: Session) -> Privileges:
     db_chat = cr.get_chat(db, chat_id)
@@ -44,11 +44,12 @@ def create_chat(username: str, db: Session) -> ChatModel:
     db_chat = cr.create_chat(db)
     privileges = PrivilegesCreate(username=username,
                                   send=True,
-                                  recieve=True,
+                                  receive=True,
                                   add_user=True,
                                   delete_message=True,
                                   delete_chat=True)
     pr.create_privileges(db,privileges,db_chat.id)
+    pcr.create_past_chat(db, db_chat.id, username)
     return db_chat
 
 def search_by_date_for_chat(chat_id: int, date: datetime, db: Session) -> list[Message]:
