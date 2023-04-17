@@ -21,10 +21,10 @@ export class BotComponent implements OnInit{
     }
   }
 
-  homePage() {
-    // navigate to the home page
-    this.router.navigate(['/home']);
-  }
+  // homePage() {
+  //   // navigate to the home page
+  //   this.router.navigate(['/home']);
+  // }
 
   submit() {
     console.log('Input was: ', this.newMessage)
