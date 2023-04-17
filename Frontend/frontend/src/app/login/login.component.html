@@ -1,6 +1,5 @@
 <body>
     <h1>Login</h1>
-    <h2 *ngIf="loginFailure">Login Failure. Please enter again</h2>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
         <label for="username">Enter Username: </label>
         <input type="text" id="username" name="username" value="" ngModel>
@@ -8,4 +7,5 @@
         <input type="text" id="password" name="password" value="" ngModel>
         <input type="submit" value="submit" class="button">
     </form>
+    <div *ngIf="loginFailure">Login Failure. Please enter again</div>
 </body>

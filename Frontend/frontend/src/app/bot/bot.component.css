@@ -6,8 +6,9 @@
   margin: auto;
   margin-bottom: 20px;
   width: 50%;
-  height: 40px;
-  background-color: white;
+  height: 75%;
+  background-color: black;
+  color: white;
   border: 0px;
   padding: 10px;
   display: flex;
@@ -25,16 +26,20 @@
   overflow-y: scroll;
   border-radius: 10px;
   background-color: black;
+  color: white;
 }
 
 .input-box {
   display: flex;
   align-items: center;
   border-radius: 10px;
+  color: white;
 }
+
 .input-box input {
   flex: 1;
   margin-right: 10px;
-  border-radius: 100px;
-  background-color: #f0f0f0;
+  border-radius: 10px;
+  background-color: #000000;
+  color: white;
 }
