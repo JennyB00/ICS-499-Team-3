@@ -22,7 +22,15 @@
     <div class="chat-wrapper">
       <div class="chatbox">
         <div *ngFor="let message of messages">
-          {{ message }}
+          <div class="message">
+            <div class="avatar">
+              <img src="assets/img/bot.png" alt="Bot Icon" width="50" height="50">
+            </div>
+            <div class="details">
+              <div class="bot-name">Bot</div>
+              <div class="message-text">{{ message }}</div>
+            </div>
+          </div>
         </div>
       </div>
 

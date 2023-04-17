@@ -27,16 +27,14 @@ export class BotComponent implements OnInit{
   // }
 
   submit() {
-    console.log('Input was: ', this.newMessage)
     if (this.newMessage.trim() !== '') {
       // send the message to the server using POST request
       this.http.post('http://localhost:8000/bot/process','', { params: new HttpParams().set('prompt',this.newMessage).set('username',this.userService.getCurrentUser())})
         .subscribe({
           next: (response) => {
             console.log('Message sent successfully');
-            console.log('Input was:', this.newMessage);
             console.log('Response:', response);
-            this.messages.push(this.userService.getCurrentUser()+' - '+this.newMessage);
+            //this.messages.push(this.userService.getCurrentUser()+' - '+this.newMessage);
             this.messages.push('Bot - '+response);
             this.newMessage = '';
           },

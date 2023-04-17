@@ -29,6 +29,35 @@
   color: white;
 }
 
+.message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  margin-right: 10px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.bot-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.message-text {
+  background-color: black;
+  padding: 10px;
+  border-radius: 10px;
+  align-self: flex-start;
+  max-width: 75%;
+  color: white;
+}
+
 .input-box {
   display: flex;
   align-items: center;
