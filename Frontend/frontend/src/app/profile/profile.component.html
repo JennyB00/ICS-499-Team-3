@@ -1,25 +1,11 @@
 <html>
     <body *ngIf="userHTTP">
         <h1>
-            <section *ngIf="!updateUsername">
-                {{ userHTTP.username }} 
-                <button *ngIf="!updatePassword" (click)="onUpdateUsername()">Change Username</button>
-            </section>
-            <section *ngIf="updateUsername">
-                <form [formGroup]="usernameForm" (ngSubmit)="onSubmitUsername(usernameForm.value)">
-                    <label for="username">New Username:</label>
-                    <input type="text" id="username" name="username" value="" formControlName="username">
-                    <input type="submit" value="Submit" [disabled]="!usernameForm.valid">
-                    <input type="button" (click)="onCancelUsername()" value="Cancel">
-                </form>
-            </section>
+            {{ userHTTP.username }} 
         </h1>
-        <section *ngIf="updateUsername">
-            <div for="username" *ngIf="usernameForm.get('username')?.hasError('required')">Username Required</div>
-        </section>
         <h2>
             <section *ngIf="!updatePassword">
-                <button *ngIf="!updateUsername" (click)="onUpdatePassword()">Change Password</button>
+                <button (click)="onUpdatePassword()">Change Password</button>
             </section>
             <section *ngIf="updatePassword">
                 <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword(passwordForm.value)">
@@ -71,7 +57,7 @@
         </section>
         <section *ngIf="!addChat">
             <button (click)="onAddChat()">Add Chat</button><br>
-            <button (click)="onChatClick(chat.pastChatID)" *ngFor="let chat of userHTTP.pastChats">{{chat.pastChatID}}</button>
+            <button (click)="onChatClick(chat.past_chat_id)" *ngFor="let chat of userHTTP.past_chats">{{chat.past_chat_id}}</button>
         </section>
     
     </body>

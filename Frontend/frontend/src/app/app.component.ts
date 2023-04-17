@@ -15,7 +15,6 @@ export class AppComponent {
   loggedIn() {
     return this.userService.isLoggedIn();
   }
-
   onHome() {
     this.router.navigate(["/profile"]);
   }
@@ -25,6 +24,14 @@ export class AppComponent {
   onLogin() {
     // navigate to the login page
     this.router.navigate(['/login']);
+  }
+  onLogout() {
+    if (this.loggedIn()) {
+      const username = this.userService.getCurrentUser();
+      this.userService.updateStatus(username, 'offline');
+      this.userService.setCurrentUser('');
+      window.location.reload();
+    }
   }
   onBot() {
     this.router.navigate(['/bot'])

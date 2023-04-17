@@ -12,12 +12,10 @@ export class ProfileComponent implements OnInit{
   // @Input() username: string;
   user: any;
   userHTTP: User;
-  updateUsername: boolean = false;
   updatePassword: boolean = false;
   showContacts: boolean = false;
   addContact: boolean = false;
   addChat: boolean = false;
-  usernameForm: FormGroup;
   passwordForm: FormGroup;
   contactForm: FormGroup;
   chatForm: FormGroup;
@@ -35,9 +33,6 @@ export class ProfileComponent implements OnInit{
       this.user = this.userService.get(this.userService.getCurrentUser());
       this.userService.getHTTP(this.userService.getCurrentUser()).subscribe((user) => {this.userHTTP = user} );
     }
-    this.usernameForm = this.formBuilder.group({
-      username: this.formBuilder.control("", Validators.required)
-    });
     this.passwordForm = this.formBuilder.group({
       password: this.formBuilder.control("", Validators.required),
       confirm: this.formBuilder.control("", Validators.required)
@@ -56,9 +51,6 @@ export class ProfileComponent implements OnInit{
   }
     
 
-  onSubmitUsername(value: any) {
-    this.updateUsername = false;
-  }
   onSubmitPassword(value: any) {
     const username = this.userService.getCurrentUser();
     const password = value.password;
@@ -66,16 +58,12 @@ export class ProfileComponent implements OnInit{
     this.updatePassword = false;
   }
   onSubmitContact(value: any) {
+    const contact = value.contact;
+    this.userService.addContact(this.userService.getCurrentUser(),contact).subscribe();
     this.addContact = false;
   }
   onSubmitChat(value: any) {
     this.addChat = false;
-  }
-  onUpdateUsername() {
-    this.updateUsername = true;
-  }
-  onCancelUsername() {
-    this.updateUsername = false;
   }
   onUpdatePassword() {
     this.updatePassword = true;

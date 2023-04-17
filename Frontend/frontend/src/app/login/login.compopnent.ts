@@ -25,6 +25,7 @@ export class LoginComponent {
       const match: boolean = (pass == password);
       if (match) {
         this.userService.setCurrentUser(username);
+        this.userService.updateStatus(username, 'online');
         this.router.navigate(['/profile']);
       }
       else {

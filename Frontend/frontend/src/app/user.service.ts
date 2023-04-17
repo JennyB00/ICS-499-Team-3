@@ -190,7 +190,7 @@ interface Contact {
 }
 
 interface PastChat {
-  pastChatID: number;
+  past_chat_id: number;
   id: number;
 }
 
@@ -198,7 +198,7 @@ export interface User {
   username: string;
   status: string;
   contacts: Contact[];
-  pastChats: PastChat[];
+  past_chats: PastChat[];
 }
 
 interface UserCreate {
