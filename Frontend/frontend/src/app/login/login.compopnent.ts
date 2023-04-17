@@ -19,14 +19,24 @@ export class LoginComponent {
   //   this.login.emit()
   // }
   onSubmit(value: any) {
-    const username = value.username;
-    const password = value.password;
-    if (this.userService.verifyPassword(username, password)) {
-      this.userService.setCurrentUser(username);
-      this.router.navigate(['/profile']);
-    } 
-    else {
-      this.loginFailure = true;
-    }
+    const username: string = value.username;
+    const password: string = value.password;
+    this.userService.getPassword(username).subscribe((pass) => {
+      const match: boolean = (pass == password);
+      if (match) {
+        this.userService.setCurrentUser(username);
+        this.router.navigate(['/profile']);
+      }
+      else {
+        this.loginFailure = true;
+      }
+    });
+    // if (this.userService.verifyPassword(username, password)) {
+    //   this.userService.setCurrentUser(username);
+    //   this.router.navigate(['/profile']);
+    // } 
+    // else {
+    //   this.loginFailure = true;
+    // }
   }
 }

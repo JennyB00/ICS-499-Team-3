@@ -1,5 +1,6 @@
-from fastapi import FastAPI, HTTPException, Request, Depends
+from fastapi import FastAPI, Request, Depends
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from Domain.account import *
 from Database.database import *
 from Controllers import account_controller, chat_controller, contacts_controller, past_chats_controller, messages_controller, privileges_controller, bot_controller
@@ -19,6 +20,15 @@ app.include_router(bot_controller.router)
 #     dependencies=[],
 #     responses={418: {"description": "I'm a teapot"}},
 # )
+origins = ["http://localhost:4200"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 @app.on_event("startup")
 async def startup():
     Base.metadata.create_all(bind=engine)

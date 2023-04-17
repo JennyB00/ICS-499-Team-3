@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { User, UserService } from '../user.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class ProfileComponent implements OnInit{
   // @Input() username: string;
   user: any;
+  userHTTP: User;
   updateUsername: boolean = false;
   updatePassword: boolean = false;
   showContacts: boolean = false;
@@ -32,6 +33,7 @@ export class ProfileComponent implements OnInit{
     }
     else {
       this.user = this.userService.get(this.userService.getCurrentUser());
+      this.userService.getHTTP(this.userService.getCurrentUser()).subscribe((user) => {this.userHTTP = user} );
     }
     this.usernameForm = this.formBuilder.group({
       username: this.formBuilder.control("", Validators.required)
@@ -58,6 +60,9 @@ export class ProfileComponent implements OnInit{
     this.updateUsername = false;
   }
   onSubmitPassword(value: any) {
+    const username = this.userService.getCurrentUser();
+    const password = value.password;
+    this.userService.updatePassword(username, password).subscribe();
     this.updatePassword = false;
   }
   onSubmitContact(value: any) {
@@ -96,7 +101,7 @@ export class ProfileComponent implements OnInit{
   onCancelChat() {
     this.addChat = false;
   }
-  onChatClick(chatID: string) {
+  onChatClick(chatID: number) {
     this.router.navigate(['/chat'])
   }
 }

@@ -1,8 +1,8 @@
 <html>
-    <body>
+    <body *ngIf="userHTTP">
         <h1>
             <section *ngIf="!updateUsername">
-                {{ user.username }} 
+                {{ userHTTP.username }} 
                 <button *ngIf="!updatePassword" (click)="onUpdateUsername()">Change Username</button>
             </section>
             <section *ngIf="updateUsername">
@@ -35,7 +35,7 @@
         <section *ngIf="updatePassword" id="password errors">
             <div *ngIf="passwordForm.hasError('notSame')">Passwords do not match</div>
         </section>
-        <h3>{{ user.status }}</h3>
+        <h3>{{ userHTTP.status }}</h3>
         <h4>
             <section *ngIf="!showContacts">
                 <div>
@@ -54,7 +54,7 @@
                 <section *ngIf="!addContact">
                     <button (click)="onAddContact()">add</button>
                 </section>
-                <p *ngFor="let contact of user.contacts">{{contact}}</p>
+                <p *ngFor="let contact of userHTTP.contacts">{{contact.contact}}</p>
                 <button (click)="onHideContacts()">close</button>
             </section>
         </h4>
@@ -63,7 +63,7 @@
             <form [formGroup]="chatForm" (ngSubmit)="onSubmitChat(chatForm.value)">
                 <label for="users">Add Users:</label>
                 <select id="users" name="users" multiple>
-                    <option *ngFor="let contact of user.contacts">{{contact}}</option>
+                    <option *ngFor="let contact of userHTTP.contacts">{{contact.contact}}</option>
                 </select>
                 <input type="submit" value="Submit" [disabled]="!chatForm.valid">
                 <input type="button" (click)="onCancelChat()" value="Cancel">
@@ -71,7 +71,7 @@
         </section>
         <section *ngIf="!addChat">
             <button (click)="onAddChat()">Add Chat</button><br>
-            <button (click)="onChatClick(chat)" *ngFor="let chat of user.past_chats">{{chat}}</button>
+            <button (click)="onChatClick(chat.pastChatID)" *ngFor="let chat of userHTTP.pastChats">{{chat.pastChatID}}</button>
         </section>
     
     </body>
