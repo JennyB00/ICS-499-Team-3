@@ -21,9 +21,13 @@ export class BotComponent implements OnInit{
     }
   }
 
+  homePage() {
+    // navigate to the home page
+    this.router.navigate(['/home']);
+  }
+
   submit() {
     console.log('Input was: ', this.newMessage)
-
     if (this.newMessage.trim() !== '') {
       // send the message to the server using POST request
       this.http.post('http://localhost:8000/bot/process','', { params: new HttpParams().set('prompt',this.newMessage).set('username',this.userService.getCurrentUser())})
@@ -41,6 +45,13 @@ export class BotComponent implements OnInit{
             console.log('Error response body: ', error.error);
           }
         });
+    }
+  }
+
+  onKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter' && this.newMessage.trim() !== '') {
+      this.submit();
+      this.newMessage = '';
     }
   }
 }
