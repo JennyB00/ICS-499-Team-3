@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit{
-  message = ""
-  messages = []
+  chatMessage: string;
+  messages: string[] = [];
   privileges = []
   active = []
 
@@ -25,11 +25,15 @@ export class ChatComponent implements OnInit{
     this.router.navigate(['/chatSettings']);
   }
 
-  submit() {
-
+  sendMessage() {
+    if (this.chatMessage) {
+      this.messages.push(this.chatMessage);
+      this.chatMessage = '';
+    }
   }
 
   ngOnInit(): void {
     this.messages = []
   }
+
 }
