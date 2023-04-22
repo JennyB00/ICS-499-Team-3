@@ -1,19 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Message } from '../chat.service';
 
 @Component({
   selector: 'app-message',
   template: `
-    <p>
-      message works!
-      {{ rand }}
-    </p>
+    <body *ngIf="message">
+      <h3>{{ message.username }}</h3>
+      <div *ngIf="isString()">
+        <h5>{{ decodeString() }}</h5>
+      </div>
+      <div *ngIf="!isString()">
+        <h5> Non string messages not implemented yet! </h5>
+      </div>
+      <p class="date">{{ message.date }}</p>
+    </body>
+    <body *ngIf="!message">
+      <p class="loading">!!! LOADING !!!</p>
+    </body>
   `,
   styles: [
+    'body { background-color: #ff9800; border-radius: 50px; border: thin, black; margin: 5px; padding: 10px 10px}',
+    'h3 { color: white; text-shadow: 1px 1px black; text-decoration: underline }',
+    'h5 { color: white; text-shadow: 1px 1px black; }',
+    'loading { font-size: large; }',
+    'date { color: gray; }'
   ]
 })
 export class MessageComponent {
-    rand = Math.random();
-    constructor() {
-      setInterval(() => this.rand = Math.random(), 500)
+    @Input() message: Message;
+    constructor() { }
+
+    isString(): boolean {
+      return this.message.type == "str";
+    }
+
+    decodeString(): string {
+      return this.message.message.toString();
     }
 }
