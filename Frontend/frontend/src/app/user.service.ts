@@ -7,21 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  users = [
-    {
-      username: "admin",
-      status: "online",
-      contacts: ["friend"],
-      past_chats: ["123","456","789"]
-    },
-    {
-      username: "friend",
-      status: "offline",
-      contacts: [],
-      past_chats: ["456"]
-    }
-  ];
-  currentUser: string = '';
+  private currentUser: string = '';
   private urlStub: string = 'http://localhost:8000/accounts/'
   constructor(private http: HttpClient) { }
 
@@ -33,15 +19,6 @@ export class UserService {
   getAll(limit?: number): Observable<User[]> {
     const options = (typeof limit !== 'undefined') ? {params: new HttpParams().set('limit',limit)} : {};
     return this.http.get<User[]>(this.urlStub, options);
-  }
-
-  get(username: string) {
-    for (var user of this.users) {
-      if (user.username == username) {
-        return user
-      }
-    }
-    return
   }
 
   /**
@@ -194,15 +171,16 @@ interface PastChat {
   id: number;
 }
 
-export interface User {
+interface UserBase {
   username: string;
   status: string;
+}
+
+export interface User extends UserBase {
   contacts: Contact[];
   past_chats: PastChat[];
 }
 
-interface UserCreate {
-  username: string;
+export interface UserCreate extends UserBase {
   password: string;
-  status: string;
 }

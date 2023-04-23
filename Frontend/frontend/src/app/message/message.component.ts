@@ -19,11 +19,11 @@ import { Message } from '../chat.service';
     </body>
   `,
   styles: [
-    'body { background-color: #ff9800; border-radius: 50px; border: thin, black; margin: 5px; padding: 10px 10px}',
-    'h3 { color: white; text-shadow: 1px 1px black; text-decoration: underline }',
+    'body { background-color: #ff9800; border-radius: 50px; border: thin, black; margin: 5px; padding: 5px 5px}',
+    'h3 { color: white; text-shadow: 2px 2px black; text-decoration: underline }',
     'h5 { color: white; text-shadow: 1px 1px black; }',
-    'loading { font-size: large; }',
-    'date { color: gray; }'
+    'loading { font-size: large; text-shadow: 2px 2px black; }',
+    'date { color: gray; text-shadow: 1px 1px white; }'
   ]
 })
 export class MessageComponent {

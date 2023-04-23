@@ -1,17 +1,20 @@
 <div class="container">
     <div class="grid-container">
         <div class="grid-item grid-item-1">
-            <button class="cta-button" (click)="homePage()">Home Page</button>
             <button class="cta-button" (click)="chatSettings()">Chat Settings</button>
         </div>
         <div id="chatArea">
             <div *ngFor="let message of messages">
                 {{ message }}
             </div>
+            <div *ngIf="chat">
+                <app-message *ngFor="let m of chat.messages" [message]="m">
+                </app-message>
+            </div>
         </div>
         <div id="messageArea">
             <input type="text" [(ngModel)]="chatMessage" placeholder="Enter your message">
-            <button (click)="sendMessage()">Send</button>
+            <button (click)="sendStringMessage()" [disabled]="!chatMessage">Send</button>
         </div>
     </div>
 </div>
