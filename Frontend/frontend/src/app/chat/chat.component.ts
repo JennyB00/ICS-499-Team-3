@@ -53,7 +53,7 @@ export class ChatComponent implements OnInit{
       username: this.userService.getCurrentUser(),
       type: "str",
       date: new Date().toISOString(),
-      message: this.encoder.encode(this.chatMessage).toString()
+      message: this.chatMessage
     };
     this.chatService.addMessage(id,message).subscribe(() => { this.chatMessage = ''; });
     this.messages.push(this.chatMessage);
