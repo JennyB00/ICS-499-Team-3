@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 
@@ -7,9 +8,10 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   // @Output() login = new EventEmitter();
   loginFailure: boolean = false;
+  loginForm: FormGroup;
 
   constructor(private userService: UserService, private router: Router) {}
   // onLoginFailure() {
@@ -18,6 +20,20 @@ export class LoginComponent {
   // onLoginSuccess() {
   //   this.login.emit()
   // }
+
+  ngOnInit(){
+    this.loginForm = new FormGroup({
+      username: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[\\w\\-\\s\\/]+')
+      ])),
+      password: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[\\w\\-\\s\\/]+')
+      ]))
+    });
+  }
+
   onSubmit(value: any) {
     const username: string = value.username;
     const password: string = value.password;
