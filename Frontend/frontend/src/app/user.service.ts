@@ -16,7 +16,7 @@ export class UserService {
    * @param limit GET query option
    * @returns Observable of the backend HTTP GET
    */
-  getAll(limit?: number): Observable<User[]> {
+  getAll(limit?: number) {
     const options = (typeof limit !== 'undefined') ? {params: new HttpParams().set('limit',limit)} : {};
     return this.http.get<User[]>(this.urlStub, options);
   }
@@ -26,7 +26,7 @@ export class UserService {
    * @param username username for the account to query
    * @returns Observable of the backend HTTP GET
    */
-  getHTTP(username: string): Observable<User> {
+  getHTTP(username: string) {
     return this.http.get<User>(this.urlStub+username);
   }
 
@@ -36,7 +36,7 @@ export class UserService {
    * backend query parameters
    * @returns Observable of the backend HTTP POST
    */
-  add(user: UserCreate): Observable<User> {
+  add(user: UserCreate) {
     return this.http.post<User>(this.urlStub, user);
   }
 
@@ -44,8 +44,8 @@ export class UserService {
    * Queries the backend for all usernames
    * @returns Observable of backend HTTP GET
    */
-  getUsernames(): Observable<String[]> {
-    return this.http.get<String[]>(this.urlStub+'usernames');
+  getUsernames() {
+    return this.http.get<string[]>(this.urlStub+'usernames');
   }
 
   /**
@@ -53,13 +53,13 @@ export class UserService {
    * @param username user to delete
    * @returns Obervable of backend HTTP DELETE success message
    */
-  delete(username: string): Observable<String> {
-    return this.http.delete<String>(this.urlStub+username);
+  delete(username: string) {
+    return this.http.delete<string>(this.urlStub+username);
   }
 
   verifyPassword(username: string, password: string) {
     let match: boolean;
-    this.http.get<String>(this.urlStub+username+'/password').subscribe((pass) => {match = (pass == password); return match;});
+    this.http.get<string>(this.urlStub+username+'/password').subscribe((pass) => {match = (pass == password); return match;});
     return true;
   }
 
@@ -68,8 +68,8 @@ export class UserService {
    * @param username user to grab password of
    * @returns Observable of account password
    */
-  getPassword(username: string): Observable<String> {
-    return this.http.get<String>(this.urlStub+username+'/password');
+  getPassword(username: string) {
+    return this.http.get<string>(this.urlStub+username+'/password');
   }
 
   /**
@@ -80,7 +80,7 @@ export class UserService {
    */
   updatePassword(username: string, password: string) {
     const options = { params: new HttpParams().set('password',password) };
-    return this.http.post<String>(this.urlStub+username+'/password', '', options);
+    return this.http.post<string>(this.urlStub+username+'/password', '', options);
   }
 
   /**
@@ -91,7 +91,7 @@ export class UserService {
    */
   updateStatus(username: string, status: string) {
     const options = { params: new HttpParams().set('status',status) };
-    return this.http.post<String>(this.urlStub+username+'/status', '', options);
+    return this.http.post<string>(this.urlStub+username+'/status', '', options);
   }
 
   /**
@@ -111,7 +111,7 @@ export class UserService {
    * @returns Observable of success message
    */
   deleteContact(id: number) {
-    return this.http.delete<String>('http://localhost:8000/contacts/'+id);
+    return this.http.delete<string>('http://localhost:8000/contacts/'+id);
   }
 
   /**
@@ -131,7 +131,7 @@ export class UserService {
    * @returns Observable of success message
    */
   deletePastChat(id: number) {
-    return this.http.delete<String>('http://localhost:8000/past_chats/'+id);
+    return this.http.delete<string>('http://localhost:8000/past_chats/'+id);
   }
 
   /**

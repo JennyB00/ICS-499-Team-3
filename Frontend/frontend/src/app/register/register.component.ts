@@ -31,18 +31,19 @@ export class RegisterComponent implements OnInit {
     onSubmit(value: any){
         const username: string = value.username;
         const password: string = value.password;
-        const usernames = this.userService.getUsernames();
-        for(var index in usernames){
-            if(username == usernames[index]){
-                this.usernameTaken = true;
-                break;
+        this.userService.getUsernames().subscribe((usernames) => {
+            for(var index in usernames){
+                if(username == usernames[index]){
+                    this.usernameTaken = true;
+                    break;
+                }
             }
-        }
-        if(this.usernameTaken == false){
-            const newUser: UserCreate = {username: username, password: password, status: 'offline'};
-            this.userService.add(newUser);
-            this.registrationComplete = true;
-        }
+            if(this.usernameTaken == false){
+                const newUser: UserCreate = {username: username, password: password, status: 'offline'};
+                this.userService.add(newUser);
+                this.registrationComplete = true;
+            }
+        });
     }
 
     onRegistrationComplete() {
