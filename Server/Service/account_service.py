@@ -21,8 +21,8 @@ def create_account(account: AccountCreate, db: Session) -> Account:
     account = Account.from_orm(db_account)
     return account
 
-# def valid_username(username: str, db: Session) -> bool:
-#     if username in ar.get_all_usernames(db):
-#         return False
-#     else:
-#         return True
+def valid_username(username: str, db: Session) -> bool:
+    if username in ar.get_all_usernames(db):
+        return False
+    else:
+        return True
