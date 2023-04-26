@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
 import { UserCreate, UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { Observable, map } from 'rxjs';
 
 @Component({
     selector: 'app-register',
@@ -20,30 +21,28 @@ export class RegisterComponent implements OnInit {
             username: new FormControl('', Validators.compose([
                 Validators.required,
                 Validators.pattern('[\\w\\-\\s\\/]+')
-              ])),
+              ]),this.uniqueUsernameValidator),
             password: new FormControl('', Validators.compose([
                 Validators.required,
-                Validators.pattern('[\\w\\-\\s\\/]+')
+                Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{5,}$')
               ]))
         });
+    }
+
+    uniqueUsernameValidator: AsyncValidatorFn = (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+        return this.userService.validUsername(control.value).pipe(
+            map((valid) => valid ? null : {taken:true})
+        );
     }
 
     onSubmit(value: any){
         const username: string = value.username;
         const password: string = value.password;
-        this.userService.getUsernames().subscribe((usernames) => {
-            for(var index in usernames){
-                if(username == usernames[index]){
-                    this.usernameTaken = true;
-                    break;
-                }
-            }
-            if(this.usernameTaken == false){
-                const newUser: UserCreate = {username: username, password: password, status: 'offline'};
-                this.userService.add(newUser);
-                this.registrationComplete = true;
-            }
-        });
+        if(this.registrationForm.valid){
+            const newUser: UserCreate = {username: username, password: password, status: 'offline'};
+            this.userService.add(newUser);
+            this.registrationComplete = true;
+        }
     }
 
     onRegistrationComplete() {

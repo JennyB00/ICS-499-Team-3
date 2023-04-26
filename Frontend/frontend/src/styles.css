@@ -38,3 +38,7 @@ body {
 nav {
     background-color: aqua;
 }
+
+.errors {
+    color: red;
+}

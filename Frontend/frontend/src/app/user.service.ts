@@ -41,11 +41,13 @@ export class UserService {
   }
 
   /**
-   * Queries the backend for all usernames
-   * @returns Observable of backend HTTP GET
+   * HTTP GET of validating new username is unique
+   * @param username new username to validate it is unique
+   * @returns Observable of boolean response
    */
-  getUsernames() {
-    return this.http.get<string[]>(this.urlStub+'usernames');
+  validUsername(username: string) {
+    const options = {params: new HttpParams().set('username', username)}
+    return this.http.get<boolean>(this.urlStub+'valid_username', options);
   }
 
   /**

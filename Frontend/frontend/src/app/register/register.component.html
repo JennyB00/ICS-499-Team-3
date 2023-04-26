@@ -8,7 +8,15 @@
             <input type="text" id="password" name="password" value="" formControlName="password">
             <input type="submit" [disabled]="!registrationForm.valid" value="submit" class="button">
         </form>
-        <div *ngIf="usernameTaken">Username taken. Please enter again</div>
+        <section class="errors">
+            <div *ngIf="registrationForm.get('username')?.hasError('taken')">Username taken. Please enter again</div>
+            <div *ngIf="registrationForm.get('password')?.hasError('pattern')">Password must have:
+                <div>&#x2022; 5 characters</div>
+                <div>&#x2022; capital letter</div>
+                <div>&#x2022; lowercase letter</div>
+                <div>&#x2022; number</div>
+            </div>
+        </section>
     </section>
     <section *ngIf="registrationComplete">
         <h1>Account Created Succesfully</h1>
