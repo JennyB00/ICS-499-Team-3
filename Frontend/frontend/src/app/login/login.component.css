@@ -5,5 +5,13 @@ div {
 }
 
 body {
-    margin-left: 10px;
+    text-align: center;
+}
+
+form {
+    display: inline-grid;
+}
+
+label {
+    font-size: x-large;
 }

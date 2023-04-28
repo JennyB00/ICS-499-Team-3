@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit{
     this.passwordForm = this.formBuilder.group({
       password: this.formBuilder.control("", [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{5,}$')]),
       confirm: this.formBuilder.control("", Validators.required)
-    }, {validators: this.confirmPasswordValidator});
+    }, {validators: confirmPasswordValidator});
     this.contactForm = this.formBuilder.group({
       contact: this.formBuilder.control("", Validators.required, this.contactValidator)
     });
@@ -56,38 +56,33 @@ export class ProfileComponent implements OnInit{
       users: this.formBuilder.control("", Validators.required)
     });
   }
-  confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-    const password = control.get('password')?.value;
-    const confirm = control.get('confirm')?.value;
-    return password == confirm ? null : {notSame: true};
-  }
   contactValidator: AsyncValidatorFn = (control: AbstractControl): Observable<ValidationErrors | null> => {
     return this.userService.validUsername(control.value).pipe(
-        map((valid) => valid ? {missing:true} : null)
-    );
-}
+      map((valid) => valid ? {missing:true} : null)
+      );
+    }
     
 
-  onSubmitPassword(value: any) {
-    const username = this.userService.getCurrentUser();
-    const password = value.password;
-    this.userService.updatePassword(username, password).subscribe();
-    this.updatePassword = false;
-  }
-  onSubmitContact(value: any) {
-    const contact = value.contact;
-    this.userService.addContact(this.userHTTP.username,contact).subscribe(() => {
-      this.userService.getContacts(this.userHTTP.username).subscribe((contacts) => {
-        this.contacts = contacts;
+    onSubmitPassword(value: any) {
+      const username = this.userService.getCurrentUser();
+      const password = value.password;
+      this.userService.updatePassword(username, password).subscribe();
+      this.updatePassword = false;
+    }
+    onSubmitContact(value: any) {
+      const contact = value.contact;
+      this.userService.addContact(this.userHTTP.username,contact).subscribe(() => {
+        this.userService.getContacts(this.userHTTP.username).subscribe((contacts) => {
+          this.contacts = contacts;
+        });
       });
-    });
-    this.addContact = false;
-  }
-  onSubmitChat(value: any) {
-    this.addChat = false;
-  }
-  onUpdatePassword() {
-    this.updatePassword = true;
+      this.addContact = false;
+    }
+    onSubmitChat(value: any) {
+      this.addChat = false;
+    }
+    onUpdatePassword() {
+      this.updatePassword = true;
   }
   onCancelPassword() {
     this.updatePassword = false;
@@ -133,4 +128,10 @@ export class ProfileComponent implements OnInit{
     });
     return users;
   }
+}
+
+export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const password = control.get('password')?.value;
+  const confirm = control.get('confirm')?.value;
+  return password == confirm ? null : {notSame: true};
 }

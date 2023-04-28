@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, Valid
 import { UserCreate, UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
+import { confirmPasswordValidator } from '../profile/profile.component';
 
 @Component({
     selector: 'app-register',
@@ -20,13 +21,15 @@ export class RegisterComponent implements OnInit {
         this.registrationForm = new FormGroup({
             username: new FormControl('', Validators.compose([
                 Validators.required,
-                Validators.pattern('[\\w\\-\\s\\/]+')
-              ]),this.uniqueUsernameValidator),
+                Validators.pattern('[\\w\\-\\s\\/]+')]),
+                this.uniqueUsernameValidator),
             password: new FormControl('', Validators.compose([
                 Validators.required,
-                Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{5,}$')
-              ]))
-        });
+                Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{5,}$')])),
+            confirm: new FormControl('', Validators.compose([
+                Validators.required]))
+        },
+        confirmPasswordValidator);
     }
 
     uniqueUsernameValidator: AsyncValidatorFn = (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
@@ -40,8 +43,9 @@ export class RegisterComponent implements OnInit {
         const password: string = value.password;
         if(this.registrationForm.valid){
             const newUser: UserCreate = {username: username, password: password, status: 'offline'};
-            this.userService.add(newUser);
-            this.registrationComplete = true;
+            this.userService.add(newUser).subscribe(()=>{
+                this.registrationComplete = true;
+            });
         }
     }
 

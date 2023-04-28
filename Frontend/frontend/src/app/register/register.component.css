@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+}
+
+form {
+    display: inline-grid;
+}
+
+label {
+    font-size: x-large;
+}

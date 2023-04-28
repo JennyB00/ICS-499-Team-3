@@ -2,10 +2,12 @@
     <section *ngIf="!registrationComplete">
         <h1>Create Account</h1>
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
-            <label for="username">Enter Username: </label>
-            <input type="text" id="username" name="username" value="" formControlName="username">
-            <label for="password">Enter Password: </label>
-            <input type="text" id="password" name="password" value="" formControlName="password">
+            <label for="username">Enter Username:</label>
+            <input type="text" id="username" value="" formControlName="username">
+            <label for="password">Enter Password:</label>
+            <input type="password" id="password" value="" formControlName="password">
+            <label for="confirm">Confirm Password:</label>
+            <input type="password" id="confirm" value="" formControlName="confirm">
             <input type="submit" [disabled]="!registrationForm.valid" value="Submit" class="button">
         </form>
         <section class="errors">
@@ -16,6 +18,7 @@
                 <div>&#x2022; lowercase letter</div>
                 <div>&#x2022; number</div>
             </div>
+            <div *ngIf="registrationForm.hasError('notSame')">Passwords must match</div>
         </section>
     </section>
     <section *ngIf="registrationComplete">
