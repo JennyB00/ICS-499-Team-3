@@ -10,7 +10,7 @@ import { UserService } from '../user.service';
 })
 
 export class BotComponent implements OnInit{
-  messages: string[] = [];
+  messages: listItem[] = [];
   newMessage = '';
 
   constructor(private router: Router, private http: HttpClient, private userService: UserService) {}
@@ -29,13 +29,13 @@ export class BotComponent implements OnInit{
   submit() {
     if (this.newMessage.trim() !== '') {
       // send the message to the server using POST request
+      this.messages.push({type: "prompt",message: this.newMessage});
       this.http.post('http://localhost:8000/bot/process','', { params: new HttpParams().set('prompt',this.newMessage).set('username',this.userService.getCurrentUser())})
         .subscribe({
           next: (response) => {
             console.log('Message sent successfully');
             console.log('Response:', response);
-            //this.messages.push(this.userService.getCurrentUser()+' - '+this.newMessage);
-            this.messages.push('Bot - '+response);
+            this.messages.push({type: "response",message: response.toString()});
             this.newMessage = '';
           },
           error: (error) => {
@@ -49,7 +49,11 @@ export class BotComponent implements OnInit{
   onKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter' && this.newMessage.trim() !== '') {
       this.submit();
-      this.newMessage = '';
     }
   }
+}
+
+interface listItem {
+  type: string;
+  message: string;
 }

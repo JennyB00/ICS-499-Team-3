@@ -23,12 +23,18 @@
       <div class="chatbox">
         <div *ngFor="let message of messages">
           <div class="message">
-            <div class="avatar">
+            <div class="avatar" *ngIf="message.type == 'response'">
               <img src="assets/img/bot.png" alt="Bot Icon" width="50" height="50">
             </div>
             <div class="details">
-              <div class="bot-name">Bot</div>
-              <div class="message-text">{{ message }}</div>
+              <div class="bot-name" *ngIf="message.type == 'response'">
+                Bot
+                <div class="message-text">{{ message.message }}</div>
+              </div>
+              <div class="bot-name" *ngIf="message.type == 'prompt'">
+                Prompt:
+                <span class="message-text">{{ message.message }}</span>
+              </div>
             </div>
           </div>
         </div>

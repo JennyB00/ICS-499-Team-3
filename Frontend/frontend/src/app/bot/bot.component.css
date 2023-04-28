@@ -50,6 +50,7 @@
 }
 
 .message-text {
+  font-weight: normal;
   background-color: black;
   padding: 10px;
   border-radius: 10px;

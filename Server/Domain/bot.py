@@ -14,7 +14,7 @@ class Bot(BaseModel):
             temperature=1,
             user=username
         )
-        return response["choices"][0]["text"].replace(".", ".\n")
+        return response["choices"][0]["text"]
 
     def generate_image(self, prompt: str) -> str:
         response = openai.Image.create(
