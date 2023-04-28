@@ -6,7 +6,7 @@
 #chatArea {
     height: 450px;
     overflow-y: scroll;
-    border: 1px solid #ff0000;
+    border: 1px solid #ff9800;
     border-radius: 5px;
     padding: 10px;
 }

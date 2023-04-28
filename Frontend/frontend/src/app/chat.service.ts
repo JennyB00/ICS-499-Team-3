@@ -52,6 +52,15 @@ export class ChatService {
   }
 
   /**
+   * HTTP GET request of a chat's users
+   * @param id ID of chat to get users for
+   * @returns Observable of username list
+   */
+  getUsers(id: number) {
+    return this.http.get<string[]>(this.urlStub+id+'/users');
+  }
+
+  /**
    * HTTP GET request for a list of usernames of online users in the requested chat
    * @param id ID of chat to get active users for
    * @returns Observable of array of usernames for active users
@@ -108,7 +117,7 @@ interface PrivilegesCreate {
   delete_chat: boolean;
 }
 
-interface Privileges extends PrivilegesCreate {
+export interface Privileges extends PrivilegesCreate {
   id: number;
 }
 

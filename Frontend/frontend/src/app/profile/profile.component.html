@@ -3,7 +3,7 @@
         <h1>
             {{ userHTTP.username }} 
         </h1>
-        <h2>
+        <h6>
             <section *ngIf="!updatePassword">
                 <button (click)="onUpdatePassword()">Change Password</button>
             </section>
@@ -16,17 +16,17 @@
                     <input type="submit" value="Submit" [disabled]="!passwordForm.valid">
                     <input type="button" (click)="onCancelPassword()" value="Cancel">
                 </form>
+                <div *ngIf="updatePassword" class="errors">
+                    <div *ngIf="passwordForm.hasError('notSame')">Passwords do not match</div>
+                    <div *ngIf="passwordForm.get('password')?.hasError('pattern')">Password must have:
+                        <div>&#x2022; 5 characters</div>
+                        <div>&#x2022; capital letter</div>
+                        <div>&#x2022; lowercase letter</div>
+                        <div>&#x2022; number</div>
+                    </div>
+                </div>
             </section>
-        </h2>
-        <div *ngIf="updatePassword" class="errors">
-            <div *ngIf="passwordForm.hasError('notSame')">Passwords do not match</div>
-            <div *ngIf="passwordForm.get('password')?.hasError('pattern')">Password must have:
-                <div>&#x2022; 5 characters</div>
-                <div>&#x2022; capital letter</div>
-                <div>&#x2022; lowercase letter</div>
-                <div>&#x2022; number</div>
-            </div>
-        </div>
+        </h6>
         <h3>{{ userHTTP.status }}</h3>
         <h4>
             <section *ngIf="!showContacts">
@@ -35,25 +35,33 @@
                 </div>
             </section>
             <section *ngIf="showContacts">
-                <section *ngIf="addContact">
-                    <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact(contactForm.value)">
-                        <label for="new contact">New Contact:</label>
-                        <input type="text" id="new contact" name="new contact" value="" formControlName="contact">
-                        <input type="submit" value="Submit" [disabled]="!contactForm.valid">
-                        <input type="button" (click)="onCancelContact()" value="Cancel">
-                    </form>
-                    <section class="errors">
-                        <div *ngIf="contactForm.get('contact')?.hasError('missing')">Contact Not Found</div>
+                <span style="display: inline-block;">
+                    <span *ngIf="!addContact">
+                        <button class="add-contact-button" (click)="onAddContact()">🞢</button>
+                    </span>
+                    <span *ngIf="addContact">
+                        <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact(contactForm.value)" style="display: inline;">
+                            <label for="new contact">New Contact:</label>
+                            <input type="text" id="new contact" name="new contact" value="" formControlName="contact">
+                            <input type="submit" value="Submit" [disabled]="!contactForm.valid">
+                            <input type="button" (click)="onCancelContact()" value="Cancel">
+                        </form>
+                    </span>
+                    <button class="close-button" (click)="onHideContacts()">&#x2573;</button>
+                </span>
+                <section class="errors" *ngIf="addContact">
+                    <div *ngIf="contactForm.get('contact')?.hasError('missing')">Contact Not Found</div>
+                </section>
+                <div *ngFor="let contact of contacts">
+                    <section *ngIf="!deleteContact">
+                        {{contact.contact}}
+                        <button class="delete-button" (click)="onRequestDeleteContact()">Delete</button>
                     </section>
-                </section>
-                <section *ngIf="!addContact">
-                    <button (click)="onAddContact()">add</button>
-                </section>
-                <div *ngFor="let contact of userHTTP.contacts">
-                    {{contact.contact}}
-                    <button>Delete</button>
+                    <section *ngIf="deleteContact">
+                        <button (click)="onDeleteContact(contact.id)" class="confirm-button">Confirm</button>
+                        <button (click)="onCancelDeleteContact()">Cancel</button>
+                    </section>
                 </div>
-                <button (click)="onHideContacts()">close</button>
             </section>
         </h4>
         
@@ -61,17 +69,19 @@
             <form [formGroup]="chatForm" (ngSubmit)="onSubmitChat(chatForm.value)">
                 <label for="users">Add Users:</label>
                 <select id="users" name="users" multiple>
-                    <option *ngFor="let contact of userHTTP.contacts">{{contact.contact}}</option>
+                    <option *ngFor="let contact of contacts">{{contact.contact}}</option>
                 </select>
                 <input type="submit" value="Submit" [disabled]="!chatForm.valid">
                 <input type="button" (click)="onCancelChat()" value="Cancel">
             </form>
         </section>
         <section *ngIf="!addChat">
-            <button (click)="onAddChat()">Add Chat</button><br>
-            <div>Select Chat:</div>
-            <button (click)="onChatClick(chat.past_chat_id)" *ngFor="let chat of userHTTP.past_chats" id="pastChats">{{chat.past_chat_id}}</button>
+            <button (click)="onAddChat()">New Chat</button><br>
+            <h2>Select Chat:</h2>
+            <div *ngFor="let chat of userHTTP.past_chats" id="pastChats">
+                <button (click)="onChatClick(chat.past_chat_id)">{{chat.past_chat_id}}</button>
+                <span>Users: {{pastChatUsers.get(chat.past_chat_id)}}</span>
+            </div>
         </section>
-    
     </body>
 </html>

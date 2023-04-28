@@ -97,6 +97,15 @@ export class UserService {
   }
 
   /**
+   * HTTP GET a user's contacts
+   * @param username user to get contacts of
+   * @returns Observable of Contact list
+   */
+  getContacts(username: string) {
+    return this.http.get<Contact[]>(this.urlStub+username+'/contacts');
+  }
+
+  /**
    * Adds a contact to the given user
    * @param username user to add contact to
    * @param contact contact to add
@@ -163,7 +172,7 @@ export class UserService {
   }
 }
 
-interface Contact {
+export interface Contact {
   contact: string;
   id: number;
 }

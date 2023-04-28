@@ -5,7 +5,7 @@
         <input type="text" id="username" name="username" value="" formControlName="username">
         <label for="password">Enter Password: </label>
         <input type="text" id="password" name="password" value="" formControlName="password">
-        <input type="submit" [disabled]="!loginForm.valid" value="submit" class="button">
+        <input type="submit" [disabled]="!loginForm.valid" value="Submit" class="button">
     </form>
     <div *ngIf="loginFailure">Login Failure. Please enter again</div>
 </body>

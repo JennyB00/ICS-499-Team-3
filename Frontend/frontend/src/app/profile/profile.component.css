@@ -1,11 +1,36 @@
 h1 {
     padding: auto;
-    margin: 20px;
     font: bolder;
 }
 
 h3 {
     padding: auto;
-    margin-left: 20px;
     color: greenyellow;
+    text-shadow: 2px 2px 5px white;
+}
+
+body {
+    margin-left: 30px;
+}
+
+.add-contact-button {
+    background-color: greenyellow;
+    color: black;
+    font-size: 64px;
+    font-weight: bold;
+    padding: 10px 20px; /* smaller button size */
+    margin: 0%;
+    text-shadow: 2px 2px white;
+}
+
+.close-button {
+    font-size: 32px;
+    font-weight: bolder;
+    padding: 10px 15px; /* smaller button size */
+    margin: 0px 25px;
+    position: absolute;
+}
+
+.confirm-button {
+    background-color: red;
 }

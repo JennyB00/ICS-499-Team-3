@@ -17,6 +17,7 @@
     cursor: pointer;
     margin: 20px; /* larger margin */
     box-shadow: 2px 2px 5px #999; /* subtle box shadow */
+    text-shadow: 2px 2px black;
     transition: transform 0.2s ease-in-out; /* add button hover effect */
 }
   
@@ -24,15 +25,22 @@
     transform: scale(1.1); /* scale up button on hover */
 }
 
+.delete-button, .close-button {
+    background-color: red;
+}
+
+
 input[type=submit]:disabled, .cta-button:disabled, input[type=button]:disabled {
     background-color: #ff99003d; /* dark orange button color */
     color: #ffffff3d; /* gray text color */
     box-shadow: none; /* like light turned off */
+    text-shadow: none;
 }
 
 body {
     background-color: black;
     color: white;
+    text-shadow: 2px 2px 5px #ff9800;
 }
 
 nav {
@@ -41,4 +49,6 @@ nav {
 
 .errors {
     color: red;
+    text-shadow: none;
+    font-weight: bold;
 }

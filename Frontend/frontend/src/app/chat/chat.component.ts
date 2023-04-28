@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageComponent } from '../message/message.component';
 import { Router } from '@angular/router';
-import { Chat, ChatService, Message, MessageCreate } from '../chat.service';
+import { Chat, ChatService, Message, MessageCreate, Privileges } from '../chat.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -13,10 +13,9 @@ export class ChatComponent implements OnInit{
   chat: Chat;
   id: number;
   chatMessage: string;
-  messages: string[];
-  // privileges = [];
+  messages: Message[];
+  privileges: Privileges;
   // active = [];
-  private encoder = new TextEncoder();
 
   constructor(private chatService: ChatService,
     private userService: UserService,
@@ -24,14 +23,22 @@ export class ChatComponent implements OnInit{
 
   ngOnInit(): void {
     this.messages = [];
-    if (this.chatService.isChatSelected()) {
+    if (this.chatService.isChatSelected() && this.userService.isLoggedIn()) {
       const id = this.chatService.getChatID();
-      this.chatService.getChat(id).subscribe((chat) => {this.chat = chat});
-      for (let m of this.chat.messages) {
-        this.messages.push(m.username+': '+m.message.toString());
-      }
+      this.chatService.getChat(id).subscribe((chat) => {
+        this.chat = chat;
+        this.messages = chat.messages;
+        for (let p of chat.privileges) {
+          if (p.username == this.userService.getCurrentUser()) {
+            this.privileges = p;
+          }
+        }
+        if (!this.privileges) {
+          this.router.navigate(['/']);
+        }
+      });
     } else {
-      this.messages = [];
+      this.router.navigate(['/']);
     }
   }
 
@@ -41,10 +48,10 @@ export class ChatComponent implements OnInit{
   }
 
   sendMessage() {
-    if (this.chatMessage) {
-      this.messages.push(this.chatMessage);
-      this.chatMessage = '';
-    }
+    // if (this.chatMessage) {
+    //   this.messages.push(this.chatMessage);
+    //   this.chatMessage = '';
+    // }
   }
 
   sendStringMessage() {
@@ -55,7 +62,9 @@ export class ChatComponent implements OnInit{
       date: new Date().toISOString(),
       message: this.chatMessage
     };
-    this.chatService.addMessage(id,message).subscribe(() => { this.chatMessage = ''; });
-    this.messages.push(this.chatMessage);
+    this.chatService.addMessage(id,message).subscribe((newMessage) => {
+      this.chatMessage = '';
+      this.messages.push(newMessage);
+    });
   }
 }
