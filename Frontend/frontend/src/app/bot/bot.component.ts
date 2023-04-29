@@ -11,7 +11,9 @@ import { UserService } from '../user.service';
 
 export class BotComponent implements OnInit{
   messages: listItem[] = [];
-  newMessage = '';
+  prompt: string = '';
+  generateImg: boolean = false;
+  imgURL: string;
 
   constructor(private router: Router, private http: HttpClient, private userService: UserService) {}
 
@@ -21,22 +23,17 @@ export class BotComponent implements OnInit{
     }
   }
 
-  // homePage() {
-  //   // navigate to the home page
-  //   this.router.navigate(['/home']);
-  // }
-
   submit() {
-    if (this.newMessage.trim() !== '') {
+    if (this.prompt.trim() !== '') {
       // send the message to the server using POST request
-      this.messages.push({type: "prompt",message: this.newMessage});
-      this.http.post('http://localhost:8000/bot/process','', { params: new HttpParams().set('prompt',this.newMessage).set('username',this.userService.getCurrentUser())})
+      this.messages.push({type: "prompt",message: this.prompt});
+      this.http.post<string>('http://localhost:8000/bot/process','', { params: new HttpParams().set('prompt',this.prompt).set('username',this.userService.getCurrentUser())})
         .subscribe({
           next: (response) => {
             console.log('Message sent successfully');
             console.log('Response:', response);
             this.messages.push({type: "response",message: response.toString()});
-            this.newMessage = '';
+            this.prompt = '';
           },
           error: (error) => {
             console.error('Error sending message: ', error);
@@ -47,9 +44,28 @@ export class BotComponent implements OnInit{
   }
 
   onKeyPress(event: KeyboardEvent) {
-    if (event.key === 'Enter' && this.newMessage.trim() !== '') {
+    if (event.key === 'Enter' && this.prompt.trim() !== '') {
       this.submit();
     }
+  }
+  
+  generate() {
+    if (this.prompt.trim() !== '') {
+      this.imgURL = '';
+      this.http.post<string>('http://localhost:8000/bot/generate_image','', {params: new HttpParams().set('prompt',this.prompt)}).subscribe(
+        (url) => {
+          this.imgURL = url;
+        });
+        this.prompt = '';
+      }
+  }
+
+  onGenerate() {
+    this.generateImg = true;
+  }
+
+  onChat() {
+    this.generateImg = false;
   }
 }
 

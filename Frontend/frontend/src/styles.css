@@ -43,12 +43,17 @@ body {
     text-shadow: 2px 2px 5px #ff9800;
 }
 
-nav {
-    background-color: aqua;
+.nav {
+    background-color: #59b8ff;
 }
 
 .errors {
     color: red;
     text-shadow: none;
     font-weight: bold;
+}
+
+.content {
+    overflow-y: scroll;
+    height: calc(100vh - 148px);
 }
