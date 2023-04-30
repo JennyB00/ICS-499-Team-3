@@ -1,4 +1,8 @@
-<div class="container">
+<div style="
+height: calc(100vh - 148px);
+width: 75%;
+margin: auto;
+">
     <!-- <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
       <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
@@ -27,8 +31,9 @@
         </div>
       </div>
 
-      <div class="images" *ngIf="generateImg">
-        <img *ngIf="imgURL" src="{{imgURL}}" class="generated-img">
+      <div class="images" *ngIf="generateImg" style="display: flex; overflow: scroll;">
+        <img *ngIf="imgURL && imgPreview" src="{{imgURL}}" class="generated-img" style="width: 65%;" (click)="onImgClick()">
+        <img *ngIf="imgURL && !imgPreview" src="{{imgURL}}" class="generated-img" style="width: auto;" (click)="onImgClick()">
       </div>
 
       <div class="input-box">

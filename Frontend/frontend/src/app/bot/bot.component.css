@@ -1,8 +1,6 @@
 .chat-wrapper {
   margin: auto;
-  margin-bottom: 20px;
-  width: 90%;
-  height: 75%;
+  height: 100%;
   background-color: black;
   color: white;
   border: 0px;
@@ -72,6 +70,6 @@
 }
 
 .generated-img {
-  width: 100%;
   height: auto;
+  margin: auto;
 }

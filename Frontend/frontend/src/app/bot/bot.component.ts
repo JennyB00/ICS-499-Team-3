@@ -14,6 +14,7 @@ export class BotComponent implements OnInit{
   prompt: string = '';
   generateImg: boolean = false;
   imgURL: string;
+  imgPreview: boolean = true;
 
   constructor(private router: Router, private http: HttpClient, private userService: UserService) {}
 
@@ -66,6 +67,11 @@ export class BotComponent implements OnInit{
 
   onChat() {
     this.generateImg = false;
+  }
+
+  onImgClick() {
+    const flip = !this.imgPreview;
+    this.imgPreview = flip;
   }
 }
 
