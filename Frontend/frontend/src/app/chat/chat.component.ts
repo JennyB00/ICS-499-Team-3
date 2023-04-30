@@ -93,7 +93,10 @@ export class ChatComponent implements OnInit{
   }
 
   submitDeleteChat(chatID: number) {
-
+    this.chatService.deleteChat(chatID).subscribe((response) => {
+      console.log(response)
+      this.deleteChat = false;
+    });
   }
 
   cancelDeleteChat() {
