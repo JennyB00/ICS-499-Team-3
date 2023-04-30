@@ -1,15 +1,30 @@
 <div *ngIf="chat">
     <div class="grid-container">
         <div class="grid-item grid-item-1">
-            <button class="cta-button" (click)="chatSettings()">Chat Settings</button>
-            <button class="delete-button" *ngIf="privileges.delete_chat">Delete</button>
+            <button class="cta-button" (click)="onChatSettings()">Chat Settings</button>
+            <span *ngIf="chatSettings">
+                <span *ngIf="!deleteChat">
+                    <button class="delete-button" *ngIf="privileges.delete_chat" (click)="onDeleteChat()">Delete</button>
+                </span>
+                <span *ngIf="deleteChat">
+                    <button class="delete-button" (click)="submitDeleteChat(chat.id)">Confirm</button>
+                    <button (click)="cancelDeleteChat()">Cancel</button>
+                </span>
+                <span *ngIf="!addUser">
+                    <button *ngIf="privileges.add_user">Add User</button>
+                </span>
+            </span>
         </div>
         <div id="chatArea">
             <div *ngIf="chat">
                 <div *ngFor="let m of messages">
-                    <span style="display: inline-flex;">
+                    <span style="display: inline-flex;" *ngIf="!deleteMessage">
                         <app-message  [message]="m"></app-message>
-                        <button class="delete-button" *ngIf="privileges.delete_message">Delete</button>
+                        <button class="delete-button" (click)="onDeleteMessage()" *ngIf="privileges.delete_message">Delete</button>
+                    </span>
+                    <span style="display: inline-flex;" *ngIf="deleteMessage">
+                        <button class="delete-button" (click)="submitDeleteMessage(m.id)">Confirm</button>
+                        <button (click)="cancelDeleteMessage()">Cancel</button>
                     </span>
                 </div>
             </div>

@@ -15,7 +15,11 @@ export class ChatComponent implements OnInit{
   chatMessage: string;
   messages: Message[];
   privileges: Privileges;
-  // active = [];
+  active: string[];
+  deleteMessage: boolean = false;
+  chatSettings: boolean = false;
+  deleteChat: boolean = false;
+  addUser: boolean = false;
 
   constructor(private chatService: ChatService,
     private userService: UserService,
@@ -41,19 +45,14 @@ export class ChatComponent implements OnInit{
       this.router.navigate(['/']);
     }
   }
-
-  chatSettings() {
-    // navigate to the home page
-    this.router.navigate(['/chatSettings']);
-  }
-
+  
   sendMessage() {
     // if (this.chatMessage) {
-    //   this.messages.push(this.chatMessage);
-    //   this.chatMessage = '';
-    // }
+      //   this.messages.push(this.chatMessage);
+      //   this.chatMessage = '';
+      // }
   }
-
+  
   sendStringMessage() {
     const id = this.chatService.getChatID();
     const message: MessageCreate = {
@@ -66,5 +65,38 @@ export class ChatComponent implements OnInit{
       this.chatMessage = '';
       this.messages.push(newMessage);
     });
+  
+  }
+
+  onChatSettings() {
+    const flip: boolean = !this.chatSettings;
+    this.chatSettings = flip;
+  }
+
+  onDeleteMessage() {
+    this.deleteMessage = true;
+  }
+
+  submitDeleteMessage(messageID: number) {
+    this.chatService.deleteMessage(messageID).subscribe((response) => {
+      console.log(response);
+      this.deleteMessage = false;
+    });
+  }
+
+  cancelDeleteMessage() {
+    this.deleteMessage = false;
+  }
+
+  onDeleteChat() {
+    this.deleteChat = true;
+  }
+
+  submitDeleteChat(chatID: number) {
+
+  }
+
+  cancelDeleteChat() {
+    this.deleteChat = false;
   }
 }

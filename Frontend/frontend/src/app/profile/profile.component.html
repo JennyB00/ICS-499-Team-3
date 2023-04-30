@@ -65,7 +65,7 @@
             </section>
         </h4>
         
-        <section *ngIf="addChat">
+        <section *ngIf="newChat">
             <form [formGroup]="chatForm" (ngSubmit)="onSubmitChat(chatForm.value)">
                 <label for="users">Add Users:</label>
                 <select id="users" name="users" multiple>
@@ -75,7 +75,7 @@
                 <input type="button" (click)="onCancelChat()" value="Cancel">
             </form>
         </section>
-        <section *ngIf="!addChat">
+        <section *ngIf="!newChat">
             <button (click)="onAddChat()">New Chat</button><br>
             <h2>Select Chat:</h2>
             <div *ngFor="let chat of userHTTP.past_chats" id="pastChats">

@@ -42,8 +42,10 @@ export class LoginComponent implements OnInit {
       const match: boolean = (pass == password);
       if (match) {
         this.userService.setCurrentUser(username);
-        this.userService.updateStatus(username, 'online');
-        this.router.navigate(['/profile']);
+        this.userService.updateStatus(username, 'online').subscribe((response) => {
+          console.log(response.message);
+          this.router.navigate(['/profile']);
+        });
       }
       else {
         this.loginFailure = true;

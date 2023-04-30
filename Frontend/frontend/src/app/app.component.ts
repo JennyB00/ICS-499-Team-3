@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
+import { UserService, messageResponse } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +28,9 @@ export class AppComponent {
   onLogout() {
     if (this.loggedIn()) {
       const username = this.userService.getCurrentUser();
-      this.userService.updateStatus(username, 'offline');
+      this.userService.updateStatus(username, 'offline').subscribe((response) => {
+        console.log(response.message);
+      });
       this.userService.setCurrentUser('');
       window.location.reload();
     }

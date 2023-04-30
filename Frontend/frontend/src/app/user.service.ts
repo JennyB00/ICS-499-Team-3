@@ -56,7 +56,7 @@ export class UserService {
    * @returns Obervable of backend HTTP DELETE success message
    */
   delete(username: string) {
-    return this.http.delete<string>(this.urlStub+username);
+    return this.http.delete<messageResponse>(this.urlStub+username);
   }
 
   verifyPassword(username: string, password: string) {
@@ -82,7 +82,7 @@ export class UserService {
    */
   updatePassword(username: string, password: string) {
     const options = { params: new HttpParams().set('password',password) };
-    return this.http.post<string>(this.urlStub+username+'/password', '', options);
+    return this.http.post<messageResponse>(this.urlStub+username+'/password', '', options);
   }
 
   /**
@@ -93,7 +93,7 @@ export class UserService {
    */
   updateStatus(username: string, status: string) {
     const options = { params: new HttpParams().set('status',status) };
-    return this.http.post<string>(this.urlStub+username+'/status', '', options);
+    return this.http.post<messageResponse>(this.urlStub+username+'/status', '', options);
   }
 
   /**
@@ -122,7 +122,7 @@ export class UserService {
    * @returns Observable of success message
    */
   deleteContact(id: number) {
-    return this.http.delete<string>('http://localhost:8000/contacts/'+id);
+    return this.http.delete<messageResponse>('http://localhost:8000/contacts/'+id);
   }
 
   /**
@@ -142,7 +142,7 @@ export class UserService {
    * @returns Observable of success message
    */
   deletePastChat(id: number) {
-    return this.http.delete<string>('http://localhost:8000/past_chats/'+id);
+    return this.http.delete<messageResponse>('http://localhost:8000/past_chats/'+id);
   }
 
   /**
@@ -194,4 +194,8 @@ export interface User extends UserBase {
 
 export interface UserCreate extends UserBase {
   password: string;
+}
+
+export interface messageResponse {
+  message: string;
 }

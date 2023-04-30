@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit{
   showContacts: boolean = false;
   addContact: boolean = false;
   deleteContact: boolean = false;
-  addChat: boolean = false;
+  newChat: boolean = false;
   passwordForm: FormGroup;
   contactForm: FormGroup;
   chatForm: FormGroup;
@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit{
       this.addContact = false;
     }
     onSubmitChat(value: any) {
-      this.addChat = false;
+      this.newChat = false;
     }
     onUpdatePassword() {
       this.updatePassword = true;
@@ -106,10 +106,10 @@ export class ProfileComponent implements OnInit{
     this.deleteContact = false;
   }
   onAddChat() {
-    this.addChat = true;
+    this.newChat = true;
   }
   onCancelChat() {
-    this.addChat = false;
+    this.newChat = false;
   }
   onChatClick(chatID: number) {
     this.chatService.setChatID(chatID);

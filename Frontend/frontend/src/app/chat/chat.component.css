@@ -1,5 +1,7 @@
 .grid-container {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 148px);
     border: solid 2px #ff9800;
 }
 
