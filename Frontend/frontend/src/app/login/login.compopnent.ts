@@ -29,8 +29,7 @@ export class LoginComponent implements OnInit {
         Validators.pattern('[\\w\\-\\s\\/]+')
       ])),
       password: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('[\\w\\-\\s\\/]+')
+        Validators.required
       ]))
     });
   }
