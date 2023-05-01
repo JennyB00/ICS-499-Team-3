@@ -1,7 +1,7 @@
 import openai
 from pydantic import BaseModel
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 class Bot(BaseModel):

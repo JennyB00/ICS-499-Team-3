@@ -15,18 +15,18 @@
                 </span>
                 <span *ngIf="addUser">
                     <form>
-                        <input type="text" [(ngModel)]="selectedUser" placeholder="Enter Username">
-                        <button (click)="submitAddUser(chat.id)">Add</button>
+                        <input type="text" [(ngModel)]="selectedUser" placeholder="Enter Username" name="user">
+                        <button (click)="submitAddUser()">Add</button>
                         <button (click)="cancelAddUser()">Cancel</button>
                     </form>
                 </span>
                 <span *ngIf="!removeUser">
                     <button (click)="onRemoveUser()">Remove User</button>
                 </span>
-                <span>
+                <span *ngIf="removeUser">
                     <form>
-                        <input type="text" [(ngModel)]="selectedUser" placeholder="Enter user to be removed">
-                        <button (click)="submitRemoveUser(chat.id)">Remove</button>
+                        <input type="text" [(ngModel)]="selectedUser" placeholder="Enter user to be removed" name="user">
+                        <button (click)="submitRemoveUser()">Remove</button>
                         <button (click)="cancelRemoveUser()">Cancel</button>
                     </form>
                 </span>

@@ -109,7 +109,7 @@ export class ChatComponent implements OnInit{
     this.addUser = true;
   }
 
-  submitAddUser(chatID: number){
+  submitAddUser(){
     const newUser: PrivilegesCreate = {
       username: this.selectedUser,
       send: true,
@@ -118,7 +118,7 @@ export class ChatComponent implements OnInit{
       delete_message: false,
       delete_chat: false
     };
-    this.chatService.addPrivileges(chatID, newUser).subscribe((response) => {
+    this.chatService.addPrivileges(this.id, newUser).subscribe((response) => {
       console.log(response);
       this.addUser = false;
     });
@@ -132,11 +132,19 @@ export class ChatComponent implements OnInit{
   }
 
   //Not sure this is the correct way to remove users. might want to double check.
-  submitRemoveUser(chatID: number){
-    this.chatService.deletePrivileges(chatID).subscribe((response) => {
-      console.log(response);
-      this.removeUser = false;
+  submitRemoveUser(){
+    let priv: Privileges | undefined;
+    this.chat.privileges.forEach((p) => {
+      if (p.username == this.selectedUser) {
+        priv = p;
+      }
     });
+    if (priv) {
+        this.chatService.deletePrivileges(priv.id).subscribe((response) => {
+          console.log(response);
+          this.removeUser = false;
+        });
+    }
   }
 
   cancelRemoveUser(){
