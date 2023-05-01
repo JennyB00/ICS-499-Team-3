@@ -10,9 +10,11 @@
   justify-content: space-between;
 }
 
-.cta-button {
-  border-radius: 10px;
-  margin-right: 10px;
+.button {
+  border-radius: 100px;
+  text-align: center;
+  font-size: 22px;
+  padding: 7px;
 }
 
 
@@ -33,16 +35,6 @@
   margin-right: 10px;
 }
 
-.details {
-  display: flex;
-  flex-direction: column;
-}
-
-.bot-name {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
 .message {
   border-radius: 10px;
   align-self: flex-start;
@@ -54,14 +46,15 @@
   display: flex;
   align-items: center;
   border-radius: 10px;
-  color: white;
+  background-color: #555555;
 }
 
 .input-box input {
   flex: 1;
+  margin-left: 10px;
   margin-right: 10px;
   border-radius: 10px;
-  background-color: #000000;
+  background-color: #555554;
   color: white;
 }
 
@@ -92,4 +85,43 @@
   display: flex;
   align-items: center;
   border-radius: 10px;
+}
+
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loading-dots span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  background-color: #ccc;
+  border-radius: 50%;
+  animation: bounce 0.8s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(1) {
+  animation-delay: -0.24s;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: -0.12s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-8px);
+  }
+}
+
+.loading-dots.stop span {
+  animation: none;
+  display: none;
 }

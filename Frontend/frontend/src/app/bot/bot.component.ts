@@ -15,6 +15,7 @@ export class BotComponent implements OnInit{
   generateImg: boolean = false;
   imgURL: string;
   imgPreview: boolean = true;
+  isLoading: boolean = true;
 
   constructor(private router: Router, private http: HttpClient, private userService: UserService) {}
 
@@ -25,6 +26,7 @@ export class BotComponent implements OnInit{
   }
 
   submit() {
+    this.isLoading = true;
     if (this.prompt.trim() !== '') {
       // send the message to the server using POST request
       this.messages.push({type: "prompt",message: this.prompt});
@@ -34,11 +36,13 @@ export class BotComponent implements OnInit{
             console.log('Message sent successfully');
             console.log('Response:', response);
             this.messages.push({type: "response",message: response.toString()});
+            this.isLoading = false;
             this.prompt = '';
           },
           error: (error) => {
             console.error('Error sending message: ', error);
             console.log('Error response body: ', error.error);
+            this.isLoading = false;
           }
         });
     }
@@ -49,7 +53,7 @@ export class BotComponent implements OnInit{
       this.submit();
     }
   }
-  
+
   generate() {
     if (this.prompt.trim() !== '') {
       this.imgURL = '';

@@ -1,25 +1,30 @@
 <div style="
-height: calc(100vh - 50px);
-width: 75%;
+height: calc(100vh);
+width: 80%;
 margin-left: 10%;
 ">
 
   <div class="chat-wrapper">
     <div *ngIf="!generateImg" class="chatbox">
-      <div *ngFor="let message of messages">
+      <div *ngFor="let message of messages; let i=index;">
         <div class="message">
           <div class="bot-content" *ngIf="message.type == 'response'">
-            <img src="assets/img/bot.png" alt="Bot Icon" width="40" height="40">
+            <img src="assets/img/bot.png" alt="Bot Icon" width="40" height="40" style="margin-right: 10px;">
             Bot: {{ message.message }}
           </div>
           <div class="user-content" *ngIf="message.type == 'prompt'">
-            <img alt="User Icon" height="40" src="assets/img/user.png" width="40">
+            <img alt="User Icon" height="40" src="assets/img/user.png" width="40" style="margin-right: 10px;">
             User: {{ message.message }}
           </div>
         </div>
+        <div class="loading-dots" [ngClass]="{'stop': !isLoading && i === messages.length - 1}"
+             *ngIf="message.type == 'prompt' && i === messages.length - 1">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
-
     <div *ngIf="generateImg" class="images" style="display: flex; overflow: scroll;">
       <img (click)="onImgClick()" *ngIf="imgURL && imgPreview" class="generated-img" src="{{imgURL}}"
            style="width: 65%;">
@@ -29,11 +34,11 @@ margin-left: 10%;
 
     <div class="input-box">
       <input (keypress)="onKeyPress($event)" [(ngModel)]="prompt" type="text">
-      <button (click)="submit()" *ngIf="!generateImg">Send</button>
-      <button (click)="onGenerate()" *ngIf="!generateImg">Generate Image</button>
-      <button (click)="generate()" *ngIf="generateImg">Send</button>
-      <button (click)="onChat()" *ngIf="generateImg">Chat with Bot</button>
+      <span id="myIcon"></span>
+      <button class="button" (click)="submit()" *ngIf="!generateImg">Send</button>
+      <button class="button" (click)="onGenerate()" *ngIf="!generateImg">Generate Image</button>
+      <button class="button" (click)="generate()" *ngIf="generateImg">Send</button>
+      <button class="button" (click)="onChat()" *ngIf="generateImg">Chat with Bot</button>
     </div>
   </div>
 </div>
-
