@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ChatService {
   private currentChatID: number = -1;
-  private urlStub: string = 'http://localhost:8000/chats/'
+  private urlStub: string = '/chats/'
 
   constructor(private http: HttpClient) { }
 
@@ -85,7 +85,7 @@ export class ChatService {
    * @returns Observable of success message
    */
   deletePrivileges(id: number): Observable<string> {
-    return this.http.delete<string>('http://localhost:8000/privileges/'+id);
+    return this.http.delete<string>('/privileges/'+id);
   }
 
   /**
@@ -104,7 +104,7 @@ export class ChatService {
    * @returns Observable of success message
    */
   deleteMessage(id: number): Observable<string> {
-    return this.http.delete<string>('http://localhost:8000/messages/'+id);
+    return this.http.delete<string>('/messages/'+id);
   }
 }
 

@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class UserService {
   private currentUser: string = '';
-  private urlStub: string = 'http://localhost:8000/accounts/'
+  private urlStub: string = '/accounts/'
   constructor(private http: HttpClient) { }
 
   /**
@@ -122,7 +122,7 @@ export class UserService {
    * @returns Observable of success message
    */
   deleteContact(id: number) {
-    return this.http.delete<messageResponse>('http://localhost:8000/contacts/'+id);
+    return this.http.delete<messageResponse>('/contacts/'+id);
   }
 
   /**
@@ -142,7 +142,7 @@ export class UserService {
    * @returns Observable of success message
    */
   deletePastChat(id: number) {
-    return this.http.delete<messageResponse>('http://localhost:8000/past_chats/'+id);
+    return this.http.delete<messageResponse>('/past_chats/'+id);
   }
 
   /**

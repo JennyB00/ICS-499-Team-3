@@ -28,7 +28,7 @@ export class BotComponent implements OnInit{
     if (this.prompt.trim() !== '') {
       // send the message to the server using POST request
       this.messages.push({type: "prompt",message: this.prompt});
-      this.http.post<string>('http://localhost:8000/bot/process','', { params: new HttpParams().set('prompt',this.prompt).set('username',this.userService.getCurrentUser())})
+      this.http.post<string>('/bot/process','', { params: new HttpParams().set('prompt',this.prompt).set('username',this.userService.getCurrentUser())})
         .subscribe({
           next: (response) => {
             console.log('Message sent successfully');
@@ -53,7 +53,7 @@ export class BotComponent implements OnInit{
   generate() {
     if (this.prompt.trim() !== '') {
       this.imgURL = '';
-      this.http.post<string>('http://localhost:8000/bot/generate_image','', {params: new HttpParams().set('prompt',this.prompt)}).subscribe(
+      this.http.post<string>('/bot/generate_image','', {params: new HttpParams().set('prompt',this.prompt)}).subscribe(
         (url) => {
           this.imgURL = url;
         });
