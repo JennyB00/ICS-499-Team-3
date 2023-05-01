@@ -73,7 +73,7 @@ export class ChatService {
    * HTTP POST
    * @param id ID of chat to add privileges to
    * @param privileges Privileges to add
-   * @returns Observable of new Privilegs
+   * @returns Observable of new Privileges
    */
   addPrivileges(id: number, privileges: PrivilegesCreate): Observable<Privileges> {
     return this.http.post<Privileges>(this.urlStub+id+'/privileges',privileges);
