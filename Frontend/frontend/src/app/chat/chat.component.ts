@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageComponent } from '../message/message.component';
 import { Router } from '@angular/router';
-import { Chat, ChatService, Message, MessageCreate, Privileges } from '../chat.service';
+import { Chat, ChatService, Message, MessageCreate, Privileges, PrivilegesCreate } from '../chat.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -110,14 +110,13 @@ export class ChatComponent implements OnInit{
   }
 
   submitAddUser(chatID: number){
-    const newUser: Privileges = {
+    const newUser: PrivilegesCreate = {
       username: this.selectedUser,
       send: true,
       receive: true,
       add_user: true,
       delete_message: false,
-      delete_chat: false,
-      id: chatID
+      delete_chat: false
     };
     this.chatService.addPrivileges(chatID, newUser).subscribe((response) => {
       console.log(response);
