@@ -1,10 +1,4 @@
-<div style="
-height: calc(100vh);
-width: 80%;
-margin-left: 10%;
-margin-right: 10%;
-">
-
+<div class="application">
   <div class="chat-wrapper">
     <div *ngIf="!generateImg" class="chatbox">
       <div *ngFor="let message of messages; let i=index;">
@@ -35,7 +29,6 @@ margin-right: 10%;
 
     <div class="input-box">
       <input (keypress)="onKeyPress($event)" [(ngModel)]="prompt" type="text">
-      <span id="myIcon"></span>
       <button class="button" (click)="submit()" *ngIf="!generateImg">Send</button>
       <button class="button" (click)="onGenerate()" *ngIf="!generateImg">Generate Image</button>
       <button class="button" (click)="generate()" *ngIf="generateImg">Send</button>
