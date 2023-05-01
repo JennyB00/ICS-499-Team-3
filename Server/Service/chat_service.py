@@ -83,3 +83,12 @@ def search_by_word_for_chat(chat_id: int, search: str, db: Session) -> list[Mess
             if w == search:
                 filtered_messages.append(m)
     return filtered_messages
+
+def delete_chat(chat_id: int, db: Session) -> bool:
+    db_chat = cr.get_chat(db, chat_id)
+    for p in db_chat.privileges:
+        db_user = ar.get_account(db, p.username)
+        for past in db_user.past_chats:
+            if past.chat_id is chat_id:
+                pr.delete_privileges(p.id)
+    cr.delete_chat(db, chat_id)

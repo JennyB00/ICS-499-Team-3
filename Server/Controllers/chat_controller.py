@@ -33,7 +33,7 @@ def read_chat(id: int, db: Session = Depends(get_db)):
 
 @router.delete("/{id}")
 def delete_chat(id: int, db: Session = Depends(get_db)):
-    if chat_repo.delete_chat(db, id):
+    if chat_service.delete_chat(id, db):
         return {"message": "Chat successfully deleted"}
     else:
         raise HTTPException(status_code=404, detail="Chat not found")
