@@ -1,5 +1,12 @@
+.application {
+  height: calc(100vh);
+  width: 100%;
+  background-color: #555555;
+}
+
 .chat-wrapper {
-  margin: auto;
+  margin-left: 10%;
+  width: 80%;
   height: 100%;
   background-color: black;
   color: white;
@@ -9,6 +16,7 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 
 .button {
   border-radius: 100px;
