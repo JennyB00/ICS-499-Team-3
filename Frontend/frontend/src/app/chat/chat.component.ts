@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageComponent } from '../message/message.component';
 import { Router } from '@angular/router';
-import { Chat, ChatService, Message, MessageCreate, Privileges } from '../chat.service';
+import { Chat, ChatService, Message, MessageCreate, Privileges, PrivilegesCreate } from '../chat.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class ChatComponent implements OnInit{
   chat: Chat;
   id: number;
   chatMessage: string;
+  selectedUser: String;
   messages: Message[];
   privileges: Privileges;
   active: string[];
@@ -20,6 +21,7 @@ export class ChatComponent implements OnInit{
   chatSettings: boolean = false;
   deleteChat: boolean = false;
   addUser: boolean = false;
+  removeUser: boolean = false;
 
   constructor(private chatService: ChatService,
     private userService: UserService,
@@ -101,5 +103,43 @@ export class ChatComponent implements OnInit{
 
   cancelDeleteChat() {
     this.deleteChat = false;
+  }
+
+  onAddUser(){
+    this.addUser = true;
+  }
+
+  submitAddUser(chatID: number){
+    const newUser: PrivilegesCreate = {
+      username: this.selectedUser,
+      send: true,
+      receive: true,
+      add_user: true,
+      delete_message: false,
+      delete_chat: false
+    };
+    this.chatService.addPrivileges(chatID, newUser).subscribe((response) => {
+      console.log(response);
+      this.addUser = false;
+    });
+  }
+  cancelAddUser() {
+    this.addUser = false;
+  }
+
+  onRemoveUser(){
+    this.removeUser = true;
+  }
+
+  //Not sure this is the correct way to remove users. might want to double check.
+  submitRemoveUser(chatID: number){
+    this.chatService.deletePrivileges(chatID).subscribe((response) => {
+      console.log(response);
+      this.removeUser = false;
+    });
+  }
+
+  cancelRemoveUser(){
+    this.removeUser = false;
   }
 }

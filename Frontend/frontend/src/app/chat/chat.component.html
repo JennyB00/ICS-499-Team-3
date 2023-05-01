@@ -11,7 +11,24 @@
                     <button (click)="cancelDeleteChat()">Cancel</button>
                 </span>
                 <span *ngIf="!addUser">
-                    <button *ngIf="privileges.add_user">Add User</button>
+                    <button *ngIf="privileges.add_user" (click)="onAddUser()">Add User</button>
+                </span>
+                <span *ngIf="addUser">
+                    <form>
+                        <input type="text" [(ngModel)]="selectedUser" placeholder="Enter Username">
+                        <button (click)="submitAddUser(chat.id)">Add</button>
+                        <button (click)="cancelAddUser()">Cancel</button>
+                    </form>
+                </span>
+                <span *ngIf="!removeUser">
+                    <button (click)="onRemoveUser()">Remove User</button>
+                </span>
+                <span>
+                    <form>
+                        <input type="text" [(ngModel)]="selectedUser" placeholder="Enter user to be removed">
+                        <button (click)="submitRemoveUser(chat.id)">Remove</button>
+                        <button (click)="cancelRemoveUser()">Cancel</button>
+                    </form>
                 </span>
             </span>
         </div>
