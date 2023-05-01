@@ -1,47 +1,39 @@
 <div style="
-height: calc(100vh - 148px);
+height: calc(100vh - 50px);
 width: 75%;
-margin: auto;
+margin-left: 10%;
 ">
-    <!-- <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
-      <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <button class="cta-button""></button>
-      </div>
-
-    </header> -->
-    <div class="chat-wrapper">
-      <div class="chatbox" *ngIf="!generateImg">
-        <div *ngFor="let message of messages">
-          <div class="message">
-            <div class="avatar" *ngIf="message.type == 'response'">
-              <img src="assets/img/bot.png" alt="Bot Icon" width="50" height="50">
-            </div>
-            <div class="details">
-              <div class="bot-name" *ngIf="message.type == 'response'">
-                Bot
-                <div class="message-text">{{ message.message }}</div>
-              </div>
-              <div class="bot-name" *ngIf="message.type == 'prompt'">
-                Prompt:
-                <span class="message-text">{{ message.message }}</span>
-              </div>
-            </div>
+  <div class="chat-wrapper">
+    <div *ngIf="!generateImg" class="chatbox">
+      <div *ngFor="let message of messages">
+        <div class="message">
+          <div class="bot-content" *ngIf="message.type == 'response'">
+            <img src="assets/img/bot.png" alt="Bot Icon" width="40" height="40">
+            Bot: {{ message.message }}
+          </div>
+          <div class="user-content" *ngIf="message.type == 'prompt'">
+            <img alt="User Icon" height="40" src="assets/img/user.png" width="40">
+            User: {{ message.message }}
           </div>
         </div>
       </div>
-
-      <div class="images" *ngIf="generateImg" style="display: flex; overflow: scroll;">
-        <img *ngIf="imgURL && imgPreview" src="{{imgURL}}" class="generated-img" style="width: 65%;" (click)="onImgClick()">
-        <img *ngIf="imgURL && !imgPreview" src="{{imgURL}}" class="generated-img" style="width: auto;" (click)="onImgClick()">
-      </div>
-
-      <div class="input-box">
-        <input type="text" [(ngModel)]="prompt" (keypress)="onKeyPress($event)" >
-        <button (click)="submit()" *ngIf="!generateImg">Send</button>
-        <button (click)="onGenerate()" *ngIf="!generateImg">Generate Image</button>
-        <button (click)="generate()" *ngIf="generateImg">Send</button>
-        <button (click)="onChat()" *ngIf="generateImg">Chat with Bot</button>
-      </div>
     </div>
+
+    <div *ngIf="generateImg" class="images" style="display: flex; overflow: scroll;">
+      <img (click)="onImgClick()" *ngIf="imgURL && imgPreview" class="generated-img" src="{{imgURL}}"
+           style="width: 65%;">
+      <img (click)="onImgClick()" *ngIf="imgURL && !imgPreview" class="generated-img" src="{{imgURL}}"
+           style="width: auto;">
+    </div>
+
+    <div class="input-box">
+      <input (keypress)="onKeyPress($event)" [(ngModel)]="prompt" type="text">
+      <button (click)="submit()" *ngIf="!generateImg">Send</button>
+      <button (click)="onGenerate()" *ngIf="!generateImg">Generate Image</button>
+      <button (click)="generate()" *ngIf="generateImg">Send</button>
+      <button (click)="onChat()" *ngIf="generateImg">Chat with Bot</button>
+    </div>
+  </div>
 </div>
+
