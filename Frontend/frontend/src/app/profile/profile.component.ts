@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Contact, User, UserService } from '../user.service';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ChatService } from '../chat.service';
+import { ChatService, Privileges } from '../chat.service';
 import { Observable, map } from 'rxjs';
 
 @Component({
@@ -79,6 +79,24 @@ export class ProfileComponent implements OnInit{
       this.addContact = false;
     }
     onSubmitChat(value: any) {
+      this.chatService.addChat(this.userHTTP.username).subscribe((response) => {
+        console.log(response);
+      
+        for (var index in value){
+          const newUser: Privileges = {
+            username: value[index].username,
+            send: true,
+            receive: true,
+            add_user: true,
+            delete_message: false,
+            delete_chat: false,
+            id: response.id
+          };
+          this.chatService.addPrivileges(response.id, newUser).subscribe((response) =>{
+            console.log(response);
+          });
+        }
+      });
       this.newChat = false;
     }
     onUpdatePassword() {
