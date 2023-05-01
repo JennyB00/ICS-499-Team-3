@@ -120,7 +120,11 @@ export class ChatComponent implements OnInit{
     };
     this.chatService.addPrivileges(this.id, newUser).subscribe((response) => {
       console.log(response);
+      this.selectedUser = '';
       this.addUser = false;
+      this.userService.addPastChat(this.selectedUser, this.id).subscribe((response) => {
+        console.log(response);
+      });
     });
   }
   cancelAddUser() {
@@ -142,6 +146,7 @@ export class ChatComponent implements OnInit{
     if (priv) {
         this.chatService.deletePrivileges(priv.id).subscribe((response) => {
           console.log(response);
+          this.selectedUser = '';
           this.removeUser = false;
         });
     }

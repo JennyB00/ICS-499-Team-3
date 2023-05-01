@@ -110,7 +110,7 @@ export class ProfileComponent implements OnInit{
     console.log(usernames);
     this.chatService.addChat(this.userHTTP.username).subscribe((response) => {
       console.log(response);
-    
+      const chat_id = response.id;
       for (let user of usernames){
         const newUser: Privileges = {
           username: user,
@@ -119,15 +119,20 @@ export class ProfileComponent implements OnInit{
           add_user: true,
           delete_message: false,
           delete_chat: false,
-          id: response.id
+          id: chat_id
         };
-        this.chatService.addPrivileges(response.id, newUser).subscribe((response) =>{
+        this.chatService.addPrivileges(chat_id, newUser).subscribe((response) =>{
           console.log(response);
         });
+        this.userService.addPastChat(user, chat_id).subscribe(() => {
+          
+        });
       }
-      
-      this.chatService.setChatID(response.id);
-      this.router.navigate(['/chat']);
+      this.userService.addPastChat(this.userService.getCurrentUser(),chat_id).subscribe((response2) => {
+        console.log(response2);
+        this.chatService.setChatID(chat_id);
+        this.router.navigate(['/chat']);
+      });
     });
     this.newChat = false;
   }

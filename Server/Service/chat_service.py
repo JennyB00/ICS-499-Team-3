@@ -91,4 +91,4 @@ def delete_chat(chat_id: int, db: Session) -> bool:
         for past in db_user.past_chats:
             if past.chat_id is chat_id:
                 pr.delete_privileges(p.id)
-    cr.delete_chat(db, chat_id)
+    return cr.delete_chat(db, chat_id)
