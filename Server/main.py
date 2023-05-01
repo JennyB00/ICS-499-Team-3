@@ -20,7 +20,7 @@ app.include_router(bot_controller.router)
 #     dependencies=[],
 #     responses={418: {"description": "I'm a teapot"}},
 # )
-origins = ["http://localhost:4200"]
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
