@@ -108,7 +108,7 @@ export class ChatService {
   }
 }
 
-interface PrivilegesCreate {
+export interface PrivilegesCreate {
   username: string;
   send: boolean;
   receive: boolean;

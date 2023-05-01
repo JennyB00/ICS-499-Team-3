@@ -13,7 +13,7 @@ export class ChatComponent implements OnInit{
   chat: Chat;
   id: number;
   chatMessage: string;
-  selectedUser: String;
+  selectedUser: string;
   messages: Message[];
   privileges: Privileges;
   active: string[];
