@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Contact, User, UserService } from '../user.service';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ChatService, Privileges } from '../chat.service';
 import { Observable, map } from 'rxjs';
@@ -43,64 +43,96 @@ export class ProfileComponent implements OnInit{
             this.pastChatUsers.set(pastChat.past_chat_id, users);
           });
         }
-      } );
+        this.chatForm = this.formBuilder.group({
+          users: this.formBuilder.array([
+          ])
+        });
+        this.contacts.forEach(() => 
+          this.users.push(this.formBuilder.control(false))
+        );
+        const existingContactValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+          const contact = control.value;
+          let contactUsernames: string[] = [];
+          this.contacts.forEach((c) => {
+            contactUsernames.push(c.contact);
+          });
+          return contactUsernames.indexOf(contact) > -1 ? {existing: true} : null;
+        }
+        this.contactForm = this.formBuilder.group({
+          contact: this.formBuilder.control("",
+          [Validators.required, existingContactValidator],
+          this.contactValidator)
+        });
+      });
     }
     this.passwordForm = this.formBuilder.group({
       password: this.formBuilder.control("", [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{5,}$')]),
       confirm: this.formBuilder.control("", Validators.required)
     }, {validators: confirmPasswordValidator});
-    this.contactForm = this.formBuilder.group({
-      contact: this.formBuilder.control("", Validators.required, this.contactValidator)
-    });
-    this.chatForm = this.formBuilder.group({
-      users: this.formBuilder.control("", Validators.required)
-    });
   }
   contactValidator: AsyncValidatorFn = (control: AbstractControl): Observable<ValidationErrors | null> => {
     return this.userService.validUsername(control.value).pipe(
       map((valid) => valid ? {missing:true} : null)
       );
-    }
+  }
+  
+  get users() {
+    return this.chatForm.get('users') as FormArray;
+  }
     
-
-    onSubmitPassword(value: any) {
-      const username = this.userService.getCurrentUser();
-      const password = value.password;
-      this.userService.updatePassword(username, password).subscribe();
-      this.updatePassword = false;
-    }
-    onSubmitContact(value: any) {
-      const contact = value.contact;
-      this.userService.addContact(this.userHTTP.username,contact).subscribe(() => {
-        this.userService.getContacts(this.userHTTP.username).subscribe((contacts) => {
-          this.contacts = contacts;
-        });
+  onSubmitPassword(value: any) {
+    const username = this.userService.getCurrentUser();
+    const password = value.password;
+    this.userService.updatePassword(username, password).subscribe();
+    this.updatePassword = false;
+  }
+  onSubmitContact(value: any) {
+    const contact = value.contact;
+    this.userService.addContact(this.userHTTP.username,contact).subscribe(() => {
+      this.userService.getContacts(this.userHTTP.username).subscribe((contacts) => {
+        this.contacts = contacts;
       });
-      this.addContact = false;
-    }
-    onSubmitChat(value: any) {
-      this.chatService.addChat(this.userHTTP.username).subscribe((response) => {
-        console.log(response);
-      
-        for (var index in value){
-          const newUser: Privileges = {
-            username: value[index].username,
-            send: true,
-            receive: true,
-            add_user: true,
-            delete_message: false,
-            delete_chat: false,
-            id: response.id
-          };
-          this.chatService.addPrivileges(response.id, newUser).subscribe((response) =>{
-            console.log(response);
-          });
+    });
+    this.addContact = false;
+  }
+  onSubmitChat(value: any) {
+    console.log(value);
+    const values = value.users;
+    const usernames: string[] = [];
+    values.forEach((val:boolean, i:number) => {
+      if (val) {
+        const contact: Contact | undefined = this.contacts.at(i);
+        if (contact) {
+          usernames.push(contact.contact);
         }
-      });
-      this.newChat = false;
-    }
-    onUpdatePassword() {
-      this.updatePassword = true;
+      }
+    });
+    console.log(usernames);
+    this.chatService.addChat(this.userHTTP.username).subscribe((response) => {
+      console.log(response);
+    
+      for (let user of usernames){
+        const newUser: Privileges = {
+          username: user,
+          send: true,
+          receive: true,
+          add_user: true,
+          delete_message: false,
+          delete_chat: false,
+          id: response.id
+        };
+        this.chatService.addPrivileges(response.id, newUser).subscribe((response) =>{
+          console.log(response);
+        });
+      }
+      
+      this.chatService.setChatID(response.id);
+      this.router.navigate(['/chat']);
+    });
+    this.newChat = false;
+  }
+  onUpdatePassword() {
+    this.updatePassword = true;
   }
   onCancelPassword() {
     this.updatePassword = false;

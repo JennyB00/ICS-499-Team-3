@@ -51,6 +51,7 @@
                 </span>
                 <section class="errors" *ngIf="addContact">
                     <div *ngIf="contactForm.get('contact')?.hasError('missing')">Contact Not Found</div>
+                    <div *ngIf="contactForm.get('contact')?.hasError('existing')">Contact already used</div>
                 </section>
                 <div *ngFor="let contact of contacts">
                     <section *ngIf="!deleteContact">
@@ -68,9 +69,15 @@
         <section *ngIf="newChat">
             <form [formGroup]="chatForm" (ngSubmit)="onSubmitChat(chatForm.value)">
                 <label for="users">Add Users:</label>
-                <select id="users" name="users" multiple>
+                <div id="options" style="overflow-y: scroll;" formArrayName="users">
+                    <div *ngFor="let contact of contacts; let i=index">
+                        <input type="checkbox" id="contact-{{i}}" [formControlName]="i" value="{{contact.contact}}">
+                        <label for="contact-{{i}}">{{contact.contact}}</label>
+                    </div>
+                </div>
+                <!-- <select id="users" name="users" multiple>
                     <option *ngFor="let contact of contacts">{{contact.contact}}</option>
-                </select>
+                </select> -->
                 <input type="submit" value="Submit" [disabled]="!chatForm.valid">
                 <input type="button" (click)="onCancelChat()" value="Cancel">
             </form>
