@@ -91,5 +91,5 @@ def delete_chat(chat_id: int, db: Session) -> bool:
         for past in db_user.past_chats:
             p = PastChat.from_orm(past)
             if p.past_chat_id is chat_id:
-                pr.delete_privileges(p.id)
+                pcr.delete_past_chat(db, p.id)
     return cr.delete_chat(db, chat_id)

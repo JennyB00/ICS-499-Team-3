@@ -98,6 +98,7 @@ export class ChatComponent implements OnInit{
     this.chatService.deleteChat(chatID).subscribe((response) => {
       console.log(response)
       this.deleteChat = false;
+      this.router.navigate(['/profile']);
     });
   }
 
